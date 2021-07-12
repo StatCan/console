@@ -32,6 +32,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
 import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface ISelectPolicyProps {
   classes: any;
@@ -117,6 +118,8 @@ const PolicySelectors = ({
   const [loading, isLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
 
+  const { t } = useTranslation("policies");
+
   const fetchPolicies = useCallback(() => {
     isLoading(true);
 
@@ -175,9 +178,11 @@ const PolicySelectors = ({
         {records.length > 0 ? (
           <React.Fragment>
             <Grid item xs={12} className={classes.actionsTray}>
-              <span className={classes.actionsTitle}>Assign Policies</span>
+              <span className={classes.actionsTitle}>
+                {t("assignPolicies")}
+              </span>
               <TextField
-                placeholder="Filter by Policy"
+                placeholder={t("filterByPolicy")}
                 className={classes.filterField}
                 id="search-resource"
                 label=""
@@ -195,19 +200,19 @@ const PolicySelectors = ({
             </Grid>
             <Grid item xs={12} className={classes.tableBlock}>
               <TableWrapper
-                columns={[{ label: "Policy", elementKey: "name" }]}
+                columns={[{ label: t("policy"), elementKey: "name" }]}
                 onSelect={selectionChanged}
                 selectedItems={selectedPolicy}
                 isLoading={loading}
                 records={filteredRecords}
-                entityName="Policies"
+                entityName={t("policies")}
                 idField="name"
                 customPaperHeight={classes.multiSelectTable}
               />
             </Grid>
           </React.Fragment>
         ) : (
-          <div className={classes.noFound}>No Policies Available</div>
+          <div className={classes.noFound}>{t("noPoliciesAvailable")}</div>
         )}
       </Grid>
     </React.Fragment>

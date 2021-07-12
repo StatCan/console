@@ -35,6 +35,8 @@ import RadioGroupSelector from "../../../Common/FormComponents/RadioGroupSelecto
 import InputBoxWrapper from "../../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import FormSwitchWrapper from "../../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import AddIcon from "@material-ui/icons/Add";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../../i18n";
 
 interface IIdentityProviderProps {
   classes: any;
@@ -118,6 +120,8 @@ const IdentityProvider = ({
 }: IIdentityProviderProps) => {
   const [validationErrors, setValidationErrors] = useState<any>({});
 
+  const  { t } = useTranslation("tenants");
+
   const updateField = useCallback(
     (field: string, value: any) => {
       updateAddField("identityProvider", field, value);
@@ -156,14 +160,14 @@ const IdentityProvider = ({
           required: true,
           value: accessKeys[i],
           pattern: /^[a-zA-Z0-9-]{8,63}$/,
-          customPatternMessage: "Keys must be at least length 8",
+          customPatternMessage: i18n.t("tenants:minKeyLength"),
         });
         customIDPValidation.push({
           fieldKey: `secretkey-${i.toString()}`,
           required: true,
           value: secretKeys[i],
           pattern: /^[a-zA-Z0-9-]{8,63}$/,
-          customPatternMessage: "Keys must be at least length 8",
+          customPatternMessage: i18n.t("tenants:minKeyLength"),
         });
       }
     }
@@ -249,7 +253,7 @@ const IdentityProvider = ({
             <InputBoxWrapper
               id={`accesskey-${index.toString()}`}
               label={""}
-              placeholder={"Access Key"}
+              placeholder={t("accessKey")}
               name={`accesskey-${index.toString()}`}
               value={accessKeys[index]}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -263,7 +267,7 @@ const IdentityProvider = ({
             <InputBoxWrapper
               id={`secretkey-${index.toString()}`}
               label={""}
-              placeholder={"Secret Key"}
+              placeholder={t("secretKey")}
               name={`secretkey-${index.toString()}`}
               value={secretKeys[index]}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -275,7 +279,7 @@ const IdentityProvider = ({
               error={validationErrors[`secretkey-${index.toString()}`] || ""}
             />
             <div className={classes.buttonTray}>
-              <Tooltip title="Add User" aria-label="add">
+              <Tooltip title={t<string>("addUser")} aria-label={t("add")}>
                 <IconButton
                   size={"small"}
                   onClick={() => {
@@ -288,7 +292,7 @@ const IdentityProvider = ({
                   <AddIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Randomize Credentials" aria-label="add">
+              <Tooltip title={t<string>("randomizeCredentials")} aria-label={t("add")}>
                 <IconButton
                   onClick={() => {
                     updateUserField(index, getRandomString(16));
@@ -299,7 +303,7 @@ const IdentityProvider = ({
                   <CasinoIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Remove" aria-label="add">
+              <Tooltip title={t<string>("remove")} aria-label={t("add")}>
                 <IconButton
                   size={"small"}
                   style={{ marginLeft: 16 }}
@@ -343,7 +347,7 @@ const IdentityProvider = ({
               error={validationErrors[`ad-userdn-${index.toString()}`] || ""}
             />
             <div className={classes.buttonTray}>
-              <Tooltip title="Add User" aria-label="add">
+              <Tooltip title={t<string>("addUser")} aria-label={t("add")}>
                 <IconButton
                   size={"small"}
                   onClick={() => {
@@ -354,7 +358,7 @@ const IdentityProvider = ({
                   <AddIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Remove" aria-label="add">
+              <Tooltip title={t<string>("remove")} aria-label={t("add")}>
                 <IconButton
                   size={"small"}
                   style={{ marginLeft: 16 }}
@@ -380,10 +384,9 @@ const IdentityProvider = ({
   return (
     <Fragment>
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Identity Provider</h3>
+        <h3 className={classes.h3Section}>{t("identityProvider")}</h3>
         <span className={classes.descriptionText}>
-          Access to the tenant can be controlled via an external Identity
-          Manager.
+          {t("accessToTenantCanBe")}
         </span>
       </div>
       <Grid item xs={12}>
@@ -391,20 +394,20 @@ const IdentityProvider = ({
           currentSelection={idpSelection}
           id="idp-options"
           name="idp-options"
-          label="Protocol"
+          label={t("protocol")}
           onChange={(e) => {
             updateField("idpSelection", e.target.value);
           }}
           selectorOptions={[
-            { label: "Built-in", value: "Built-in" },
-            { label: "OpenID", value: "OpenID" },
-            { label: "Active Directory", value: "AD" },
+            { label: t("builtIn"), value: "Built-in" },
+            { label: t("openID"), value: "OpenID" },
+            { label: t("activeDir"), value: "AD" },
           ]}
         />
       </Grid>
       {idpSelection === "Built-in" && (
         <Fragment>
-          Add additional users
+          {t("addAdditionalUsers")}
           {inputs}
         </Fragment>
       )}
@@ -418,7 +421,7 @@ const IdentityProvider = ({
                 updateField("openIDURL", e.target.value);
                 cleanValidation("openID_URL");
               }}
-              label="URL"
+              label={t("url")}
               value={openIDURL}
               placeholder="https://your-identity-provider.com/"
               error={validationErrors["openID_URL"] || ""}
@@ -433,7 +436,7 @@ const IdentityProvider = ({
                 updateField("openIDConfigurationURL", e.target.value);
                 cleanValidation("openID_CONFIGURATION_URL");
               }}
-              label="Configuration URL"
+              label={t("configurationURL")}
               value={openIDConfigurationURL}
               placeholder="https://your-identity-provider.com/.well-known/openid-configuration"
               error={validationErrors["openID_CONFIGURATION_URL"] || ""}
@@ -448,7 +451,7 @@ const IdentityProvider = ({
                 updateField("openIDClientID", e.target.value);
                 cleanValidation("openID_clientID");
               }}
-              label="Client ID"
+              label={t("clientID")}
               value={openIDClientID}
               error={validationErrors["openID_clientID"] || ""}
               required
@@ -462,7 +465,7 @@ const IdentityProvider = ({
                 updateField("openIDSecretID", e.target.value);
                 cleanValidation("openID_secretID");
               }}
-              label="Secret ID"
+              label={t("secretID")}
               value={openIDSecretID}
               error={validationErrors["openID_secretID"] || ""}
               required
@@ -476,7 +479,7 @@ const IdentityProvider = ({
                 updateField("openIDCallbackURL", e.target.value);
                 cleanValidation("openID_callbackURL");
               }}
-              label="Callback URL"
+              label={t("callbackURL")}
               value={openIDCallbackURL}
               placeholder="https://your-console-endpoint:9443/oauth_callback"
               error={validationErrors["openID_callbackURL"] || ""}
@@ -490,7 +493,7 @@ const IdentityProvider = ({
                 updateField("openIDClaimName", e.target.value);
                 cleanValidation("openID_claimName");
               }}
-              label="Claim Name"
+              label={t("claimName")}
               value={openIDClaimName}
               error={validationErrors["openID_claimName"] || ""}
               required
@@ -504,7 +507,7 @@ const IdentityProvider = ({
                 updateField("openIDScopes", e.target.value);
                 cleanValidation("openID_scopes");
               }}
-              label="Scopes"
+              label={t("scopes")}
               value={openIDScopes}
             />
           </Grid>
@@ -520,7 +523,7 @@ const IdentityProvider = ({
                 updateField("ADURL", e.target.value);
                 cleanValidation("AD_URL");
               }}
-              label="LDAP Server Address"
+              label={t("ldapServerAddress")}
               value={ADURL}
               placeholder="ldap-server:636"
               error={validationErrors["AD_URL"] || ""}
@@ -538,7 +541,7 @@ const IdentityProvider = ({
                 const checked = targetD.checked;
                 updateField("ADSkipTLS", checked);
               }}
-              label={"Skip TLS Verification"}
+              label={t("skipTLSverification")}
             />
           </Grid>
           <Grid item xs={12}>
@@ -552,7 +555,7 @@ const IdentityProvider = ({
                 const checked = targetD.checked;
                 updateField("ADServerInsecure", checked);
               }}
-              label={"Server Insecure"}
+              label={t("serverInsecure")}
             />
           </Grid>
           {ADServerInsecure ? (
@@ -563,7 +566,7 @@ const IdentityProvider = ({
                 display="block"
                 gutterBottom
               >
-                Warning: All traffic with Active Directory will be unencrypted
+                {t("warningAllTraffic")}
               </Typography>
               <br />
             </Grid>
@@ -579,7 +582,7 @@ const IdentityProvider = ({
                 const checked = targetD.checked;
                 updateField("ADServerStartTLS", checked);
               }}
-              label={"Start TLS connection to AD/LDAP server"}
+              label={t("startTLSconnection")}
             />
           </Grid>
           <Grid item xs={12}>
@@ -589,7 +592,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADUserNameFormat", e.target.value);
               }}
-              label="Username Format"
+              label={t("usernameFormat")}
               value={ADUserNameFormat}
               placeholder="uid=%s,cn=accounts,dc=myldapserver,dc=com"
             />
@@ -601,7 +604,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADUserNameSearchFilter", e.target.value);
               }}
-              label="Username Search Filter"
+              label={t("usernameSearchFilter")}
               value={ADUserNameSearchFilter}
               placeholder="(|(objectclass=posixAccount)(uid=%s))"
             />
@@ -613,7 +616,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADGroupSearchBaseDN", e.target.value);
               }}
-              label="Group Search Base DN"
+              label={t("groupSearchBaseDN")}
               value={ADGroupSearchBaseDN}
               placeholder="ou=hwengg,dc=min,dc=io;ou=swengg,dc=min,dc=io"
             />
@@ -625,7 +628,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADGroupSearchFilter", e.target.value);
               }}
-              label="Group Search Filter"
+              label={t("groupSearchFilter")}
               value={ADGroupSearchFilter}
               placeholder="(&(objectclass=groupOfNames)(member=%s))"
             />
@@ -637,7 +640,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADGroupNameAttribute", e.target.value);
               }}
-              label="Group Name Attribute"
+              label={t("groupNameAttribute")}
               value={ADGroupNameAttribute}
               placeholder="cn"
             />
@@ -649,7 +652,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADLookupBindDN", e.target.value);
               }}
-              label="Lookup Bind DN"
+              label={t("lookupBindDN")}
               value={ADLookupBindDN}
               placeholder="cn=admin,dc=min,dc=io"
             />
@@ -661,7 +664,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADLookupBindPassword", e.target.value);
               }}
-              label="Lookup Bind Password"
+              label={t("lookupBindPassword")}
               value={ADLookupBindPassword}
               placeholder="admin"
             />
@@ -673,7 +676,7 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADUserDNSearchBaseDN", e.target.value);
               }}
-              label="User DN Search Base DN"
+              label={t("userDNSearchBase")}
               value={ADUserDNSearchBaseDN}
               placeholder="dc=min,dc=io"
             />
@@ -685,13 +688,13 @@ const IdentityProvider = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("ADUserDNSearchFilter", e.target.value);
               }}
-              label="User DN Search Filter"
+              label={t("userDNSearchFilter")}
               value={ADUserDNSearchFilter}
               placeholder="(uid=%s)"
             />
           </Grid>
           <Grid item xs={12}>
-            List of user DNs (Distinguished Names) to be Tenant Administrators
+            {t("listOfUserDNs")}
             {inputs}
           </Grid>
         </Fragment>

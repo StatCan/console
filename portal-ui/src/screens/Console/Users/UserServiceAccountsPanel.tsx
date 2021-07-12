@@ -34,6 +34,7 @@ import DeleteServiceAccount from "../Account/DeleteServiceAccount";
 import CredentialsPrompt from "../Common/CredentialsPrompt/CredentialsPrompt";
 import { CreateIcon } from "../../../icons";
 import Button from "@material-ui/core/Button";
+import { useTranslation } from "react-i18next";
 
 interface IUserServiceAccountsProps {
   classes: any;
@@ -65,6 +66,8 @@ const UserServiceAccountsPanel = ({
   const [showNewCredentials, setShowNewCredentials] = useState<boolean>(false);
   const [newServiceAccount, setNewServiceAccount] =
     useState<NewServiceAccount | null>(null);
+
+  const { t } = useTranslation("users");
 
   useEffect(() => {
     fetchRecords();
@@ -156,11 +159,11 @@ const UserServiceAccountsPanel = ({
           closeModal={() => {
             closeCredentialsModal();
           }}
-          entity="Service Account"
+          entity={t("serviceAccount")}
         />
       )}
       <div className={classes.actionsTray}>
-        <h1 className={classes.sectionTitle}>Service Accounts</h1>
+        <h1 className={classes.sectionTitle}>{t("serviceAccounts")}</h1>
         <Button
           variant="contained"
           color="primary"
@@ -171,16 +174,16 @@ const UserServiceAccountsPanel = ({
             setSelectedServiceAccount(null);
           }}
         >
-          Create service account
+          {t("createServiceAccount")}
         </Button>
       </div>
       <br />
       <TableWrapper
         isLoading={loading}
         records={records}
-        entityName={"Service Accounts"}
+        entityName={t("serviceAccounts")}
         idField={""}
-        columns={[{ label: "Service Account", elementKey: "" }]}
+        columns={[{ label: t("serviceAccount"), elementKey: "" }]}
         itemActions={tableActions}
       />
     </React.Fragment>

@@ -33,6 +33,7 @@ import TableWrapper from "../../Common/TableWrapper/TableWrapper";
 import api from "../../../../common/api";
 import DeleteEvent from "./DeleteEvent";
 import AddEvent from "./AddEvent";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -61,6 +62,7 @@ const BucketEventsPanel = ({
   const [records, setRecords] = useState<BucketEvent[]>([]);
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
   const [selectedEvent, setSelectedEvent] = useState<BucketEvent | null>(null);
+  const { t } = useTranslation("bucketsDetails");
 
   const bucketName = match.params["bucketName"];
 
@@ -129,7 +131,7 @@ const BucketEventsPanel = ({
 
       <Grid container>
         <Grid item xs={12} className={classes.actionsTray}>
-          <h1 className={classes.sectionTitle}>Events</h1>
+          <h1 className={classes.sectionTitle}>{t("events")}</h1>
           <Button
             variant="contained"
             color="primary"
@@ -139,25 +141,25 @@ const BucketEventsPanel = ({
               setAddEventScreenOpen(true);
             }}
           >
-            Subscribe to Event
+            {t("subscribeToEvent")}
           </Button>
         </Grid>
         <Grid item xs={12}>
           <TableWrapper
             itemActions={tableActions}
             columns={[
-              { label: "SQS", elementKey: "arn" },
+              { label: t("sqs"), elementKey: "arn" },
               {
-                label: "Events",
+                label: t("events"),
                 elementKey: "events",
                 renderFunction: eventsDisplay,
               },
-              { label: "Prefix", elementKey: "prefix" },
-              { label: "Suffix", elementKey: "suffix" },
+              { label: t("prefix"), elementKey: "prefix" },
+              { label: t("suffix"), elementKey: "suffix" },
             ]}
             isLoading={loadingEvents}
             records={records}
-            entityName="Events"
+            entityName={t("events")}
             idField="id"
           />
         </Grid>

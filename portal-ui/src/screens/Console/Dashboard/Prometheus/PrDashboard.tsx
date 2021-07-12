@@ -42,6 +42,8 @@ import api from "../../../../common/api";
 import SyncIcon from "../../../../icons/SyncIcon";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../i18n";
 
 interface IPrDashboard {
   classes: any;
@@ -78,6 +80,8 @@ const PrDashboard = ({
   const [panelInformation, setPanelInformation] =
     useState<IDashboardPanel[]>(panelsConfiguration);
   const [curTab, setCurTab] = useState<number>(0);
+
+  const { t } = useTranslation("dashboard");
 
   const minHeight = 600;
   const colsInGrid = 8;
@@ -211,8 +215,7 @@ const PrDashboard = ({
           setPanelInformation(widgetsWithValue);
         } else {
           displayErrorMessage({
-            errorMessage:
-              "Widget information could not be retrieved at this time. Please try again",
+            errorMessage: i18n.t("dashboard:widgetInfoErr"),
             detailedError: "",
           });
         }
@@ -255,14 +258,14 @@ const PrDashboard = ({
         xs={12}
         className={`${classes.actionsTray} ${classes.timeContainers}`}
       >
-        <span className={classes.label}>Start Time</span>
+        <span className={classes.label}>{t("startTime")}</span>
         <DateTimePickerWrapper
           value={timeStart}
           onChange={setTimeStart}
           forSearchBlock
           id="stTime"
         />
-        <span className={classes.label}>End Time</span>
+        <span className={classes.label}>{t("endTime")}</span>
         <DateTimePickerWrapper
           value={timeEnd}
           onChange={setTimeEnd}
@@ -277,14 +280,14 @@ const PrDashboard = ({
           startIcon={<SyncIcon />}
           className={classes.syncButton}
         >
-          Sync
+          {t("sync")}
         </Button>
       </Grid>
       <Grid item xs={12}>
         <Tabs
           indicatorColor="primary"
           textColor="primary"
-          aria-label="cluster-tabs"
+          aria-label={t("clusterTabs")}
           variant="scrollable"
           scrollButtons="auto"
           value={curTab}
@@ -292,9 +295,9 @@ const PrDashboard = ({
             setCurTab(newValue);
           }}
         >
-          <Tab label="Summary" {...a11yProps(0)} />
-          <Tab label="Traffic" {...a11yProps(1)} />
-          <Tab label="Resources" {...a11yProps(2)} />
+          <Tab label={t("summary")} {...a11yProps(0)} />
+          <Tab label={t("traffic")} {...a11yProps(1)} />
+          <Tab label={t("resources")} {...a11yProps(2)} />
         </Tabs>
       </Grid>
       <Grid item xs={12} className={classes.widgetsContainer}>

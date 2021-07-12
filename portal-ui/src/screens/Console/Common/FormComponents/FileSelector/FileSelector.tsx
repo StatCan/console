@@ -25,6 +25,7 @@ import { fieldBasic, tooltipHelper } from "../common/styleLibrary";
 import { fileProcess } from "./utils";
 import HelpIcon from "../../../../../icons/HelpIcon";
 import ErrorBlock from "../../../../shared/ErrorBlock";
+import { useTranslation } from "react-i18next";
 
 interface InputBoxProps {
   label: string;
@@ -105,6 +106,8 @@ const FileSelector = ({
 }: InputBoxProps) => {
   const [showFileSelector, setShowSelector] = useState(false);
 
+  const { t } = useTranslation("common");
+
   return (
     <React.Fragment>
       <Grid
@@ -157,7 +160,7 @@ const FileSelector = ({
             {value !== "" && (
               <IconButton
                 color="primary"
-                aria-label="upload picture"
+                aria-label={t("uploadPicture")}
                 component="span"
                 onClick={() => {
                   setShowSelector(false);
@@ -176,7 +179,7 @@ const FileSelector = ({
             <div className={classes.valueString}>{value}</div>
             <IconButton
               color="primary"
-              aria-label="upload picture"
+              aria-label={t("uploadPicture")}
               component="span"
               onClick={() => {
                 setShowSelector(true);

@@ -25,6 +25,7 @@ import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import FormSwitchWrapper from "../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import api from "../../../../common/api";
+import { useTranslation } from "react-i18next";
 
 interface IUpdateTenantModal {
   open: boolean;
@@ -61,6 +62,8 @@ const UpdateTenantModal = ({
   const [imageRegistryPassword, setImageRegistryPassword] =
     useState<string>("");
   const [validMinioImage, setValidMinioImage] = useState<boolean>(true);
+
+  const { t } = useTranslation("tenants");
 
   const validateImage = useCallback(
     (fieldToCheck: string) => {
@@ -131,25 +134,24 @@ const UpdateTenantModal = ({
 
   return (
     <ModalWrapper
-      title={"Update MinIO Version"}
+      title={t("updateMinioVersion")}
       modalOpen={open}
       onClose={closeAction}
     >
       <Grid container>
         <Grid item xs={12} className={classes.formScrollable}>
-          <span>
-            Please enter the MinIO image from dockerhub to use. If blank, then
-            latest build will be used.
-          </span>
+          <span>{t("pleaseEnterMinioImg")}</span>
           <br />
           <br />
           <Grid item xs={12}>
             <InputBoxWrapper
               value={minioImage}
-              label={"MinIO's Image"}
+              label={t("miniosImage")}
               id={"minioImage"}
               name={"minioImage"}
-              placeholder={"E.g. minio/minio:RELEASE.2021-08-20T18-32-01Z"}
+              placeholder={t("minioImageExample", {
+                image: "minio/minio:RELEASE.2021-08-20T18-32-01Z",
+              })}
               onChange={(e) => {
                 setMinioImage(e.target.value);
               }}
@@ -164,8 +166,8 @@ const UpdateTenantModal = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setImageRegistry(!imageRegistry);
               }}
-              label={"Set Custom Image Registry"}
-              indicatorLabels={["Yes", "No"]}
+              label={t("setCustomImgRegistry")}
+              indicatorLabels={[t("yes"), t("no")]}
             />
           </Grid>
           {imageRegistry && (
@@ -173,10 +175,12 @@ const UpdateTenantModal = ({
               <Grid item xs={12}>
                 <InputBoxWrapper
                   value={imageRegistryEndpoint}
-                  label={"Endpoint"}
+                  label={t("endpoint")}
                   id={"imageRegistry"}
                   name={"imageRegistry"}
-                  placeholder={"E.g. https://index.docker.io/v1/"}
+                  placeholder={t("endpointExample", {
+                    link: "https://index.docker.io/v1/",
+                  })}
                   onChange={(e) => {
                     setImageRegistryEndpoint(e.target.value);
                   }}
@@ -185,10 +189,10 @@ const UpdateTenantModal = ({
               <Grid item xs={12}>
                 <InputBoxWrapper
                   value={imageRegistryUsername}
-                  label={"Username"}
+                  label={t("username")}
                   id={"imageRegistryUsername"}
                   name={"imageRegistryUsername"}
-                  placeholder={"Enter image registry username"}
+                  placeholder={t("enterImageRegistryUsername")}
                   onChange={(e) => {
                     setImageRegistryUsername(e.target.value);
                   }}
@@ -197,10 +201,10 @@ const UpdateTenantModal = ({
               <Grid item xs={12}>
                 <InputBoxWrapper
                   value={imageRegistryPassword}
-                  label={"Password"}
+                  label={t("password")}
                   id={"imageRegistryPassword"}
                   name={"imageRegistryPassword"}
-                  placeholder={"Enter image registry password"}
+                  placeholder={t("enterImageRegistryPassword")}
                   onChange={(e) => {
                     setImageRegistryPassword(e.target.value);
                   }}
@@ -216,7 +220,7 @@ const UpdateTenantModal = ({
             className={classes.clearButton}
             onClick={resetForm}
           >
-            Clear
+            {t("clear")}
           </button>
           <Button
             type="submit"
@@ -232,7 +236,7 @@ const UpdateTenantModal = ({
             }
             onClick={updateMinIOImage}
           >
-            Save
+            {t("save")}
           </Button>
         </Grid>
       </Grid>

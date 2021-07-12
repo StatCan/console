@@ -30,6 +30,7 @@ import InputBoxWrapper from "../Common/FormComponents/InputBoxWrapper/InputBoxWr
 import FormSwitchWrapper from "../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import PredefinedList from "../Common/FormComponents/PredefinedList/PredefinedList";
 import PolicySelectors from "../Policies/PolicySelectors";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -69,6 +70,8 @@ const AddUser = ({
   const [currentGroups, setCurrentGroups] = useState<string[]>([]);
   const [currenTab, setCurrenTab] = useState<number>(0);
 
+  const { t } = useTranslation("users");
+
   const getUserInformation = useCallback(() => {
     if (!selectedUser) {
       return null;
@@ -104,7 +107,7 @@ const AddUser = ({
 
     if (secretKey.length < 8) {
       setModalErrorSnackMessage({
-        errorMessage: "Passwords must be at least 8 characters long",
+        errorMessage: t("passwordLengthErr"),
         detailedError: "",
       });
       setAddLoading(false);
@@ -173,12 +176,12 @@ const AddUser = ({
         closeModalAndRefresh();
       }}
       modalOpen={open}
-      title={selectedUser !== null ? "Edit User" : "Create User"}
+      title={selectedUser !== null ? t("editUser") : t("createUser")}
     >
       {selectedUser !== null && (
         <div className={classes.floatingEnabled}>
           <FormSwitchWrapper
-            indicatorLabels={["Enabled", "Disabled"]}
+            indicatorLabels={[t("enabled"), t("disabled")]}
             checked={enabled}
             value={"user_enabled"}
             id="user-status"
@@ -204,7 +207,7 @@ const AddUser = ({
               <InputBoxWrapper
                 id="accesskey-input"
                 name="accesskey-input"
-                label="Access Key"
+                label={t("accessKey")}
                 value={accessKey}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAccessKey(e.target.value);
@@ -214,14 +217,14 @@ const AddUser = ({
 
               {selectedUser !== null ? (
                 <PredefinedList
-                  label={"Current Groups"}
+                  label={t("currentGroups")}
                   content={currentGroups.join(", ")}
                 />
               ) : (
                 <InputBoxWrapper
                   id="standard-multiline-static"
                   name="standard-multiline-static"
-                  label="Secret Key"
+                  label={t("secretKey")}
                   type="password"
                   value={secretKey}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -236,8 +239,8 @@ const AddUser = ({
                     setCurrenTab(nv);
                   }}
                 >
-                  <Tab label="Policies" />
-                  <Tab label="Groups" />
+                  <Tab label={t("policies")} />
+                  <Tab label={t("groups")} />
                 </Tabs>
               </Grid>
               {currenTab === 0 && (
@@ -268,7 +271,7 @@ const AddUser = ({
                   resetForm();
                 }}
               >
-                Clear
+                {t("clear")}
               </button>
               <Button
                 type="submit"
@@ -276,7 +279,7 @@ const AddUser = ({
                 color="primary"
                 disabled={addLoading || !sendEnabled}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
             {addLoading && (

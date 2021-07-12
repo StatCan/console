@@ -26,6 +26,7 @@ import { ErrorResponseHandler } from "../../../../../../common/types";
 import InputBoxWrapper from "../../../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import ModalWrapper from "../../../../Common/ModalWrapper/ModalWrapper";
 import api from "../../../../../../common/api";
+import { useTranslation } from "react-i18next";
 
 interface ITagModal {
   modalOpen: boolean;
@@ -65,6 +66,7 @@ const AddTagModal = ({
   const [newKey, setNewKey] = useState<string>("");
   const [newLabel, setNewLabel] = useState<string>("");
   const [isSending, setIsSending] = useState<boolean>(false);
+  const { t } = useTranslation("listBuckets");
 
   const resetForm = () => {
     setNewLabel("");
@@ -100,22 +102,22 @@ const AddTagModal = ({
     <React.Fragment>
       <ModalWrapper
         modalOpen={modalOpen}
-        title="Add New Tag"
+        title={t("addNewTag")}
         onClose={() => {
           onCloseAndUpdate(false);
         }}
       >
         <Grid container>
           <h3 className={classes.pathLabel}>
-            Selected Object: {selectedObject}
+            {t("selectedObjectColon", { selectedObject })}
           </h3>
           <Grid item xs={12}>
             <InputBoxWrapper
               value={newKey}
-              label={"New Tag Key"}
+              label={t("newTagKey")}
               id={"newTagKey"}
               name={"newTagKey"}
-              placeholder={"Enter New Tag Key"}
+              placeholder={t("newTagKeyPlaceholder")}
               onChange={(e) => {
                 setNewKey(e.target.value);
               }}
@@ -124,10 +126,10 @@ const AddTagModal = ({
           <Grid item xs={12}>
             <InputBoxWrapper
               value={newLabel}
-              label={"New Tag Label"}
+              label={t("newTagLabel")}
               id={"newTagLabel"}
               name={"newTagLabel"}
-              placeholder={"Enter New Tag Label"}
+              placeholder={t("newTagLabelPlaceholder")}
               onChange={(e) => {
                 setNewLabel(e.target.value);
               }}
@@ -140,7 +142,7 @@ const AddTagModal = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -151,7 +153,7 @@ const AddTagModal = ({
               }
               onClick={addTagProcess}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
         </Grid>

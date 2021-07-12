@@ -37,6 +37,8 @@ import InputBoxWrapper from "../../../Common/FormComponents/InputBoxWrapper/Inpu
 import AddIcon from "../../../../../icons/AddIcon";
 import RemoveIcon from "../../../../../icons/RemoveIcon";
 import SelectWrapper from "../../../Common/FormComponents/SelectWrapper/SelectWrapper";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../../i18n";
 
 interface IAffinityProps {
   classes: any;
@@ -94,6 +96,8 @@ const Affinity = ({
   ]);
 
   const [keyOptions, setKeyOptions] = useState<OptionPair[]>([]);
+
+  const { t } = useTranslation("tenants");
 
   // Common
   const updateField = useCallback(
@@ -176,8 +180,7 @@ const Affinity = ({
           required: true,
           value: nodeSelectorLabels,
           customValidation: !valid,
-          customValidationMessage:
-            "You need to add at least one label key-pair",
+          customValidationMessage: i18n.t("tenants:minLabelKeyPair"),
         },
       ];
     }
@@ -192,9 +195,9 @@ const Affinity = ({
   return (
     <Fragment>
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Pod Affinity</h3>
+        <h3 className={classes.h3Section}>{t("podAffinity")}</h3>
         <span className={classes.descriptionText}>
-          Configure how pods will be assigned to nodes
+          {t("configureHowPods")}
         </span>
       </div>
       <Grid item xs={12}>
@@ -202,17 +205,17 @@ const Affinity = ({
           currentSelection={podAffinity}
           id="affinity-options"
           name="affinity-options"
-          label="Type"
+          label={t("type")}
           onChange={(e) => {
             updateField("podAffinity", e.target.value);
           }}
           selectorOptions={[
-            { label: "None", value: "none" },
-            { label: "Default (Pod Anti-afinnity)", value: "default" },
-            { label: "Node Selector", value: "nodeSelector" },
+            { label: t("none"), value: "none" },
+            { label: t("defaultAffinity"), value: "default" },
+            { label: t("nodeSelector"), value: "nodeSelector" },
           ]}
         />
-        MinIO supports multiple configurations for Pod Afinnity
+        {t("minioSupportsMultiple")}
       </Grid>
       {podAffinity === "nodeSelector" && (
         <Fragment>
@@ -229,11 +232,11 @@ const Affinity = ({
 
                 updateField("withPodAntiAffinity", checked);
               }}
-              label={"With Pod Anti-Affinity"}
+              label={t("withPodAntiAffinity")}
             />
           </Grid>
           <Grid item xs={12}>
-            <h3>Labels</h3>
+            <h3>{t("labels")}</h3>
             <span className={classes.error}>{validationErrors["labels"]}</span>
             <Grid container>
               {keyValuePairs &&
@@ -278,7 +281,7 @@ const Affinity = ({
                               setKeyValuePairs(arrCp);
                             }}
                             index={i}
-                            placeholder={"Key"}
+                            placeholder={t("key")}
                           />
                         )}
                       </Grid>
@@ -323,7 +326,7 @@ const Affinity = ({
                               setKeyValuePairs(arrCp);
                             }}
                             index={i}
-                            placeholder={"value"}
+                            placeholder={t("value")}
                           />
                         )}
                       </Grid>

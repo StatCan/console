@@ -23,6 +23,7 @@ import { containerForHeader } from "../../../Common/FormComponents/common/styleL
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import history from "./../../../../../history";
 import RefreshIcon from "../../../../../icons/RefreshIcon";
+import { useTranslation } from "react-i18next";
 
 interface IHopSimple {
   classes: any;
@@ -63,13 +64,15 @@ const Hop = ({ classes, match }: IHopSimple) => {
   const tenantNamespace = match.params["tenantNamespace"];
   const consoleFrame = React.useRef<HTMLIFrameElement>(null);
 
+  const { t } = useTranslation("tenants");
+
   return (
     <React.Fragment>
       <PageHeader
         label={
           <Fragment>
             <Link to={"/tenants"} className={classes.breadcrumLink}>
-              Tenants
+              {t("tenants")}
             </Link>
             {` > `}
             <Link
@@ -78,14 +81,14 @@ const Hop = ({ classes, match }: IHopSimple) => {
             >
               {match.params["tenantName"]}
             </Link>
-            {` > Management`}
+            {t("management")}
           </Fragment>
         }
         actions={
           <React.Fragment>
             <IconButton
               color="primary"
-              aria-label="Refresh List"
+              aria-label={t("refreshList")}
               component="span"
               onClick={() => {
                 if (
@@ -101,7 +104,7 @@ const Hop = ({ classes, match }: IHopSimple) => {
             </IconButton>
             <IconButton
               color="primary"
-              aria-label="Refresh List"
+              aria-label={t("refreshList")}
               component="span"
               onClick={() => {
                 history.push(
@@ -123,7 +126,7 @@ const Hop = ({ classes, match }: IHopSimple) => {
         <iframe
           ref={consoleFrame}
           className={classes.iframeStyle}
-          title={"metrics"}
+          title={t("metrics")}
           src={`/api/proxy/${tenantNamespace}/${tenantName}/`}
           onLoad={(val) => {
             setLoading(false);

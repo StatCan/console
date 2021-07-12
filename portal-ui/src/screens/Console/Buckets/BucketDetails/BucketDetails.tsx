@@ -51,6 +51,7 @@ import { BucketsIcon, DeleteIcon } from "../../../../icons";
 import DeleteBucket from "../ListBuckets/DeleteBucket";
 import AccessRulePanel from "./AccessRulePanel";
 import RefreshIcon from "../../../../icons/RefreshIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -192,6 +193,7 @@ const BucketDetails = ({
   const [canGetReplication, setCanGetReplication] = useState<boolean>(false);
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
   const bucketName = match.params["bucketName"];
+  const { t } = useTranslation("bucketsDetails");
 
   useEffect(() => {
     if (!iniLoad) {
@@ -323,7 +325,7 @@ const BucketDetails = ({
         label={
           <Fragment>
             <Link to={"/buckets"} className={classes.breadcrumLink}>
-              Buckets
+              {t("buckets")}
             </Link>
           </Fragment>
         }
@@ -339,7 +341,7 @@ const BucketDetails = ({
             title={bucketName}
             subTitle={
               <Fragment>
-                Access:{" "}
+                {t("accessColon")}
                 {bucketInfo &&
                   bucketInfo?.access[0].toUpperCase() +
                     bucketInfo?.access.substr(1).toLowerCase()}
@@ -347,10 +349,10 @@ const BucketDetails = ({
             }
             actions={
               <Fragment>
-                <Tooltip title={"Delete"}>
+                <Tooltip title={t<string>("delete")}>
                   <IconButton
                     color="primary"
-                    aria-label="Delete"
+                    aria-label={t("delete")}
                     component="span"
                     onClick={() => {
                       setDeleteOpen(true);
@@ -359,10 +361,10 @@ const BucketDetails = ({
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title={"Refresh"}>
+                <Tooltip title={t<string>("refresh")}>
                   <IconButton
                     color="primary"
-                    aria-label="Refresh List"
+                    aria-label={t("refreshList")}
                     component="span"
                     onClick={() => {
                       setBucketDetailsLoad(true);
@@ -384,7 +386,7 @@ const BucketDetails = ({
                 changeRoute("summary");
               }}
             >
-              <ListItemText primary="Summary" />
+              <ListItemText primary={t("summary")} />
             </ListItem>
             <ListItem
               button
@@ -393,7 +395,7 @@ const BucketDetails = ({
                 changeRoute("events");
               }}
             >
-              <ListItemText primary="Events" />
+              <ListItemText primary={t("events")} />
             </ListItem>
             <ListItem
               button
@@ -403,7 +405,7 @@ const BucketDetails = ({
                 changeRoute("replication");
               }}
             >
-              <ListItemText primary="Replication" />
+              <ListItemText primary={t("replicationTab")} />
             </ListItem>
 
             <ListItem
@@ -413,7 +415,7 @@ const BucketDetails = ({
                 changeRoute("lifecycle");
               }}
             >
-              <ListItemText primary="Lifecycle" />
+              <ListItemText primary={t("lifecycle")} />
             </ListItem>
             <ListItem
               button
@@ -422,7 +424,7 @@ const BucketDetails = ({
                 changeRoute("access");
               }}
             >
-              <ListItemText primary="Access Audit" />
+              <ListItemText primary={t("accessAudit")} />
             </ListItem>
             <ListItem
               button
@@ -431,7 +433,7 @@ const BucketDetails = ({
                 changeRoute("prefix");
               }}
             >
-              <ListItemText primary="Access Rules" />
+              <ListItemText primary={t("accessRules")} />
             </ListItem>
           </List>
         </Grid>

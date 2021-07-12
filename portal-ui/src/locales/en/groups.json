@@ -1,0 +1,22 @@
+{
+  "accessKey": "Access Key",
+  "assignUsers": "Assign Users",
+  "cancel": "Cancel",
+  "clear": "Clear",
+  "createGroup": "Create Group",
+  "delete": "Delete",
+  "deleteGroupConfirmation": "Are you sure you want to delete group <1>{{selectedGroup}}</1>?",
+  "deleteUser": "Delete User",
+  "disabled": "Disabled",
+  "editGroup": "Edit Group",
+  "editMembers": "Edit Members",
+  "enabled": "Enabled",
+  "filterUsers": "Filter Users",
+  "groupName": "Group Name",
+  "groups": "Groups",
+  "name": "Name",
+  "noUsersAvailable": "No Users Available",
+  "save": "Save",
+  "searchGroups": "Search Groups",
+  "users": "Users"
+}

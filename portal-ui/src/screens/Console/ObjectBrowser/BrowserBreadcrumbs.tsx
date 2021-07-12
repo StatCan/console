@@ -25,6 +25,7 @@ import { removeRouteLevel } from "./actions";
 import { ObjectBrowserState, Route } from "./reducers";
 import { objectBrowserCommon } from "../Common/FormComponents/common/styleLibrary";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface ObjectBrowserReducer {
   objectBrowser: ObjectBrowserState;
@@ -52,6 +53,8 @@ const BrowserBreadcrumbs = ({
   removeRouteLevel,
   title = true,
 }: IObjectBrowser) => {
+  const { t } = useTranslation("objectBrowser");
+
   const listBreadcrumbs = objectsList.map((objectItem, index) => {
     return (
       <React.Fragment key={`breadcrumbs-${index.toString()}`}>
@@ -77,7 +80,7 @@ const BrowserBreadcrumbs = ({
               : ""}
             {rewindEnabled && objectsList.length > 1 && (
               <small className={classes.smallLabel}>
-                &nbsp;(Rewind:{" "}
+                &nbsp;({t("rewindColon")}
                 <Moment date={rewindDate} format="MMMM Do YYYY, h:mm a" /> )
               </small>
             )}

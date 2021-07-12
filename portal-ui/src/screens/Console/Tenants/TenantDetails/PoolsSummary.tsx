@@ -33,6 +33,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { AppState } from "../../../../store";
 import { setTenantDetailsLoad } from "../actions";
 import SearchIcon from "../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IPoolsSummary {
   classes: any;
@@ -71,6 +72,8 @@ const PoolsSummary = ({
   const [addPoolOpen, setAddPool] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
 
+  const { t } = useTranslation("tenants");
+
   useEffect(() => {
     if (tenant) {
       const resPools = !tenant.pools ? [] : tenant.pools;
@@ -104,11 +107,11 @@ const PoolsSummary = ({
         />
       )}
       <div className={classes.topSpacer} />
-      <h1 className={classes.sectionTitle}>Pools</h1>
+      <h1 className={classes.sectionTitle}>{t("pools")}</h1>
       <Grid container>
         <Grid item xs={12} className={classes.actionsTray}>
           <TextField
-            placeholder="Filter"
+            placeholder={t("filter")}
             className={classes.searchField}
             id="search-resource"
             label=""
@@ -132,7 +135,7 @@ const PoolsSummary = ({
               setAddPool(true);
             }}
           >
-            Expand Tenant
+            {t("expandTenant")}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -143,16 +146,16 @@ const PoolsSummary = ({
           <TableWrapper
             itemActions={[]}
             columns={[
-              { label: "Name", elementKey: "name" },
-              { label: "Capacity", elementKey: "capacity" },
-              { label: "# of Instances", elementKey: "servers" },
-              { label: "# of Drives", elementKey: "volumes" },
+              { label: t("name"), elementKey: "name" },
+              { label: t("capacity"), elementKey: "capacity" },
+              { label: t("numOfInstances"), elementKey: "servers" },
+              { label: t("numOfDrives"), elementKey: "volumes" },
             ]}
             isLoading={loadingTenant}
             records={filteredPools}
-            entityName="Servers"
+            entityName={t("servers")}
             idField="name"
-            customEmptyMessage="No Pools found"
+            customEmptyMessage={t("noPoolsFound")}
           />
         </Grid>
       </Grid>

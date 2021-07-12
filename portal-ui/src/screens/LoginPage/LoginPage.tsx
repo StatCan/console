@@ -42,6 +42,7 @@ import { ErrorResponseHandler } from "../../common/types";
 import api from "../../common/api";
 import history from "../../history";
 import RefreshIcon from "../../icons/RefreshIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -209,6 +210,8 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
   });
   const [loginSending, setLoginSending] = useState<boolean>(false);
 
+  const { t } = useTranslation("other");
+
   const loginStrategyEndpoints: LoginStrategyRoutes = {
     form: "/api/v1/login",
     "service-account": "/api/v1/login/operator",
@@ -282,7 +285,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
             variant="h6"
             className={classes.headerTitle}
           >
-            Console Login
+            {t("consoleLogin")}
           </Typography>
           <form className={classes.form} noValidate onSubmit={formSubmit}>
             <Grid container spacing={2}>
@@ -294,7 +297,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setAccessKey(e.target.value)
                   }
-                  label="Enter Username"
+                  label={t("enterUsername")}
                   name="accessKey"
                   autoComplete="username"
                   disabled={loginSending}
@@ -308,7 +311,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
                     setSecretKey(e.target.value)
                   }
                   name="secretKey"
-                  label="Enter Password"
+                  label={t("enterPassword")}
                   type="password"
                   id="secretKey"
                   autoComplete="current-password"
@@ -324,7 +327,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
                 className={classes.submit}
                 disabled={secretKey === "" || accessKey === "" || loginSending}
               >
-                Login
+                {t("login")}
               </Button>
             </Grid>
             <Grid item xs={12} className={classes.linearPredef}>
@@ -343,7 +346,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
             variant="h6"
             className={classes.headerTitle}
           >
-            Welcome
+            {t("welcome")}
           </Typography>
           <Button
             component={"a"}
@@ -353,7 +356,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
             color="primary"
             className={classes.submit}
           >
-            Login with SSO
+            {t("loginWithSSO")}
           </Button>
         </React.Fragment>
       );
@@ -367,7 +370,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
             variant="h6"
             className={classes.headerTitle}
           >
-            Operator Login
+            {t("operatorLogin")}
           </Typography>
           <form className={classes.form} noValidate onSubmit={formSubmit}>
             <Grid container spacing={2}>
@@ -380,7 +383,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setJwt(e.target.value)
                   }
-                  label="JWT"
+                  label={t("jwt")}
                   name="jwt"
                   autoComplete="off"
                   disabled={loginSending}
@@ -395,7 +398,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
                 className={classes.submit}
                 disabled={jwt === "" || loginSending}
               >
-                Login
+                {t("login")}
               </Button>
             </Grid>
             <Grid item xs={12} className={classes.linearPredef}>
@@ -414,7 +417,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
           ) : (
             <React.Fragment>
               <div>
-                <p>An error has ocurred, the backend cannot be reached.</p>
+                <p>{t("backendNotFoundErr")}</p>
               </div>
               <div>
                 <Button
@@ -425,7 +428,7 @@ const Login = ({ classes, userLoggedIn }: ILoginProps) => {
                   color={"primary"}
                   className={classes.retryButton}
                 >
-                  Retry
+                  {t("retry")}
                 </Button>
               </div>
             </React.Fragment>

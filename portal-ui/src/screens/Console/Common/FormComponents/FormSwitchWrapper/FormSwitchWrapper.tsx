@@ -20,6 +20,7 @@ import { InputLabel, Switch, Tooltip, Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { actionsTray, fieldBasic } from "../common/styleLibrary";
 import HelpIcon from "../../../../../icons/HelpIcon";
+import { useTranslation } from "react-i18next";
 
 interface IFormSwitch {
   label?: string;
@@ -188,6 +189,8 @@ const FormSwitchWrapper = ({
   containerClass = "",
   classes,
 }: IFormSwitch) => {
+  const { t } = useTranslation("common");
+
   const switchComponent = (
     <React.Fragment>
       <div className={`${classes.switchContainer} ${containerClass}`}>
@@ -196,7 +199,7 @@ const FormSwitchWrapper = ({
           onChange={onChange}
           color="primary"
           name={name}
-          inputProps={{ "aria-label": "primary checkbox" }}
+          inputProps={{ "aria-label": t("primaryCheckbox") }}
           disabled={disabled}
           disableRipple
           disableFocusRipple

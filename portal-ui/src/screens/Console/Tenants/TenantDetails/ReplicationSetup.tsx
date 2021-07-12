@@ -23,6 +23,7 @@ import { Button, LinearProgress } from "@material-ui/core";
 import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import { useTranslation } from "react-i18next";
 
 interface IReplicationProps {
   classes: any;
@@ -70,10 +71,12 @@ const ReplicationSetup = ({
   const sourceBuckets: IDropDownElements[] = [];
   const destinationBuckets: IDropDownElements[] = [];
 
+  const { t } = useTranslation("tenants");
+
   return (
     <ModalWrapper
       modalOpen={open}
-      title="Add Pool"
+      title={t("addPool")}
       onClose={() => {
         closeModalAndRefresh(false);
       }}
@@ -88,7 +91,7 @@ const ReplicationSetup = ({
       >
         <Grid item xs={12}>
           <SelectWrapper
-            label="Source Bucket"
+            label={t("sourceBucket")}
             options={sourceBuckets}
             onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
               setSourceBucket(e.target.value as string);
@@ -106,12 +109,12 @@ const ReplicationSetup = ({
             onChange={(_, newValue: number) => {
               setSelectedTab(newValue);
             }}
-            aria-label="cluster-tabs"
+            aria-label={t("clusterTabs")}
             variant="scrollable"
             scrollButtons="auto"
           >
-            <Tab label="Local Cluster" />
-            <Tab label="Remote Cluster" />
+            <Tab label={t("localCluster")} />
+            <Tab label={t("remoteCluster")} />
           </Tabs>
         </Grid>
         <Grid item xs={12}>
@@ -121,7 +124,7 @@ const ReplicationSetup = ({
           <React.Fragment>
             <Grid item xs={12}>
               <SelectWrapper
-                label="Cluster"
+                label={t("cluster")}
                 options={clustersList}
                 onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                   setClusterSelected(e.target.value as string);
@@ -133,7 +136,7 @@ const ReplicationSetup = ({
             </Grid>
             <Grid item xs={12}>
               <SelectWrapper
-                label="Destination Bucket"
+                label={t("destinationBucket")}
                 options={destinationBuckets}
                 onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                   setDestinationBucket(e.target.value as string);
@@ -155,7 +158,7 @@ const ReplicationSetup = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAddress(e.target.value);
                 }}
-                label="Address"
+                label={t("address")}
                 value={address}
               />
             </Grid>
@@ -166,7 +169,7 @@ const ReplicationSetup = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setBucket(e.target.value);
                 }}
-                label="Bucket"
+                label={t("bucket")}
                 value={bucket}
               />
             </Grid>
@@ -177,7 +180,7 @@ const ReplicationSetup = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAccessKey(e.target.value);
                 }}
-                label="Access Key"
+                label={t("accessKey")}
                 value={accessKey}
               />
             </Grid>
@@ -188,7 +191,7 @@ const ReplicationSetup = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setSecretKey(e.target.value);
                 }}
-                label="Secret Key"
+                label={t("secretKey")}
                 value={secretKey}
               />
             </Grid>
@@ -201,7 +204,7 @@ const ReplicationSetup = ({
             color="primary"
             disabled={addSending}
           >
-            Save
+            {t("save")}
           </Button>
         </Grid>
         {addSending && (

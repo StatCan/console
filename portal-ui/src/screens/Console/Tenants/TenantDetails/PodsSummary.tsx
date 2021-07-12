@@ -30,6 +30,8 @@ import { AppState } from "../../../../store";
 import { setTenantDetailsLoad } from "../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
 import DeletePod from "./DeletePod";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../i18n";
 
 interface IPodsSummary {
   classes: any;
@@ -58,6 +60,8 @@ const PodsSummary = ({
 
   const tenantName = match.params["tenantName"];
   const tenantNamespace = match.params["tenantNamespace"];
+
+  const { t } = useTranslation("tenants");
 
   const podViewAction = (pod: IPodListElement) => {
     history.push(
@@ -107,7 +111,7 @@ const PodsSummary = ({
         })
         .catch((err: ErrorResponseHandler) => {
           setErrorSnackMessage({
-            errorMessage: "Error loading pods",
+            errorMessage: i18n.t("tenants:errorLoadingPods"),
             detailedError: err.detailedError,
           });
         });
@@ -124,26 +128,26 @@ const PodsSummary = ({
         />
       )}
       <div className={classes.topSpacer} />
-      <h1 className={classes.sectionTitle}>Pods</h1>
+      <h1 className={classes.sectionTitle}>{t("pods")}</h1>
       <TableWrapper
         columns={[
-          { label: "Name", elementKey: "name" },
-          { label: "Status", elementKey: "status" },
-          { label: "Age", elementKey: "time" },
-          { label: "Pod IP", elementKey: "podIP" },
+          { label: t("name"), elementKey: "name" },
+          { label: t("status"), elementKey: "status" },
+          { label: t("age"), elementKey: "time" },
+          { label: t("podIP"), elementKey: "podIP" },
           {
-            label: "Restarts",
+            label: t("restarts"),
             elementKey: "restarts",
             renderFunction: (input) => {
               return input != null ? input : 0;
             },
           },
-          { label: "Node", elementKey: "node" },
+          { label: t("node"), elementKey: "node" },
         ]}
         isLoading={loadingPods}
         records={pods}
         itemActions={podTableActions}
-        entityName="Servers"
+        entityName={t("servers")}
         idField="name"
       />
     </Fragment>

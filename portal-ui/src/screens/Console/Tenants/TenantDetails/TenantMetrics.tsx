@@ -26,6 +26,7 @@ import { ITenant } from "../ListTenants/types";
 import { setErrorSnackMessage } from "../../../../actions";
 import { AppState } from "../../../../store";
 import { LinearProgress } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 interface ITenantMetrics {
   classes: any;
@@ -57,9 +58,11 @@ const TenantMetrics = ({ classes, match }: ITenantMetrics) => {
 
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { t } = useTranslation("tenants");
+
   return (
     <React.Fragment>
-      <h1 className={classes.sectionTitle}>Metrics</h1>
+      <h1 className={classes.sectionTitle}>{t("metrics")}</h1>
       {loading && (
         <div style={{ marginTop: "80px" }}>
           <LinearProgress />
@@ -67,7 +70,7 @@ const TenantMetrics = ({ classes, match }: ITenantMetrics) => {
       )}
       <iframe
         className={classes.iframeStyle}
-        title={"metrics"}
+        title={t("metrics")}
         src={`/api/proxy/${tenantNamespace}/${tenantName}/metrics`}
         onLoad={() => {
           setLoading(false);

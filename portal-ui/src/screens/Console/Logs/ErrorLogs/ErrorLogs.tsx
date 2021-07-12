@@ -32,6 +32,7 @@ import {
   searchField,
 } from "../../Common/FormComponents/common/styleLibrary";
 import SearchIcon from "../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -83,6 +84,8 @@ const ErrorLogs = ({
 }: ILogs) => {
   const [highlight, setHighlight] = useState("");
 
+  const { t } = useTranslation("logs");
+
   useEffect(() => {
     logResetMessages();
     const url = new URL(window.location.toString());
@@ -128,7 +131,7 @@ const ErrorLogs = ({
     let errorElems = [];
     if (logElement.error !== null && logElement.error !== undefined) {
       if (logElement.api && logElement.api.name) {
-        const errorText = `API: ${logElement.api.name}`;
+        const errorText = t("apiNameErr", { name: `${logElement.api.name}` });
 
         const highlightedLine =
           highlight !== ""
@@ -146,7 +149,9 @@ const ErrorLogs = ({
         );
       }
       if (logElement.time) {
-        const errorText = `Time: ${timeFromDate(logElement.time)}`;
+        const errorText = t("time", {
+          time: `${timeFromDate(logElement.time)}`,
+        });
         const highlightedLine =
           highlight !== ""
             ? errorText.toLowerCase().includes(highlight.toLowerCase())
@@ -161,7 +166,9 @@ const ErrorLogs = ({
         );
       }
       if (logElement.deploymentid) {
-        const errorText = `DeploymentID: ${logElement.deploymentid}`;
+        const errorText = t("deploymentID", {
+          id: `${logElement.deploymentid}`,
+        });
         const highlightedLine =
           highlight !== ""
             ? errorText.toLowerCase().includes(highlight.toLowerCase())
@@ -176,7 +183,7 @@ const ErrorLogs = ({
         );
       }
       if (logElement.requestID) {
-        const errorText = `RequestID: ${logElement.requestID}`;
+        const errorText = t("requestIDErr", { id: `${logElement.requestID}` });
         const highlightedLine =
           highlight !== ""
             ? errorText.toLowerCase().includes(highlight.toLowerCase())
@@ -191,7 +198,9 @@ const ErrorLogs = ({
         );
       }
       if (logElement.remotehost) {
-        const errorText = `RemoteHost: ${logElement.remotehost}`;
+        const errorText = t("remoteHostErr", {
+          remoteHost: `${logElement.remotehost}`,
+        });
         const highlightedLine =
           highlight !== ""
             ? errorText.toLowerCase().includes(highlight.toLowerCase())
@@ -206,7 +215,7 @@ const ErrorLogs = ({
         );
       }
       if (logElement.host) {
-        const errorText = `Host: ${logElement.host}`;
+        const errorText = t("host", { host: `${logElement.host}` });
         const highlightedLine =
           highlight !== ""
             ? errorText.toLowerCase().includes(highlight.toLowerCase())
@@ -221,7 +230,9 @@ const ErrorLogs = ({
         );
       }
       if (logElement.userAgent) {
-        const errorText = `UserAgent: ${logElement.userAgent}`;
+        const errorText = t("userAgentErr", {
+          userAgent: `${logElement.userAgent}`,
+        });
         const highlightedLine =
           highlight !== ""
             ? errorText.toLowerCase().includes(highlight.toLowerCase())
@@ -236,7 +247,7 @@ const ErrorLogs = ({
         );
       }
       if (logElement.error.message) {
-        const errorText = `Error: ${logElement.error.message}`;
+        const errorText = t("error", { error: `${logElement.error.message}` });
         const highlightedLine =
           highlight !== ""
             ? errorText.toLowerCase().includes(highlight.toLowerCase())
@@ -326,7 +337,7 @@ const ErrorLogs = ({
       <Grid container className={classes.logsSubContainer}>
         <Grid item xs={12} className={classes.actionsTray}>
           <TextField
-            placeholder="Highlight Line"
+            placeholder={t("highlightLine")}
             className={classes.searchField}
             id="search-resource"
             label=""

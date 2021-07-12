@@ -28,6 +28,7 @@ import {
 import { setErrorSnackMessage } from "../../../../../../actions";
 import { ErrorResponseHandler } from "../../../../../../common/types";
 import api from "../../../../../../common/api";
+import { useTranslation } from "react-i18next";
 
 interface IDeleteObjectProps {
   closeDeleteModalAndRefresh: (refresh: boolean) => void;
@@ -45,6 +46,8 @@ const DeleteObject = ({
   setErrorSnackMessage,
 }: IDeleteObjectProps) => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+
+  const { t } = useTranslation("listBuckets");
 
   const removeRecord = () => {
     if (deleteLoading) {
@@ -92,11 +95,11 @@ const DeleteObject = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("delete")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete the selected objects?{" "}
+          {t("deleteMultipleObjectsConfirm")}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -107,7 +110,7 @@ const DeleteObject = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -116,7 +119,7 @@ const DeleteObject = ({
           color="secondary"
           disabled={deleteLoading}
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

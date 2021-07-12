@@ -48,6 +48,7 @@ import Encryption from "./Steps/Encryption";
 import TenantSize from "./Steps/TenantSize";
 import Preview from "./Steps/Preview";
 import Affinity from "./Steps/Affinity";
+import { useTranslation } from "react-i18next";
 
 interface IAddTenantProps {
   closeAndRefresh: (reloadData: boolean) => any;
@@ -590,8 +591,10 @@ const AddTenant = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addSending]);
 
+  const { t } = useTranslation("tenants");
+
   const cancelButton = {
-    label: "Cancel",
+    label: t("cancel"),
     type: "other",
     enabled: true,
     action: () => {
@@ -601,108 +604,108 @@ const AddTenant = ({
 
   const wizardSteps: IWizardElement[] = [
     {
-      label: "Name Tenant",
+      label: t("nameTenant"),
       componentRender: <NameTenant />,
       buttons: [
         cancelButton,
         {
-          label: "Next",
+          label: t("next"),
           type: "next",
           enabled: validPages.includes("nameTenant"),
         },
       ],
     },
     {
-      label: "Configure",
+      label: t("configure"),
       advancedOnly: true,
       componentRender: <Configure />,
       buttons: [
         cancelButton,
-        { label: "Back", type: "back", enabled: true },
+        { label: t("back"), type: "back", enabled: true },
         {
-          label: "Next",
+          label: t("next"),
           type: "next",
           enabled: validPages.includes("configure"),
         },
       ],
     },
     {
-      label: "Pod Affinity",
+      label: t("podAffinity"),
       advancedOnly: true,
       componentRender: <Affinity />,
       buttons: [
         cancelButton,
-        { label: "Back", type: "back", enabled: true },
+        { label: t("back"), type: "back", enabled: true },
         {
-          label: "Next",
+          label: t("next"),
           type: "next",
           enabled: validPages.includes("affinity"),
         },
       ],
     },
     {
-      label: "Identity Provider",
+      label: t("identityProvider"),
       advancedOnly: true,
       componentRender: <IdentityProvider />,
       buttons: [
         cancelButton,
-        { label: "Back", type: "back", enabled: true },
+        { label: t("back"), type: "back", enabled: true },
         {
-          label: "Next",
+          label: t("next"),
           type: "next",
           enabled: validPages.includes("identityProvider"),
         },
       ],
     },
     {
-      label: "Security",
+      label: t("security"),
       advancedOnly: true,
       componentRender: <Security />,
       buttons: [
         cancelButton,
-        { label: "Back", type: "back", enabled: true },
+        { label: t("back"), type: "back", enabled: true },
         {
-          label: "Next",
+          label: t("next"),
           type: "next",
           enabled: validPages.includes("security"),
         },
       ],
     },
     {
-      label: "Encryption",
+      label: t("encryption"),
       advancedOnly: true,
       componentRender: <Encryption />,
       buttons: [
         cancelButton,
-        { label: "Back", type: "back", enabled: true },
+        { label: t("back"), type: "back", enabled: true },
         {
-          label: "Next",
+          label: t("next"),
           type: "next",
           enabled: validPages.includes("encryption"),
         },
       ],
     },
     {
-      label: "Tenant Size",
+      label: t("tenantSize"),
       componentRender: <TenantSize />,
       buttons: [
         cancelButton,
-        { label: "Back", type: "back", enabled: true },
+        { label: t("back"), type: "back", enabled: true },
         {
-          label: "Next",
+          label: t("next"),
           type: "next",
           enabled: validPages.includes("tenantSize"),
         },
       ],
     },
     {
-      label: "Preview Configuration",
+      label: t("previewConfig"),
       componentRender: <Preview />,
       buttons: [
         cancelButton,
-        { label: "Back", type: "back", enabled: true },
+        { label: t("back"), type: "back", enabled: true },
         {
-          label: "Create",
+          label: t("create"),
           type: "submit",
           enabled: !addSending,
           action: () => {
@@ -726,7 +729,7 @@ const AddTenant = ({
   return (
     <Fragment>
       <Grid item xs={12} className={classes.customTitle}>
-        Create New Tenant
+        {t("createNewTenant")}
       </Grid>
       {addSending && (
         <Grid item xs={12}>
@@ -740,7 +743,7 @@ const AddTenant = ({
           closeModal={() => {
             closeCredentialsModal();
           }}
-          entity="Tenant"
+          entity={t("tenant")}
         />
       )}
       <Grid container>

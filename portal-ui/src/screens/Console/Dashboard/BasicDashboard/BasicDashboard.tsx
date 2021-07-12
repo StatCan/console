@@ -27,6 +27,7 @@ import EgressIcon from "../../../../icons/EgressIcon";
 import TableWrapper from "../../Common/TableWrapper/TableWrapper";
 import ReportedUsageIcon from "../../../../icons/ReportedUsageIcon";
 import { BucketsIcon } from "../../../../icons";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -95,6 +96,7 @@ interface IDashboardProps {
 
 const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const { t } = useTranslation("dashboard");
 
   const prettyUsage = (usage: string | undefined) => {
     if (usage === undefined) {
@@ -125,19 +127,19 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
 
   const serverColumns = [
     {
-      label: "Endpoint",
+      label: t("endpoint"),
       elementKey: "endpoint",
     },
     {
-      label: "Status",
+      label: t("status"),
       elementKey: "state",
     },
     {
-      label: "Uptime",
+      label: t("uptime"),
       elementKey: "uptime",
     },
     {
-      label: "Version",
+      label: t("version"),
       elementKey: "version",
     },
   ];
@@ -174,7 +176,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
                 </Grid>
                 <Grid item>
                   <Typography className={classes.elementTitle}>
-                    All buckets
+                    {t("allBuckets")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -189,7 +191,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
                 </Grid>
                 <Grid item>
                   <Typography className={classes.elementTitle}>
-                    Usage
+                    {t("usage")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -205,7 +207,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
                 <Grid item>
                   <Typography className={classes.elementTitle}>
                     {" "}
-                    Total Objects
+                    {t("totalObjects")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -220,14 +222,14 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
               <Grid item>
                 <Typography className={classes.elementTitle}>
                   {" "}
-                  Servers
+                  {t("servers")}
                 </Typography>
               </Grid>
               <TableWrapper
                 columns={serverColumns}
                 isLoading={false}
                 records={serverArray}
-                entityName="Servers"
+                entityName={t("servers")}
                 idField="endpoint"
               />
             </Grid>

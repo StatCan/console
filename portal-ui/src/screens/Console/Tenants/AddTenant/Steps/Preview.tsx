@@ -26,6 +26,7 @@ import {
   modalBasic,
   wizardCommon,
 } from "../../../Common/FormComponents/common/styleLibrary";
+import { useTranslation } from "react-i18next";
 
 interface IPreviewProps {
   classes: any;
@@ -61,19 +62,19 @@ const Preview = ({
   advancedMode,
   enableTLS,
 }: IPreviewProps) => {
+  const { t } = useTranslation("tenants");
+
   return (
     <Fragment>
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Review</h3>
-        <span className={classes.descriptionText}>
-          Review the details of the new tenant
-        </span>
+        <h3 className={classes.h3Section}>{t("review")}</h3>
+        <span className={classes.descriptionText}>{t("reviewDetails")}</span>
       </div>
       <Table size="small">
         <TableBody>
           <TableRow>
             <TableCell align="right" className={classes.tableTitle}>
-              Tenant Name
+              {t("tenantName")}
             </TableCell>
             <TableCell>{tenantName}</TableCell>
           </TableRow>
@@ -82,7 +83,7 @@ const Preview = ({
             <Fragment>
               <TableRow>
                 <TableCell align="right" className={classes.tableTitle}>
-                  MinIO Image
+                  {t("minioImage")}
                 </TableCell>
                 <TableCell>{imageName}</TableCell>
               </TableRow>
@@ -92,7 +93,7 @@ const Preview = ({
           {namespace !== "" && (
             <TableRow>
               <TableCell align="right" className={classes.tableTitle}>
-                Namespace
+                {t("namespace")}
               </TableCell>
               <TableCell>{namespace}</TableCell>
             </TableRow>
@@ -100,14 +101,14 @@ const Preview = ({
 
           <TableRow>
             <TableCell align="right" className={classes.tableTitle}>
-              Storage Class
+              {t("storageClass")}
             </TableCell>
             <TableCell>{selectedStorageClass}</TableCell>
           </TableRow>
 
           <TableRow>
             <TableCell align="right" className={classes.tableTitle}>
-              Total Size
+              {t("totalSize")}
             </TableCell>
             <TableCell>
               {volumeSize} {sizeFactor}
@@ -117,9 +118,11 @@ const Preview = ({
             <Fragment>
               <TableRow>
                 <TableCell align="right" className={classes.tableTitle}>
-                  Enable TLS
+                  {t("enableTLS")}
                 </TableCell>
-                <TableCell>{enableTLS ? "Enabled" : "Disabled"}</TableCell>
+                <TableCell>
+                  {enableTLS ? t("enabled") : t("disabled")}
+                </TableCell>
               </TableRow>
             </Fragment>
           )}

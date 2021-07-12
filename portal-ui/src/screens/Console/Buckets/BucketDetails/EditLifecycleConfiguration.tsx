@@ -28,6 +28,7 @@ import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import FormSwitchWrapper from "../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import QueryMultiSelector from "../../Common/FormComponents/QueryMultiSelector/QueryMultiSelector";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -63,6 +64,7 @@ const EditLifecycleConfiguration = ({
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [tags, setTags] = useState<string>("");
   const [enabled, setEnabled] = useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   useEffect(() => {
     if (lifecycle.status === "Enabled") {
@@ -117,11 +119,11 @@ const EditLifecycleConfiguration = ({
         closeModalAndRefresh(false);
       }}
       modalOpen={open}
-      title={"Edit Lifecycle Configuration"}
+      title={t("editLifecycleConfiguration")}
     >
       <div className={classes.floatingEnabled}>
         <FormSwitchWrapper
-          indicatorLabels={["Enabled", "Disabled"]}
+          indicatorLabels={[t("enabled"), t("disabled")]}
           checked={enabled}
           value={"user_enabled"}
           id="user-status"
@@ -147,7 +149,7 @@ const EditLifecycleConfiguration = ({
                 <InputBoxWrapper
                   id="id"
                   name="id"
-                  label="Id"
+                  label={t("id")}
                   value={lifecycle.id}
                   onChange={() => {}}
                   disabled
@@ -156,13 +158,13 @@ const EditLifecycleConfiguration = ({
               <Grid item xs={12}>
                 <QueryMultiSelector
                   name="tags"
-                  label="Tags"
+                  label={t("tags")}
                   elements={tags}
                   onChange={(vl: string) => {
                     setTags(vl);
                   }}
-                  keyPlaceholder="Tag Key"
-                  valuePlaceholder="Tag Value"
+                  keyPlaceholder={t("tagKey")}
+                  valuePlaceholder={t("tagValue")}
                   withBorder
                 />
               </Grid>
@@ -174,7 +176,7 @@ const EditLifecycleConfiguration = ({
                 color="primary"
                 disabled={addLoading}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
             {addLoading && (

@@ -34,6 +34,7 @@ import api from "../../../../common/api";
 import EditLifecycleConfiguration from "./EditLifecycleConfiguration";
 import AddLifecycleModal from "./AddLifecycleModal";
 import TableWrapper from "../../Common/TableWrapper/TableWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -58,6 +59,7 @@ const BucketLifecyclePanel = ({
   const [lifecycleRecords, setLifecycleRecords] = useState<LifeCycleItem[]>([]);
   const [addLifecycleOpen, setAddLifecycleOpen] = useState<boolean>(false);
   const [editLifecycleOpen, setEditLifecycleOpen] = useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   const bucketName = match.params["bucketName"];
 
@@ -129,27 +131,27 @@ const BucketLifecyclePanel = ({
   };
 
   const lifecycleColumns = [
-    { label: "ID", elementKey: "id" },
+    { label: t("id"), elementKey: "id" },
     {
-      label: "Prefix",
+      label: t("prefix"),
       elementKey: "prefix",
     },
     {
-      label: "Status",
+      label: t("status"),
       elementKey: "status",
     },
     {
-      label: "Expiration",
+      label: t("expiration"),
       elementKey: "expiration",
       renderFunction: expirationRender,
     },
     {
-      label: "Transition",
+      label: t("transition"),
       elementKey: "transition",
       renderFunction: transitionRender,
     },
     {
-      label: "Storage Class",
+      label: t("storageClass"),
       elementKey: "storage_class",
       renderFunction: renderStorageClass,
       renderFullObject: true,
@@ -177,7 +179,7 @@ const BucketLifecyclePanel = ({
       )}
       <Grid container>
         <Grid item xs={12} className={classes.actionsTray}>
-          <h1 className={classes.sectionTitle}>Lifecycle Rules</h1>
+          <h1 className={classes.sectionTitle}>{t("lifecycleRules")}</h1>
           <Button
             variant="contained"
             color="primary"
@@ -187,7 +189,7 @@ const BucketLifecyclePanel = ({
               setAddLifecycleOpen(true);
             }}
           >
-            Add Lifecycle Rule
+            {t("addLifecycleRule")}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -196,8 +198,8 @@ const BucketLifecyclePanel = ({
             columns={lifecycleColumns}
             isLoading={loadingLifecycle}
             records={lifecycleRecords}
-            entityName="Lifecycle"
-            customEmptyMessage="There are no Lifecycle rules yet"
+            entityName={t("lifecycle")}
+            customEmptyMessage={t("noLifecyclesMsg")}
             idField="id"
           />
         </Grid>

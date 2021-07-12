@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Title from "../../../common/Title";
+import { useTranslation } from "react-i18next";
 
 // Generate Sales Data
 function createData(time: string, amount: number) {
@@ -28,10 +29,11 @@ const data = [
 
 export default function Chart() {
   const theme = useTheme();
-
+  const { t } = useTranslation("dashboard");
+  
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      <Title>{t("today")}</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -48,7 +50,7 @@ export default function Chart() {
               position="left"
               style={{ textAnchor: "middle", fill: theme.palette.text.primary }}
             >
-              Sales ($)
+              {t("sales")}
             </Label>
           </YAxis>
           <Line

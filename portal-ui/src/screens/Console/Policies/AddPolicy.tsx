@@ -30,6 +30,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import InputBoxWrapper from "../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import CodeMirrorWrapper from "../Common/FormComponents/CodeMirrorWrapper/CodeMirrorWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -62,6 +63,8 @@ const AddPolicy = ({
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [policyName, setPolicyName] = useState<string>("");
   const [policyDefinition, setPolicyDefinition] = useState<string>("");
+
+  const { t } = useTranslation("policies");
 
   const addRecord = (event: React.FormEvent) => {
     event.preventDefault();
@@ -107,7 +110,7 @@ const AddPolicy = ({
       onClose={() => {
         closeModalAndRefresh(false);
       }}
-      title={`${policyEdit ? "Info" : "Create"} Policy`}
+      title={policyEdit ? t("infoPolicy") : t("createPolicy")}
     >
       <form
         noValidate
@@ -122,8 +125,8 @@ const AddPolicy = ({
               <InputBoxWrapper
                 id="policy-name"
                 name="policy-name"
-                label="Policy Name"
-                placeholder="Enter Policy Name"
+                label={t("policyName")}
+                placeholder={t("enterPolicyName")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setPolicyName(e.target.value);
                 }}
@@ -135,7 +138,7 @@ const AddPolicy = ({
               <br />
             </Grid>
             <CodeMirrorWrapper
-              label={`${policyEdit ? "Edit" : "Write"} Policy`}
+              label={policyEdit ? t("editPolicy") : t("writePolicy")}
               value={policyDefinition}
               onBeforeChange={(editor, data, value) => {
                 setPolicyDefinition(value);
@@ -152,7 +155,7 @@ const AddPolicy = ({
                   resetForm();
                 }}
               >
-                Clear
+                {t("clear")}
               </button>
             )}
 
@@ -162,7 +165,7 @@ const AddPolicy = ({
               color="primary"
               disabled={addLoading || !validSave}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {addLoading && (

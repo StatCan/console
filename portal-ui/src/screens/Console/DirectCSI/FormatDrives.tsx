@@ -33,6 +33,7 @@ import api from "../../../common/api";
 import InputBoxWrapper from "../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import PredefinedList from "../Common/FormComponents/PredefinedList/PredefinedList";
 import FormSwitchWrapper from "../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IFormatAllDrivesProps {
   closeFormatModalAndRefresh: (
@@ -55,6 +56,8 @@ const FormatDrives = ({
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [formatAll, setFormatAll] = useState<string>("");
   const [force, setForce] = useState<boolean>(false);
+
+  const { t } = useTranslation("directCSI");
 
   const removeRecord = () => {
     if (deleteLoading) {
@@ -85,14 +88,16 @@ const FormatDrives = ({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Format {allDrives ? "All " : ""}Drives
+        {allDrives
+          ? t("formatAllDrives")
+          : t("formatDrive", { count: drivesToFormat.length })}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           {!allDrives && (
             <Fragment>
               <PredefinedList
-                label={`Selected Drive${drivesToFormat.length > 1 ? "s" : ""}`}
+                label={t("selectedDrive", { count: drivesToFormat.length })}
                 content={drivesToFormat.join(", ")}
               />
               <br />
@@ -107,21 +112,25 @@ const FormatDrives = ({
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setForce(event.target.checked);
               }}
-              label={"Force Format"}
-              indicatorLabels={["Yes", "No"]}
+              label={t("forceFormat")}
+              indicatorLabels={[t("yes"), t("no")]}
             />
           </Grid>
-          Are you sure you want to format{" "}
-          {allDrives ? <strong>All</strong> : "the selected"} drive
-          {drivesToFormat.length > 1 || allDrives ? "s" : ""}?.
+          {allDrives ? (
+            <Trans i18nKey="directCSI:formatAllDrivesConfirmation">
+              Are you sure you want to format <strong>All</strong> drives?
+            </Trans>
+          ) : (
+            t("formatDriveConfirmation", { count: drivesToFormat.length })
+          )}
           <br />
           <br />
-          <strong>
-            All information contained will be erased and cannot be recovered
-          </strong>
+          <strong>{t("formatWarning")}</strong>
           <br />
           <br />
-          To continue please type <b>YES, PROCEED</b> in the box.
+          <Trans i18nKey="directCSI:formatConfirmation">
+            To continue please type <b>{{ msg: "YES, PROCEED" }}</b> in the box.
+          </Trans>
           <Grid item xs={12}>
             <InputBoxWrapper
               id="format-confirm"
@@ -144,7 +153,7 @@ const FormatDrives = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={removeRecord}
@@ -152,7 +161,7 @@ const FormatDrives = ({
           autoFocus
           disabled={formatAll !== "YES, PROCEED"}
         >
-          Format Drive{drivesToFormat.length > 1 || allDrives ? "s" : ""}
+          {t("formatDrive", { count: drivesToFormat.length })}
         </Button>
       </DialogActions>
     </Dialog>

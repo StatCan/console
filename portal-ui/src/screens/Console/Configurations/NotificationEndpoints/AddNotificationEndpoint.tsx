@@ -38,6 +38,7 @@ import { servicesList } from "./utils";
 import { ErrorResponseHandler } from "../../../../common/types";
 import ConfMySql from "../CustomForms/ConfMySql";
 import ConfTargetGeneric from "../ConfTargetGeneric";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -81,6 +82,8 @@ const AddNotificationEndpoint = ({
   classes,
   setErrorSnackMessage,
 }: IAddNotificationEndpointProps) => {
+  const { t } = useTranslation("configurations");
+
   //Local States
   const [valuesArr, setValueArr] = useState<IElementValue[]>([]);
   const [saving, setSaving] = useState<boolean>(false);
@@ -155,8 +158,7 @@ const AddNotificationEndpoint = ({
         <Fragment>
           <form noValidate onSubmit={submitForm}>
             <Grid item xs={12} className={classes.customTitle}>
-              {targetElement ? targetElement.targetTitle : ""} - Add Lambda
-              Notification Target
+              {targetElement ? targetElement.targetTitle : ""} {t("addLambdaNotifTarget")}
             </Grid>
             <Grid item xs={12} className={classes.settingsFormContainer}>
               {srvComponent}
@@ -173,7 +175,7 @@ const AddNotificationEndpoint = ({
                   color="primary"
                   disabled={saving}
                 >
-                  Save
+                  {t("save")}
                 </Button>
               </Grid>
             </Grid>

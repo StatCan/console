@@ -37,6 +37,7 @@ import api from "../../../../common/api";
 import TableWrapper from "../../Common/TableWrapper/TableWrapper";
 import AddReplicationModal from "./AddReplicationModal";
 import DeleteReplicationRule from "./DeleteReplicationRule";
+import { useTranslation } from "react-i18next";
 
 interface IBucketReplicationProps {
   classes: any;
@@ -67,6 +68,7 @@ const BucketReplicationPanel = ({
     useState<boolean>(false);
   const [openSetReplication, setOpenSetReplication] = useState<boolean>(false);
   const [selectedRRule, setSelectedRRule] = useState<string>("");
+  const { t } = useTranslation("bucketsDetails");
 
   const bucketName = match.params["bucketName"];
 
@@ -162,7 +164,9 @@ const BucketReplicationPanel = ({
   };
 
   const tagDisplay = (events: BucketReplicationRule) => {
-    return <Fragment>{events && events.tags !== "" ? "Yes" : "No"}</Fragment>;
+    return (
+      <Fragment>{events && events.tags !== "" ? t("yes") : t("no")}</Fragment>
+    );
   };
 
   const replicationTableActions: any = [
@@ -193,7 +197,7 @@ const BucketReplicationPanel = ({
       )}
       <Grid container>
         <Grid item xs={12} className={classes.actionsTray}>
-          <h1 className={classes.sectionTitle}>Replication</h1>
+          <h1 className={classes.sectionTitle}>{t("replication")}</h1>
           <Button
             variant="contained"
             color="primary"
@@ -204,7 +208,7 @@ const BucketReplicationPanel = ({
               setOpenReplicationOpen(true);
             }}
           >
-            Add Replication Rule
+            {t("addReplicationRule")}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -212,28 +216,28 @@ const BucketReplicationPanel = ({
             itemActions={replicationTableActions}
             columns={[
               {
-                label: "Priority",
+                label: t("priority"),
                 elementKey: "priority",
               },
               {
-                label: "Destination",
+                label: t("destination"),
                 elementKey: "destination",
                 renderFunction: ruleDestDisplay,
               },
               {
-                label: "Prefix",
+                label: t("prefix"),
                 elementKey: "prefix",
               },
               {
-                label: "Tags",
+                label: t("tags"),
                 elementKey: "tags",
                 renderFunction: tagDisplay,
               },
-              { label: "Status", elementKey: "status" },
+              { label: t("status"), elementKey: "status" },
             ]}
             isLoading={loadingReplication}
             records={replicationRules}
-            entityName="Replication Rules"
+            entityName={t("replicationRules")}
             idField="id"
           />
         </Grid>

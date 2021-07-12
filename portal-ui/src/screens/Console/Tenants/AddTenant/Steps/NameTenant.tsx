@@ -48,6 +48,8 @@ import SelectWrapper from "../../../Common/FormComponents/SelectWrapper/SelectWr
 import FormSwitchWrapper from "../../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import AddIcon from "../../../../../icons/AddIcon";
 import AddNamespaceModal from "./helpers/AddNamespaceModal";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -93,6 +95,8 @@ const NameTenant = ({
     useState<boolean>(false);
   const [showCreateButton, setShowCreateButton] = useState<boolean>(false);
   const [openAddNSConfirm, setOpenAddNSConfirm] = useState<boolean>(false);
+
+  const { t } = useTranslation("tenants");
 
   // Common
   const updateField = useCallback(
@@ -154,7 +158,7 @@ const NameTenant = ({
       })
       .catch((err: ErrorResponseHandler) => {
         setModalErrorSnackMessage({
-          errorMessage: "Error validating if namespace already has tenants",
+          errorMessage: i18n.t("tenants:namespaceValidationErr"),
           detailedError: err.detailedError,
         });
       });
@@ -188,14 +192,14 @@ const NameTenant = ({
 
     if (!emptyNamespace && !loadingNamespaceInfo) {
       customNamespaceError = true;
-      errorMessage = "You can only create one tenant per namespace";
+      errorMessage = i18n.t("tenants:oneTenantPerNamespaceErr");
     } else if (
       storageClasses.length < 1 &&
       emptyNamespace &&
       !loadingNamespaceInfo
     ) {
       customNamespaceError = true;
-      errorMessage = "Please enter a valid namespace";
+      errorMessage = i18n.t("tenants:invalidNamespaceErr");
     }
 
     const commonValidation = commonFormValidation([
@@ -203,8 +207,7 @@ const NameTenant = ({
         fieldKey: "tenant-name",
         required: true,
         pattern: /^[a-z0-9-]{3,63}$/,
-        customPatternMessage:
-          "Name only can contain lowercase letters, numbers and '-'. Min. Length: 3",
+        customPatternMessage: i18n.t("tenants:nameErr"),
         value: tenantName,
       },
       {
@@ -259,9 +262,9 @@ const NameTenant = ({
         />
       )}
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Name Tenant</h3>
+        <h3 className={classes.h3Section}>{t("nameTenant")}</h3>
         <span className={classes.descriptionText}>
-          How would you like to name this new tenant?
+          {t("newTenantNamePrompt")}
         </span>
       </div>
       <Grid item xs={12}>
@@ -272,7 +275,7 @@ const NameTenant = ({
             updateField("tenantName", e.target.value);
             frmValidationCleanup("tenant-name");
           }}
-          label="Name"
+          label={t("name")}
           value={tenantName}
           required
           error={validationErrors["tenant-name"] || ""}
@@ -286,7 +289,7 @@ const NameTenant = ({
             updateField("namespace", e.target.value);
             frmValidationCleanup("namespace");
           }}
-          label="Namespace"
+          label={t("namespace")}
           value={namespace}
           error={validationErrors["namespace"] || ""}
           overlayIcon={showCreateButton ? <AddIcon /> : null}
@@ -301,7 +304,7 @@ const NameTenant = ({
           onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
             updateField("selectedStorageClass", e.target.value as string);
           }}
-          label="Storage Class"
+          label={t("storageClass")}
           value={selectedStorageClass}
           options={storageClasses}
           disabled={storageClasses.length < 1}
@@ -310,12 +313,9 @@ const NameTenant = ({
       <Grid item xs={12}>
         <br />
         <span className={classes.descriptionText}>
-          Check 'Advanced Mode' for additional configuration options, such as
-          configuring an Identity Provider, Encryption at rest, and customized
-          TLS/SSL Certificates.
+          {t("checkAdvancedModeFor")}
           <br />
-          Leave 'Advanced Mode' unchecked to use the secure default settings for
-          the tenant.
+          {t("leaveAdvancedModeFor")}
         </span>
         <br />
         <br />
@@ -330,7 +330,7 @@ const NameTenant = ({
 
             setAdvancedMode(checked);
           }}
-          label={"Advanced Mode"}
+          label={t("advancedMode")}
         />
       </Grid>
     </React.Fragment>

@@ -60,6 +60,7 @@ import Storage from "./Storage/Storage";
 import Metrics from "./Dashboard/Metrics";
 import Hop from "./Tenants/TenantDetails/hop/Hop";
 import MainError from "./Common/MainError/MainError";
+import { useTranslation } from "react-i18next";
 
 const drawerWidth = 245;
 
@@ -196,6 +197,8 @@ const Console = ({
   setSnackBarMessage,
 }: IConsoleProps) => {
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
+
+  const { t } = useTranslation("other");
 
   const restartServer = () => {
     serverIsLoading(true);
@@ -418,13 +421,12 @@ const Console = ({
               <div className={classes.warningBar}>
                 {isServerLoading ? (
                   <Fragment>
-                    The server is restarting.
+                    {t("serverIsRestarting")}
                     <LinearProgress className={classes.progress} />
                   </Fragment>
                 ) : (
                   <Fragment>
-                    The instance needs to be restarted for configuration changes
-                    to take effect.{" "}
+                    {t("instanceNeedsRestart")}
                     <Button
                       color="secondary"
                       size="small"
@@ -432,7 +434,7 @@ const Console = ({
                         restartServer();
                       }}
                     >
-                      Restart
+                      {t("restart")}
                     </Button>
                   </Fragment>
                 )}

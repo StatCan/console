@@ -17,6 +17,7 @@
 import storage from "local-storage-fallback";
 import { ICapacity, IErasureCodeCalc, IStorageFactors } from "./types";
 import { IPool } from "../screens/Console/Tenants/ListTenants/types";
+import i18n from "../i18n";
 
 const minStReq = 1073741824; // Minimal Space required for MinIO
 const minMemReq = 2147483648; // Minimal Memory required for MinIO in bytes
@@ -138,7 +139,7 @@ export const setMemoryResource = (
   const memReqSize = parseInt(requestedSizeBytes, 10);
   if (maxMemorySize === 0) {
     return {
-      error: "There is no memory available for the selected number of nodes",
+      error: i18n.t("other:numOfNodesMemoryErr"),
       request: 0,
       limit: 0,
     };
@@ -146,7 +147,7 @@ export const setMemoryResource = (
 
   if (maxMemorySize < minMemReq) {
     return {
-      error: "There are not enough memory resources available",
+      error: i18n.t("other:memoryResourcesAvailableEr"),
       request: 0,
       limit: 0,
     };
@@ -154,7 +155,7 @@ export const setMemoryResource = (
 
   if (memReqSize < minMemReq) {
     return {
-      error: "The requested memory size must be greater than 2Gi",
+      error: i18n.t("other:minMemorySizeErr"),
       request: 0,
       limit: 0,
     };
@@ -162,7 +163,7 @@ export const setMemoryResource = (
   if (memReqSize > maxMemorySize) {
     return {
       error:
-        "The requested memory is greater than the max available memory for the selected number of nodes",
+        i18n.t("other:maxMemorySizeErr"),
       request: 0,
       limit: 0,
     };
@@ -216,7 +217,7 @@ export const calculateDistribution = (
 
   if (parseInt(requestedSizeBytes, 10) < minStReq) {
     return {
-      error: "The pool size must be greater than 1Gi",
+      error: i18n.t("other:minPoolSizeErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,
@@ -226,7 +227,7 @@ export const calculateDistribution = (
 
   if (drivesPerServer <= 0) {
     return {
-      error: "Number of drives must be at least 1",
+      error: i18n.t("other:minNumOfDrivesErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,
@@ -278,7 +279,7 @@ const structureCalc = (
     isNaN(maxClusterSize)
   ) {
     return {
-      error: "Some provided data is invalid, please try again.",
+      error: i18n.t("other:invalidDataErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,
@@ -319,7 +320,7 @@ const structureCalc = (
 
     if (limitSize > maxClusterSize) {
       return {
-        error: "We were not able to allocate this server.",
+        error: i18n.t("other:serverAllocationErr"),
         nodes: 0,
         persistentVolumes: 0,
         disks: 0,
@@ -330,8 +331,7 @@ const structureCalc = (
 
   if (persistentVolumeSize < minStReq) {
     return {
-      error:
-        "Disk Size with this combination would be less than 1Gi, please try another combination",
+      error: i18n.t("other:diskSizeCombinationErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,

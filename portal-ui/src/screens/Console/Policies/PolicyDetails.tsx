@@ -44,6 +44,8 @@ import IAMPoliciesIcon from "../../../icons/IAMPoliciesIcon";
 import RefreshIcon from "../../../icons/RefreshIcon";
 import SearchIcon from "../../../icons/SearchIcon";
 import TrashIcon from "../../../icons/TrashIcon";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n";
 
 interface IPolicyDetailsProps {
   classes: any;
@@ -202,6 +204,8 @@ const PolicyDetails = ({
   const [filterGroups, setFilterGroups] = useState<string>("");
   const [loadingGroups, setLoadingGroups] = useState<boolean>(true);
 
+  const { t } = useTranslation("policies");
+
   const saveRecord = (event: React.FormEvent) => {
     event.preventDefault();
     if (addLoading) {
@@ -215,7 +219,7 @@ const PolicyDetails = ({
       })
       .then((_) => {
         setAddLoading(false);
-        setSnackBarMessage("Policy successfully updated");
+        setSnackBarMessage(i18n.t("policies:policySuccessfullyUpdated"));
       })
       .catch((err: ErrorResponseHandler) => {
         setAddLoading(false);
@@ -319,7 +323,7 @@ const PolicyDetails = ({
         label={
           <Fragment>
             <Link to={"/policies"} className={classes.breadcrumLink}>
-              Policy
+              {t("policy")}
             </Link>
           </Fragment>
         }
@@ -333,13 +337,13 @@ const PolicyDetails = ({
               </Fragment>
             }
             title={policyName}
-            subTitle={<Fragment>IAM Policy</Fragment>}
+            subTitle={<Fragment>{t("iamPolicy")}</Fragment>}
             actions={
               <Fragment>
-                <Tooltip title={"Delete"}>
+                <Tooltip title={t<string>("delete")}>
                   <IconButton
                     color="primary"
-                    aria-label="Delete"
+                    aria-label={t("delete")}
                     component="span"
                     onClick={() => {
                       // setDeleteOpen(true);
@@ -348,10 +352,10 @@ const PolicyDetails = ({
                     <TrashIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title={"Refresh"}>
+                <Tooltip title={t<string>("refresh")}>
                   <IconButton
                     color="primary"
-                    aria-label="Refresh List"
+                    aria-label={t("refreshList")}
                     component="span"
                     onClick={() => {
                       setLoadingUsers(true);
@@ -375,7 +379,7 @@ const PolicyDetails = ({
                 setSelectedTab(0);
               }}
             >
-              <ListItemText primary="Summary" />
+              <ListItemText primary={t("summary")} />
             </ListItem>
             <ListItem
               button
@@ -384,7 +388,7 @@ const PolicyDetails = ({
                 setSelectedTab(1);
               }}
             >
-              <ListItemText primary="Users" />
+              <ListItemText primary={t("users")} />
             </ListItem>
             <ListItem
               button
@@ -393,7 +397,7 @@ const PolicyDetails = ({
                 setSelectedTab(2);
               }}
             >
-              <ListItemText primary="Groups" />
+              <ListItemText primary={t("groups")} />
             </ListItem>
             <ListItem
               button
@@ -402,14 +406,14 @@ const PolicyDetails = ({
                 setSelectedTab(3);
               }}
             >
-              <ListItemText primary="JSON" />
+              <ListItemText primary={t("json")} />
             </ListItem>
           </List>
         </Grid>
         <Grid item xs={10}>
           {selectedTab === 0 && (
             <Fragment>
-              <h1 className={classes.sectionTitle}>Summary</h1>
+              <h1 className={classes.sectionTitle}>{t("summary")}</h1>
               <Paper className={classes.paperContainer}>
                 <form
                   noValidate
@@ -420,7 +424,7 @@ const PolicyDetails = ({
                 >
                   <Grid container>
                     <Grid item xs={8}>
-                      <h4>Statements</h4>
+                      <h4>{t("statements")}</h4>
                     </Grid>
                     <Grid item xs={4} />
 
@@ -435,7 +439,7 @@ const PolicyDetails = ({
                           >
                             <Grid container>
                               <Grid item xs={2} className={classes.labelCol}>
-                                Effect
+                                {t("effect")}
                               </Grid>
                               <Grid item xs={4}>
                                 <Fragment>{stmt.Effect}</Fragment>
@@ -443,7 +447,7 @@ const PolicyDetails = ({
                               <Grid item xs={2} className={classes.labelCol} />
                               <Grid item xs={4} />
                               <Grid item xs={2} className={classes.labelCol}>
-                                Actions
+                                {t("actions")}
                               </Grid>
                               <Grid item xs={4}>
                                 <ul>
@@ -454,7 +458,7 @@ const PolicyDetails = ({
                                 </ul>
                               </Grid>
                               <Grid item xs={2} className={classes.labelCol}>
-                                Resources
+                                {t("resources")}
                               </Grid>
                               <Grid item xs={4}>
                                 <ul>
@@ -476,11 +480,11 @@ const PolicyDetails = ({
           )}
           {selectedTab === 1 && (
             <Fragment>
-              <h1 className={classes.sectionTitle}>Users</h1>
+              <h1 className={classes.sectionTitle}>{t("users")}</h1>
               <Grid container>
                 <Grid item xs={12} className={classes.actionsTray}>
                   <TextField
-                    placeholder="Search Users"
+                    placeholder={t("searchUsers")}
                     className={classes.searchField}
                     id="search-resource"
                     label=""
@@ -502,10 +506,10 @@ const PolicyDetails = ({
                 </Grid>
                 <TableWrapper
                   itemActions={userTableActions}
-                  columns={[{ label: "Name", elementKey: "name" }]}
+                  columns={[{ label: t("name"), elementKey: "name" }]}
                   isLoading={loadingUsers}
                   records={filteredUsers}
-                  entityName="Users"
+                  entityName={t("users")}
                   idField="name"
                 />
               </Grid>
@@ -513,11 +517,11 @@ const PolicyDetails = ({
           )}
           {selectedTab === 2 && (
             <Fragment>
-              <h1 className={classes.sectionTitle}>Groups</h1>
+              <h1 className={classes.sectionTitle}>{t("groups")}</h1>
               <Grid container>
                 <Grid item xs={12} className={classes.actionsTray}>
                   <TextField
-                    placeholder="Search Groups"
+                    placeholder={t("searchGroups")}
                     className={classes.searchField}
                     id="search-resource"
                     label=""
@@ -539,10 +543,10 @@ const PolicyDetails = ({
                 </Grid>
                 <TableWrapper
                   itemActions={[]}
-                  columns={[{ label: "Name", elementKey: "name" }]}
+                  columns={[{ label: t("name"), elementKey: "name" }]}
                   isLoading={loadingGroups}
                   records={filteredGroups}
-                  entityName="Groups"
+                  entityName={t("groups")}
                   idField="name"
                 />
               </Grid>
@@ -550,7 +554,7 @@ const PolicyDetails = ({
           )}
           {selectedTab === 3 && (
             <Fragment>
-              <h1 className={classes.sectionTitle}>Raw Policy</h1>
+              <h1 className={classes.sectionTitle}>{t("rawPolicy")}</h1>
               <Paper className={classes.paperContainer}>
                 <form
                   noValidate
@@ -578,7 +582,7 @@ const PolicyDetails = ({
                             resetForm();
                           }}
                         >
-                          Clear
+                          {t("clear")}
                         </button>
                       )}
 
@@ -588,7 +592,7 @@ const PolicyDetails = ({
                         color="primary"
                         disabled={addLoading || !validSave}
                       >
-                        Save
+                        {t("save")}
                       </Button>
                     </Grid>
                     {addLoading && (

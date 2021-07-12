@@ -47,6 +47,7 @@ import FormatDrives from "./FormatDrives";
 import FormatErrorsResult from "./FormatErrorsResult";
 import RefreshIcon from "../../../icons/RefreshIcon";
 import SearchIcon from "../../../icons/SearchIcon";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDirectCSIMain {
   classes: any;
@@ -115,6 +116,8 @@ const DirectCSIMain = ({
   const [formatErrorsOpen, setFormatErrorsOpen] = useState<boolean>(false);
   const [drivesToFormat, setDrivesToFormat] = useState<string[]>([]);
   const [notAvailable, setNotAvailable] = useState<boolean>(true);
+
+  const { t } = useTranslation("directCSI");
 
   useEffect(() => {
     if (loading) {
@@ -249,10 +252,10 @@ const DirectCSIMain = ({
           }}
         />
       )}
-      <h1 className={classes.sectionTitle}>Drives</h1>
+      <h1 className={classes.sectionTitle}>{t("drives")}</h1>
       <Grid item xs={12} className={classes.actionsTray}>
         <TextField
-          placeholder="Search Drives"
+          placeholder={t("searchDrives")}
           className={classes.searchField}
           id="search-resource"
           label=""
@@ -271,7 +274,7 @@ const DirectCSIMain = ({
         />
         <IconButton
           color="primary"
-          aria-label="Refresh Tenant List"
+          aria-label={t("refreshTenantList")}
           component="span"
           onClick={() => {
             setLoading(true);
@@ -287,7 +290,7 @@ const DirectCSIMain = ({
           disabled={checkedDrives.length <= 0 || notAvailable}
           onClick={formatSelectedDrives}
         >
-          Format Selected Drives
+          {t("formatSelectedDrives")}
         </Button>
         <Button
           variant="contained"
@@ -296,7 +299,7 @@ const DirectCSIMain = ({
           onClick={formatAllDrives}
           disabled={notAvailable}
         >
-          Format All Drives
+          {t("formatAllDrives")}
         </Button>
       </Grid>
 
@@ -306,47 +309,49 @@ const DirectCSIMain = ({
       <Grid item xs={12}>
         {notAvailable && !loading ? (
           <div className={classes.notAvailableNotice}>
-            To manage locally attached drives you need to install direct-csi,
-            for more information
-            <br />
-            please follow this
-            <a
-              href="https://github.com/minio/direct-csi"
-              rel="noreferrer"
-              target="_blank"
-              className={classes.linkItem}
-            >
-              Link
-            </a>
+            <Trans i18nKey="directCSI:directcsiInstallLink">
+              To manage locally attached drives you need to install direct-csi,
+              for more information
+              <br />
+              please follow this
+              <a
+                href="https://github.com/minio/direct-csi"
+                rel="noreferrer"
+                target="_blank"
+                className={classes.linkItem}
+              >
+                Link
+              </a>
+            </Trans>
           </div>
         ) : (
           <TableWrapper
             itemActions={tableActions}
             columns={[
               {
-                label: "Drive",
+                label: t("drive"),
                 elementKey: "drive",
               },
               {
-                label: "Capacity",
+                label: t("capacity"),
                 elementKey: "capacity",
                 renderFunction: niceBytes,
               },
               {
-                label: "Allocated",
+                label: t("allocated"),
                 elementKey: "allocated",
                 renderFunction: niceBytes,
               },
               {
-                label: "Volumes",
+                label: t("volumes"),
                 elementKey: "volumes",
               },
               {
-                label: "Node",
+                label: t("node"),
                 elementKey: "node",
               },
               {
-                label: "Status",
+                label: t("status"),
                 elementKey: "status",
               },
             ]}
@@ -355,7 +360,7 @@ const DirectCSIMain = ({
             isLoading={loading}
             records={filteredRecords}
             customPaperHeight={classes.tableWrapper}
-            entityName="Drives"
+            entityName={t("drives")}
             idField="joinName"
           />
         )}

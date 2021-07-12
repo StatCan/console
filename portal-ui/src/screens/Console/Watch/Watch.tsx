@@ -33,6 +33,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import PageHeader from "../Common/PageHeader/PageHeader";
 import api from "../../../common/api";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -99,6 +100,8 @@ const Watch = ({
   const [prefix, setPrefix] = useState("");
   const [suffix, setSuffix] = useState("");
   const [bucketList, setBucketList] = useState<Bucket[]>([]);
+
+  const { t } = useTranslation("watch");
 
   const fetchBucketList = () => {
     api
@@ -180,7 +183,7 @@ const Watch = ({
 
   return (
     <React.Fragment>
-      <PageHeader label="Watch" />
+      <PageHeader label={t("watch")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12} className={classes.actionsTray}>
@@ -201,7 +204,7 @@ const Watch = ({
                   key={`select-bucket-name-default`}
                   disabled={true}
                 >
-                  Select Bucket
+                  {t("selectBucket")}
                 </MenuItem>
                 {bucketNames.map((option) => (
                   <MenuItem
@@ -214,7 +217,7 @@ const Watch = ({
               </Select>
             </FormControl>
             <TextField
-              placeholder="Prefix"
+              placeholder={t("prefix")}
               className={`${classes.searchField} ${classes.searchPrefix}`}
               id="prefix-resource"
               label=""
@@ -227,7 +230,7 @@ const Watch = ({
               }}
             />
             <TextField
-              placeholder="Suffix"
+              placeholder={t("suffix")}
               className={`${classes.searchField} ${classes.searchPrefix}`}
               id="suffix-resource"
               label=""
@@ -246,7 +249,7 @@ const Watch = ({
               disabled={start}
               onClick={() => setStart(true)}
             >
-              Start
+              {t("start")}
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -255,21 +258,21 @@ const Watch = ({
           <TableWrapper
             columns={[
               {
-                label: "Time",
+                label: t("time"),
                 elementKey: "Time",
                 renderFunction: timeFromDate,
               },
               {
-                label: "Size",
+                label: t("size"),
                 elementKey: "Size",
                 renderFunction: niceBytes,
               },
-              { label: "Type", elementKey: "Type" },
-              { label: "Path", elementKey: "Path" },
+              { label: t("type"), elementKey: "Type" },
+              { label: t("path"), elementKey: "Path" },
             ]}
             records={messages}
-            entityName={"Watch"}
-            customEmptyMessage={"No Changes at this time"}
+            entityName={t("watch")}
+            customEmptyMessage={t("noChangesAtTime")}
             idField={"watch_table"}
             isLoading={false}
           />

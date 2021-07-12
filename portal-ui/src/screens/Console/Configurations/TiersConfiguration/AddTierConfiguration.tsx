@@ -28,6 +28,7 @@ import {
 import { ErrorResponseHandler } from "../../../../common/types";
 import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import FileSelector from "../../Common/FormComponents/FileSelector/FileSelector";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -65,6 +66,8 @@ const AddTierConfiguration = ({
   setErrorSnackMessage,
   type,
 }: IAddNotificationEndpointProps) => {
+  const { t } = useTranslation("configurations");
+
   //Local States
   const [saving, setSaving] = useState<boolean>(false);
 
@@ -100,9 +103,7 @@ const AddTierConfiguration = ({
       return true;
     }
 
-    setNameInputError(
-      "Please verify that string is uppercase only and contains valid characters (numbers, dashes & underscores)."
-    );
+    setNameInputError(t("nameErr"));
     return false;
   }, [name]);
 
@@ -287,7 +288,7 @@ const AddTierConfiguration = ({
     <Fragment>
       <form noValidate onSubmit={submitForm}>
         <Grid item xs={12} className={classes.customTitle}>
-          {titleSelection} - Add Tier Configuration
+          {t("addTierConfig", { titleSelection })}
         </Grid>
         <Grid item xs={12} className={classes.settingsFormContainer}>
           <Grid container>
@@ -296,8 +297,8 @@ const AddTierConfiguration = ({
                 <InputBoxWrapper
                   id="name"
                   name="name"
-                  label="Name"
-                  placeholder="Enter Name (Eg. REMOTE-TIER)"
+                  label={t("name")}
+                  placeholder={t("enterNameExample")}
                   value={name}
                   onChange={updateTierName}
                   error={nameInputError}
@@ -305,8 +306,8 @@ const AddTierConfiguration = ({
                 <InputBoxWrapper
                   id="endpoint"
                   name="endpoint"
-                  label="Endpoint"
-                  placeholder="Enter Endpoint"
+                  label={t("endpoint")}
+                  placeholder={t("enterEndpoint")}
                   value={endpoint}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setEndpoint(e.target.value);
@@ -317,8 +318,8 @@ const AddTierConfiguration = ({
                     <InputBoxWrapper
                       id="accessKey"
                       name="accessKey"
-                      label="Access Key"
-                      placeholder="Enter Access Key"
+                      label={t("accessKey")}
+                      placeholder={t("enterAccessKey")}
                       value={accessKey}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setAccessKey(e.target.value);
@@ -327,8 +328,8 @@ const AddTierConfiguration = ({
                     <InputBoxWrapper
                       id="secretKey"
                       name="secretKey"
-                      label="Secret Key"
-                      placeholder="Enter Secret Key"
+                      label={t("secretKey")}
+                      placeholder={t("enterSecretKey")}
                       value={secretKey}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setSecretKey(e.target.value);
@@ -341,7 +342,7 @@ const AddTierConfiguration = ({
                     <FileSelector
                       accept=".json"
                       id="creds"
-                      label="Credentials"
+                      label={t("creds")}
                       name="creds"
                       onChange={(encodedValue, fileName) => {
                         setEncodedCreds(encodedValue);
@@ -356,8 +357,8 @@ const AddTierConfiguration = ({
                     <InputBoxWrapper
                       id="accountName"
                       name="accountName"
-                      label="Account Name"
-                      placeholder="Enter Account Name"
+                      label={t("accountName")}
+                      placeholder={t("enterAccountName")}
                       value={accountName}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setAccountName(e.target.value);
@@ -366,8 +367,8 @@ const AddTierConfiguration = ({
                     <InputBoxWrapper
                       id="accountKey"
                       name="accountKey"
-                      label="Account Key"
-                      placeholder="Enter Account Key"
+                      label={t("accountKey")}
+                      placeholder={t("enterAccountkey")}
                       value={accountKey}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setAccountKey(e.target.value);
@@ -378,8 +379,8 @@ const AddTierConfiguration = ({
                 <InputBoxWrapper
                   id="bucket"
                   name="bucket"
-                  label="Bucket"
-                  placeholder="Enter Bucket"
+                  label={t("bucket")}
+                  placeholder={t("enterBucket")}
                   value={bucket}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setBucket(e.target.value);
@@ -388,8 +389,8 @@ const AddTierConfiguration = ({
                 <InputBoxWrapper
                   id="prefix"
                   name="prefix"
-                  label="Prefix"
-                  placeholder="Enter Prefix"
+                  label={t("prefix")}
+                  placeholder={t("enterPrefix")}
                   value={prefix}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setPrefix(e.target.value);
@@ -398,8 +399,8 @@ const AddTierConfiguration = ({
                 <InputBoxWrapper
                   id="region"
                   name="region"
-                  label="Region"
-                  placeholder="Enter Region"
+                  label={t("region")}
+                  placeholder={t("enterRegion")}
                   value={region}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setRegion(e.target.value);
@@ -410,8 +411,8 @@ const AddTierConfiguration = ({
                     <InputBoxWrapper
                       id="storageClass"
                       name="storageClass"
-                      label="Storage Class"
-                      placeholder="Enter Storage Class"
+                      label={t("storageClass")}
+                      placeholder={t("enterStorageClass")}
                       value={storageClass}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setStorageClass(e.target.value);
@@ -430,7 +431,7 @@ const AddTierConfiguration = ({
               color="primary"
               disabled={saving || !isFormValid}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
         </Grid>

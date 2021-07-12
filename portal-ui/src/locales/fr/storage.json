@@ -1,0 +1,13 @@
+{
+  "capacity": "__STRING_NOT_TRANSLATED__",
+  "drives": "__STRING_NOT_TRANSLATED__",
+  "name": "__STRING_NOT_TRANSLATED__",
+  "namespace": "__STRING_NOT_TRANSLATED__",
+  "pvcs": "__STRING_NOT_TRANSLATED__",
+  "searchPVC": "__STRING_NOT_TRANSLATED__",
+  "status": "__STRING_NOT_TRANSLATED__",
+  "storage": "__STRING_NOT_TRANSLATED__",
+  "storageClass": "__STRING_NOT_TRANSLATED__",
+  "tenant": "__STRING_NOT_TRANSLATED__",
+  "volumes": "__STRING_NOT_TRANSLATED__"
+}

@@ -28,7 +28,7 @@ import {
 import api from "../../../../common/api";
 import { setErrorSnackMessage } from "../../../../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
-
+import { Trans, useTranslation } from "react-i18next";
 interface IVersioningEventProps {
   closeVersioningModalAndRefresh: (refresh: boolean) => void;
   modalOpen: boolean;
@@ -45,6 +45,7 @@ const EnableVersioningModal = ({
   setErrorSnackMessage,
 }: IVersioningEventProps) => {
   const [versioningLoading, setVersioningLoading] = useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   const enableVersioning = () => {
     if (versioningLoading) {
@@ -75,18 +76,26 @@ const EnableVersioningModal = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Edit Versioning</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("editVersioning")}</DialogTitle>
       <DialogContent>
         {versioningLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to{" "}
-          <strong>{versioningCurrentState ? "disable" : "enable"}</strong>{" "}
-          versioning for this bucket?
+          {versioningCurrentState ? (
+            <Trans i18nKey="bucketsDetails:bucketVersionDisableConfirm">
+              Are you sure you want to{" "}<strong>disable</strong>{" "}
+              versioning for this bucket?
+            </Trans>
+          ) : ( 
+            <Trans i18nKey="bucketsDetails:bucketVersionEnableConfirm">
+              Are you sure you want to{" "}<strong>enable</strong>{" "}
+              versioning for this bucket?
+            </Trans>
+          )}
           {versioningCurrentState && (
             <Fragment>
               <br />
               <br />
-              <strong>File versions won't be automatically deleted</strong>
+              <strong>{t("fileCantAutomaticallyDeleted")} </strong>
             </Fragment>
           )}
         </DialogContentText>
@@ -99,7 +108,7 @@ const EnableVersioningModal = ({
           color="primary"
           disabled={versioningLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -108,7 +117,7 @@ const EnableVersioningModal = ({
           color="secondary"
           autoFocus
         >
-          {versioningCurrentState ? "Disable" : "Enable"}
+          {versioningCurrentState ? t("disabled") : t("enabled")}
         </Button>
       </DialogActions>
     </Dialog>

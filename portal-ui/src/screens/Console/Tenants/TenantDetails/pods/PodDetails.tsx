@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import { setErrorSnackMessage } from "../../../../../actions";
 import PodLogs from "./PodLogs";
 import PodEvents from "./PodEvents";
+import { useTranslation } from "react-i18next";
 
 interface IPodDetailsProps {
   classes: any;
@@ -47,6 +48,8 @@ const PodDetails = ({ classes, match }: IPodDetailsProps) => {
   const tenantName = match.params["tenantName"];
   const podName = match.params["podName"];
 
+  const { t } = useTranslation("tenants");
+
   function a11yProps(index: any) {
     return {
       id: `simple-tab-${index}`,
@@ -69,7 +72,7 @@ const PodDetails = ({ classes, match }: IPodDetailsProps) => {
             to={`/namespaces/${tenantNamespace}/tenants/${tenantName}/pods`}
             className={classes.breadcrumLink}
           >
-            Pods
+            {t("pods")}
           </Link>{" "}
           &gt; {podName}
         </h1>
@@ -83,12 +86,12 @@ const PodDetails = ({ classes, match }: IPodDetailsProps) => {
             }}
             indicatorColor="primary"
             textColor="primary"
-            aria-label="cluster-tabs"
+            aria-label={t("clusterTabs")}
             variant="scrollable"
             scrollButtons="auto"
           >
-            <Tab label="Events" {...a11yProps(0)} />
-            <Tab label="Logs" {...a11yProps(1)} />
+            <Tab label={t("events")} {...a11yProps(0)} />
+            <Tab label={t("logs")} {...a11yProps(1)} />
           </Tabs>
         </Grid>
         {curTab === 0 && (

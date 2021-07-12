@@ -28,6 +28,7 @@ import PageHeader from "../Common/PageHeader/PageHeader";
 import StoragePVCs from "./StoragePVCs";
 import DirectCSIDrives from "../DirectCSI/DirectCSIDrives";
 import List from "@material-ui/core/List";
+import { useTranslation } from "react-i18next";
 
 interface IStorageProps {
   classes: any;
@@ -52,6 +53,8 @@ const routes = ["/storage/volumes", "/storage/drives"];
 const Storage = ({ classes, match }: IStorageProps) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
 
+  const { t } = useTranslation("storage");
+
   useEffect(() => {
     const index = routes.findIndex((route) => route === match.path);
     setSelectedTab(index);
@@ -63,7 +66,7 @@ const Storage = ({ classes, match }: IStorageProps) => {
 
   return (
     <Fragment>
-      <PageHeader label={"Storage"} />
+      <PageHeader label={t("storage")} />
       <Grid container className={classes.container}>
         <Grid item xs={2}>
           <List component="nav" dense={true}>
@@ -74,7 +77,7 @@ const Storage = ({ classes, match }: IStorageProps) => {
                 routeChange(0);
               }}
             >
-              <ListItemText primary="Volumes" />
+              <ListItemText primary={t("volumes")} />
             </ListItem>
             <ListItem
               button
@@ -83,7 +86,7 @@ const Storage = ({ classes, match }: IStorageProps) => {
                 routeChange(1);
               }}
             >
-              <ListItemText primary="Drives" />
+              <ListItemText primary={t("drives")} />
             </ListItem>
           </List>
         </Grid>

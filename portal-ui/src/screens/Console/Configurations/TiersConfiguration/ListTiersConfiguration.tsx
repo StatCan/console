@@ -41,6 +41,7 @@ import AddTierConfiguration from "./AddTierConfiguration";
 import UpdateTierCredentiasModal from "./UpdateTierCredentiasModal";
 import RefreshIcon from "../../../../icons/RefreshIcon";
 import SearchIcon from "../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IListTiersConfig {
   classes: any;
@@ -97,6 +98,7 @@ const ListTiersConfiguration = ({
     type: "unsupported",
   });
   const [type, setType] = useState<string>("");
+  const { t } = useTranslation("configurations");
 
   useEffect(() => {
     if (isLoading) {
@@ -217,7 +219,7 @@ const ListTiersConfiguration = ({
                     <Grid item xs={12} className={classes.lambdaContainer}>
                       <Grid item xs={12} className={classes.actionsTray}>
                         <TextField
-                          placeholder="Filter"
+                          placeholder={t("filter")}
                           className={classes.searchField}
                           id="search-resource"
                           label=""
@@ -235,7 +237,7 @@ const ListTiersConfiguration = ({
                         />
                         <IconButton
                           color="primary"
-                          aria-label="Refresh List"
+                          aria-label={t("refreshList")}
                           component="span"
                           onClick={() => {
                             setIsLoading(true);
@@ -249,7 +251,7 @@ const ListTiersConfiguration = ({
                           startIcon={<CreateIcon />}
                           onClick={addTier}
                         >
-                          Add Tier
+                          {t("addTier")}
                         </Button>
                       </Grid>
                       <Grid item xs={12}>
@@ -268,36 +270,36 @@ const ListTiersConfiguration = ({
                           ]}
                           columns={[
                             {
-                              label: "Tier Name",
+                              label: t("tierName"),
                               elementKey: "type",
                               renderFunction: renderTierName,
                               renderFullObject: true,
                             },
                             {
-                              label: "Type",
+                              label: t("type"),
                               elementKey: "type",
                               width: 150,
                             },
                             {
-                              label: "Endpoint",
+                              label: t("endpoint"),
                               elementKey: "type",
                               renderFunction: renderTierEndpoint,
                               renderFullObject: true,
                             },
                             {
-                              label: "Bucket",
+                              label: t("bucket"),
                               elementKey: "type",
                               renderFunction: renderTierBucket,
                               renderFullObject: true,
                             },
                             {
-                              label: "Prefix",
+                              label: t("prefix"),
                               elementKey: "type",
                               renderFunction: renderTierPrefix,
                               renderFullObject: true,
                             },
                             {
-                              label: "Region",
+                              label: t("region"),
                               elementKey: "type",
                               renderFunction: renderTierRegion,
                               renderFullObject: true,
@@ -305,7 +307,7 @@ const ListTiersConfiguration = ({
                           ]}
                           isLoading={isLoading}
                           records={filteredRecords}
-                          entityName="Tiers"
+                          entityName={t("tiers")}
                           idField="service_name"
                           customPaperHeight={classes.customConfigurationPage}
                           noBackground
@@ -320,12 +322,12 @@ const ListTiersConfiguration = ({
                         className={classes.backButton}
                       >
                         <BackSettingsIcon />
-                        Back To Tiers
+                        {t("backToTiers")}
                       </button>
                     </Grid>
                     <Grid item xs={12}>
                       <Grid item xs={12} className={classes.customTitle}>
-                        Add Tier Configuration
+                        {t("addTierConfiguration")}
                       </Grid>
                       <Grid
                         item
@@ -344,7 +346,7 @@ const ListTiersConfiguration = ({
                                 <img
                                   src={"/minioTier.png"}
                                   className={classes.logoButton}
-                                  alt={"MinIO"}
+                                  alt={t("minio")}
                                 />
                               </button>
                               <button
@@ -356,7 +358,7 @@ const ListTiersConfiguration = ({
                                 <img
                                   src={"/gcs.png"}
                                   className={classes.logoButton}
-                                  alt={"GCS"}
+                                  alt={t("gcs")}
                                 />
                               </button>
                               <button
@@ -368,7 +370,7 @@ const ListTiersConfiguration = ({
                                 <img
                                   src={"/amazon.png"}
                                   className={classes.logoButton}
-                                  alt={"s3"}
+                                  alt={t("s3")}
                                 />
                               </button>
                               <button
@@ -380,7 +382,7 @@ const ListTiersConfiguration = ({
                                 <img
                                   src={"/azure.png"}
                                   className={classes.logoButton}
-                                  alt={"Azure"}
+                                  alt={t("azure")}
                                 />
                               </button>
                             </div>
@@ -396,7 +398,7 @@ const ListTiersConfiguration = ({
                         className={classes.backButton}
                       >
                         <BackSettingsIcon />
-                        Back To Tier Type Selection
+                        {t("backToTierTypeSelect")}
                       </button>
                     </Grid>
                     <Grid item xs={12}>

@@ -1,0 +1,19 @@
+{
+  "afterHealing": "__STRING_NOT_TRANSLATED__",
+  "beforeHealing": "__STRING_NOT_TRANSLATED__",
+  "forceStart": "__STRING_NOT_TRANSLATED__",
+  "forceStop": "__STRING_NOT_TRANSLATED__",
+  "green": "__STRING_NOT_TRANSLATED__",
+  "grey": "__STRING_NOT_TRANSLATED__",
+  "heal": "__STRING_NOT_TRANSLATED__",
+  "healingTimeColon": "<0>Healing time:</0> {{healDuration}}s",
+  "itemsHealthStatus": "__STRING_NOT_TRANSLATED__",
+  "objectsHealedColon": "<0>Objects healed:</0> {{objectsHealed}} / {{objectsScanned}}",
+  "prefix": "__STRING_NOT_TRANSLATED__",
+  "recursive": "__STRING_NOT_TRANSLATED__",
+  "red": "__STRING_NOT_TRANSLATED__",
+  "selectBucket": "__STRING_NOT_TRANSLATED__",
+  "sizeScannedColon": "<0>Size scanned:</0> {{sizeScanned}}",
+  "start": "__STRING_NOT_TRANSLATED__",
+  "yellow": "__STRING_NOT_TRANSLATED__"
+}

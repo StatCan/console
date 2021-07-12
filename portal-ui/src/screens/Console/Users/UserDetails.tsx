@@ -52,6 +52,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import LockIcon from "@material-ui/icons/Lock";
 import ScreenTitle from "../Common/ScreenTitle/ScreenTitle";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -153,6 +154,8 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
 
   const userName = match.params["userName"];
 
+  const { t } = useTranslation("users");
+
   const changeUserPassword = () => {
     setChangeUserPasswordModalOpen(true);
   };
@@ -232,7 +235,7 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
         label={
           <Fragment>
             <Link to={"/users"} className={classes.breadcrumLink}>
-              Users
+              {t("users")}
             </Link>
           </Fragment>
         }
@@ -285,7 +288,9 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
             }
             title={userName}
             subTitle={
-              <Fragment>Status: {enabled ? "Enabled" : "Disabled"}</Fragment>
+              <Fragment>
+                {t("statusColon")} {enabled ? t("enabled") : t("disabled")}
+              </Fragment>
             }
             actions={
               <Fragment>
@@ -296,22 +301,22 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
                   }}
                   color={"primary"}
                 >
-                  {enabled ? "Disable" : "Enable"}
+                  {enabled ? t("disable") : t("enable")}
                 </Button>
-                <Tooltip title="Delete User">
+                <Tooltip title={t<string>("deleteUser")}>
                   <IconButton
                     color="primary"
-                    aria-label="Delete User"
+                    aria-label={t("deleteUser")}
                     component="span"
                     onClick={deleteUser}
                   >
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Change Password">
+                <Tooltip title={t<string>("changePassword")}>
                   <IconButton
                     color="primary"
-                    aria-label="Change Password"
+                    aria-label={t("changePassword")}
                     component="span"
                     onClick={changeUserPassword}
                   >
@@ -331,7 +336,7 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
                 setCurTab(0);
               }}
             >
-              <ListItemText primary="Groups" />
+              <ListItemText primary={t("groups")} />
             </ListItem>
             <ListItem
               button
@@ -340,7 +345,7 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
                 setCurTab(1);
               }}
             >
-              <ListItemText primary="Service Accounts" />
+              <ListItemText primary={t("serviceAccounts")} />
             </ListItem>
             <ListItem
               button
@@ -349,7 +354,7 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
                 setCurTab(2);
               }}
             >
-              <ListItemText primary="Policies" />
+              <ListItemText primary={t("policies")} />
             </ListItem>
           </List>
         </Grid>
@@ -357,7 +362,7 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
           <Grid item xs={12}>
             <TabPanel index={0} value={curTab}>
               <div className={classes.actionsTray}>
-                <h1 className={classes.sectionTitle}>Groups</h1>
+                <h1 className={classes.sectionTitle}>{t("groups")}</h1>
                 <Button
                   variant="contained"
                   color="primary"
@@ -367,16 +372,16 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
                     setAddGroupOpen(true);
                   }}
                 >
-                  Add to Groups
+                  {t("addToGroups")}
                 </Button>
               </div>
               <br />
               <TableWrapper
                 // itemActions={userTableActions}
-                columns={[{ label: "Name", elementKey: "group" }]}
+                columns={[{ label: t("name"), elementKey: "group" }]}
                 isLoading={loading}
                 records={currentGroups}
-                entityName="Groups"
+                entityName={t("groups")}
                 idField="group"
               />
             </TabPanel>
@@ -385,7 +390,7 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
             </TabPanel>
             <TabPanel index={2} value={curTab}>
               <div className={classes.actionsTray}>
-                <h1 className={classes.sectionTitle}>Policies</h1>
+                <h1 className={classes.sectionTitle}>{t("policies")}</h1>
                 <Button
                   variant="contained"
                   color="primary"
@@ -395,7 +400,7 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
                     setPolicyOpen(true);
                   }}
                 >
-                  Assign Policies
+                  {t("assignPolicies")}
                 </Button>
               </div>
               <br />
@@ -408,10 +413,10 @@ const UserDetails = ({ classes, match }: IUserDetailsProps) => {
                     },
                   },
                 ]}
-                columns={[{ label: "Name", elementKey: "policy" }]}
+                columns={[{ label: t("name"), elementKey: "policy" }]}
                 isLoading={loading}
                 records={currentPolicies}
-                entityName="Policies"
+                entityName={t("policies")}
                 idField="policy"
               />
             </TabPanel>

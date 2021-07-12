@@ -31,6 +31,7 @@ import { setErrorSnackMessage } from "../../../../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
 import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import Grid from "@material-ui/core/Grid";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeleteTenant {
   deleteOpen: boolean;
@@ -47,6 +48,8 @@ const DeleteTenant = ({
 }: IDeleteTenant) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [retypeTenant, setRetypeTenant] = useState("");
+
+  const { t } = useTranslation("tenants");
 
   useEffect(() => {
     if (deleteLoading) {
@@ -70,7 +73,7 @@ const DeleteTenant = ({
   const removeRecord = () => {
     if (retypeTenant !== selectedTenant.name) {
       setErrorSnackMessage({
-        errorMessage: "Tenant name is incorrect",
+        errorMessage: t("incorrectTenantName"),
         detailedError: "",
       });
       return;
@@ -87,11 +90,13 @@ const DeleteTenant = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Tenant</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deleteTenant")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          To continue please type <b>{selectedTenant.name}</b> in the box.
+          <Trans i18nKey="tenants:deleteTenantConfirmation">
+            To continue please type <b>{{selectedTenant: selectedTenant.name}}</b> in the box.
+          </Trans>
           <Grid item xs={12}>
             <InputBoxWrapper
               id="retype-tenant"
@@ -113,7 +118,7 @@ const DeleteTenant = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={removeRecord}
@@ -121,7 +126,7 @@ const DeleteTenant = ({
           autoFocus
           disabled={retypeTenant !== selectedTenant.name}
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

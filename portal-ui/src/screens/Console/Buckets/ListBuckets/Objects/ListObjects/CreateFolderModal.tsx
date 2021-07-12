@@ -22,6 +22,7 @@ import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { modalBasic } from "../../../../Common/FormComponents/common/styleLibrary";
 import { connect } from "react-redux";
 import { createFolder } from "../../../../ObjectBrowser/actions";
+import { useTranslation } from "react-i18next";
 
 interface ICreateFolder {
   classes: any;
@@ -51,6 +52,7 @@ const CreateFolderModal = ({
   classes,
 }: ICreateFolder) => {
   const [pathUrl, setPathUrl] = useState("");
+  const { t } = useTranslation("listBuckets");
 
   const resetForm = () => {
     setPathUrl("");
@@ -67,20 +69,20 @@ const CreateFolderModal = ({
     <React.Fragment>
       <ModalWrapper
         modalOpen={modalOpen}
-        title="Choose or create a new path"
+        title={t("chooseOrCreatePath")}
         onClose={onClose}
       >
         <Grid container>
           <h3 className={classes.pathLabel}>
-            Current Path: {folderTruncated}/
+            {t("currentPathColon")} {folderTruncated}/
           </h3>
           <Grid item xs={12}>
             <InputBoxWrapper
               value={pathUrl}
-              label={"New Folder Path"}
+              label={t("newFolderPath")}
               id={"folderPath"}
               name={"folderPath"}
-              placeholder={"Enter the new Folder Path"}
+              placeholder={t("enterNewFolderPath")}
               onChange={(e) => {
                 setPathUrl(e.target.value);
               }}
@@ -93,7 +95,7 @@ const CreateFolderModal = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -102,7 +104,7 @@ const CreateFolderModal = ({
               disabled={pathUrl.trim() === ""}
               onClick={createProcess}
             >
-              Go
+              {t("go")}
             </Button>
           </Grid>
         </Grid>

@@ -30,6 +30,7 @@ import InputBoxWrapper from "../Common/FormComponents/InputBoxWrapper/InputBoxWr
 import api from "../../../common/api";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -86,6 +87,8 @@ const ActivationModal = ({
   const [subnetEmail, setSubnetEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { t } = useTranslation("license");
+
   const activateProduct = () => {
     if (loading) {
       return;
@@ -130,13 +133,13 @@ const ActivationModal = ({
       <Grid container alignItems="center" item xs={12}>
         <Grid item xs={12}>
           <Typography component="h2" variant="h6" className={classes.pageTitle}>
-            Activate SUBNET License
+            {t("activateSubnetLicense")}
           </Typography>
         </Grid>
         <Grid item className={classes.subnetLicenseKey} xs={6}>
           <Grid item xs={12}>
             <Typography variant="caption" display="block" gutterBottom>
-              Enter your license key here
+              {t("enterLicenseKey")}
             </Typography>
           </Grid>
           <TextField
@@ -160,7 +163,7 @@ const ActivationModal = ({
             onClick={() => activateProduct()}
             disabled={loading || license.trim().length === 0}
           >
-            Activate
+            {t("activate")}
           </Button>
         </Grid>
         <Grid item className={classes.subnetLoginForm} xs={6}>
@@ -173,7 +176,7 @@ const ActivationModal = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setSubnetEmail(event.target.value);
                 }}
-                placeholder="email"
+                placeholder={t("email")}
                 label=""
                 type="text"
                 value={subnetEmail}
@@ -187,7 +190,7 @@ const ActivationModal = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setSubnetPassword(event.target.value);
                 }}
-                placeholder="password"
+                placeholder={t("password")}
                 label=""
                 type="password"
                 value={subnetPassword}
@@ -205,7 +208,7 @@ const ActivationModal = ({
                 }
                 variant="contained"
               >
-                Activate
+                {t("activate")}
               </Button>
               <Button
                 className={classes.buttonSignup}
@@ -219,7 +222,7 @@ const ActivationModal = ({
                 }}
                 variant="outlined"
               >
-                Sign Up
+                {t("signUp")}
               </Button>
             </Grid>
           </Grid>

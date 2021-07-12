@@ -33,6 +33,7 @@ import UpdateTenantModal from "./UpdateTenantModal";
 import { AppState } from "../../../../store";
 import { ErrorResponseHandler } from "../../../../common/types";
 import history from "./../../../../history";
+import { useTranslation } from "react-i18next";
 
 interface ITenantsSummary {
   classes: any;
@@ -100,6 +101,8 @@ const TenantSummary = ({
 
   const tenantName = match.params["tenantName"];
   const tenantNamespace = match.params["tenantNamespace"];
+
+  const { t } = useTranslation("tenants");
 
   const healthStatusToClass = (health_status: string) => {
     return health_status === "red"
@@ -176,7 +179,7 @@ const TenantSummary = ({
         />
       )}
       <div className={classes.topSpacer} />
-      <h1 className={classes.sectionTitle}>Summary</h1>
+      <h1 className={classes.sectionTitle}>{t("summary")}</h1>
       <Paper className={classes.paperContainer}>
         <Grid container>
           <Grid item xs={8}>
@@ -184,7 +187,7 @@ const TenantSummary = ({
               <tbody>
                 <tr>
                   <td colSpan={4}>
-                    <h2>Details</h2>
+                    <h2>{t("details")}</h2>
                     <hr className={classes.hrClass} />
                   </td>
                 </tr>
@@ -197,20 +200,24 @@ const TenantSummary = ({
                 ) : (
                   <Fragment>
                     <tr>
-                      <td className={classes.titleCol}>Capacity:</td>
+                      <td className={classes.titleCol}>{t("capacityColon")}</td>
                       <td>{niceBytes(capacity.toString(10))}</td>
-                      <td className={classes.titleCol}>Clusters:</td>
+                      <td className={classes.titleCol}>{t("clustersColon")}</td>
                       <td>{poolCount}</td>
                     </tr>
                     <tr>
-                      <td className={classes.titleCol}>Instances:</td>
+                      <td className={classes.titleCol}>
+                        {t("instancesColon")}
+                      </td>
                       <td>{instances}</td>
-                      <td className={classes.titleCol}>Volumes:</td>
+                      <td className={classes.titleCol}>{t("volumesColon")}</td>
                       <td>{volumes}</td>
                     </tr>
                     {tenant?.endpoints && (
                       <tr>
-                        <td className={classes.titleCol}>Endpoint:</td>
+                        <td className={classes.titleCol}>
+                          {t("endpointColon")}
+                        </td>
                         <td>
                           <a
                             href={tenant?.endpoints.minio}
@@ -220,7 +227,9 @@ const TenantSummary = ({
                             {tenant?.endpoints.minio}
                           </a>
                         </td>
-                        <td className={classes.titleCol}>Console:</td>
+                        <td className={classes.titleCol}>
+                          {t("consoleColon")}
+                        </td>
                         <td>
                           <a
                             href={tenant?.endpoints.console}
@@ -233,7 +242,7 @@ const TenantSummary = ({
                       </tr>
                     )}
                     <tr>
-                      <td className={classes.titleCol}>MinIO:</td>
+                      <td className={classes.titleCol}>{t("minioColon")}</td>
                       <td colSpan={3}>
                         <Button
                           color="primary"
@@ -247,7 +256,7 @@ const TenantSummary = ({
                       </td>
                     </tr>
                     <tr>
-                      <td className={classes.titleCol}>State:</td>
+                      <td className={classes.titleCol}>{t("stateColon")}</td>
                       <td colSpan={3}>{tenant?.currentState}</td>
                     </tr>
                   </Fragment>
@@ -265,7 +274,7 @@ const TenantSummary = ({
                 <UsageBarWrapper
                   currValue={usage}
                   maxValue={tenant ? tenant.total_size : 0}
-                  label={"Storage"}
+                  label={t("storage")}
                   renderFunction={niceBytes}
                   error={usageError}
                   loading={loadingUsage}
@@ -280,12 +289,12 @@ const TenantSummary = ({
                       ⬤&nbsp;
                     </span>
                   )}
-                  Health
+                  {t("health")}
                 </h4>
                 <table>
                   <tbody>
                     <tr>
-                      <td className={classes.healthCol}>Drives Online</td>
+                      <td className={classes.healthCol}>{t("drivesOnline")}</td>
                       <td>
                         {tenant?.status?.drives_online
                           ? tenant?.status?.drives_online
@@ -293,7 +302,9 @@ const TenantSummary = ({
                       </td>
                     </tr>
                     <tr>
-                      <td className={classes.healthCol}>Drives Offline</td>
+                      <td className={classes.healthCol}>
+                        {t("drivesOffline")}
+                      </td>
                       <td>
                         {tenant?.status?.drives_offline
                           ? tenant?.status?.drives_offline
@@ -301,7 +312,7 @@ const TenantSummary = ({
                       </td>
                     </tr>
                     <tr>
-                      <td className={classes.healthCol}>Write Quorum</td>
+                      <td className={classes.healthCol}>{t("writeQuorum")}</td>
                       <td>
                         {tenant?.status?.write_quorum
                           ? tenant?.status?.write_quorum
@@ -321,7 +332,7 @@ const TenantSummary = ({
                     );
                   }}
                 >
-                  Manage Tenant
+                  {t("manageTenant")}
                 </Button>
               </Fragment>
             )}
@@ -337,7 +348,7 @@ const TenantSummary = ({
               <tbody>
                 <tr>
                   <td colSpan={4}>
-                    <h2>Features</h2>
+                    <h2>{t("features")}</h2>
                     <hr className={classes.hrClass} />
                   </td>
                 </tr>
@@ -350,65 +361,71 @@ const TenantSummary = ({
                 ) : (
                   <Fragment>
                     <tr>
-                      <td className={classes.titleCol}>Logs:</td>
+                      <td className={classes.titleCol}>{t("logsColon")}</td>
                       <td>
                         <Button
                           color="primary"
                           className={classes.anchorButton}
                         >
-                          {logEnabled ? "Enabled" : "Disabled"}
+                          {logEnabled ? t("enabled") : t("disabled")}
                         </Button>
                       </td>
-                      <td className={classes.titleCol}>Monitoring:</td>
+                      <td className={classes.titleCol}>
+                        {t("monitoringColon")}
+                      </td>
                       <td>
                         <Button
                           color="primary"
                           className={classes.anchorButton}
                         >
-                          {monitoringEnabled ? "Enabled" : "Disabled"}
+                          {monitoringEnabled ? t("enabled") : t("disabled")}
                         </Button>
                       </td>
                     </tr>
                     <tr>
-                      <td className={classes.titleCol}>MinIO TLS:</td>
+                      <td className={classes.titleCol}>{t("minioTLSColon")}</td>
                       <td>
                         <Button
                           color="primary"
                           className={classes.anchorButton}
                         >
-                          {minioTLS ? "Enabled" : "Disabled"}
+                          {minioTLS ? t("enabled") : t("disabled")}
                         </Button>
                       </td>
-                      <td className={classes.titleCol}>Encryption:</td>
+                      <td className={classes.titleCol}>
+                        {t("encryptionColon")}
+                      </td>
                       <td>
                         <Button
                           color="primary"
                           className={classes.anchorButton}
                         >
-                          {encryptionEnabled ? "Enabled" : "Disabled"}
+                          {encryptionEnabled ? t("enabled") : t("disabled")}
                         </Button>
                       </td>
                     </tr>
                     <tr>
                       <React.Fragment>
-                        <td className={classes.titleCol}>Active Directory:</td>
+                        <td className={classes.titleCol}>
+                          {t("activeDirColon")}
+                        </td>
                         <td>
                           <Button
                             color="primary"
                             className={classes.anchorButton}
                           >
-                            {adEnabled ? "Enabled" : "Disabled"}
+                            {adEnabled ? t("enabled") : t("disabled")}
                           </Button>
                         </td>
                       </React.Fragment>
                       <React.Fragment>
-                        <td className={classes.titleCol}>OpenID:</td>
+                        <td className={classes.titleCol}>{t("openIDColon")}</td>
                         <td>
                           <Button
                             color="primary"
                             className={classes.anchorButton}
                           >
-                            {oidcEnabled ? "Enabled" : "Disabled"}
+                            {oidcEnabled ? t("enabled") : t("disabled")}
                           </Button>
                         </td>
                       </React.Fragment>

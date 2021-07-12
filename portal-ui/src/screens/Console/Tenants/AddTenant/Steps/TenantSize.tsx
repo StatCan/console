@@ -48,6 +48,8 @@ import { commonFormValidation } from "../../../../../utils/validationFunctions";
 import api from "../../../../../common/api";
 import InputBoxWrapper from "../../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import SelectWrapper from "../../../Common/FormComponents/SelectWrapper/SelectWrapper";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../../i18n";
 
 interface ITenantSizeProps {
   classes: any;
@@ -117,6 +119,8 @@ const TenantSize = ({
   const cleanValidation = (fieldName: string) => {
     setValidationErrors(clearValidationError(validationErrors, fieldName));
   };
+
+  const { t } = useTranslation("tenants");
 
   /*Debounce functions*/
 
@@ -244,24 +248,21 @@ const TenantSize = ({
         customValidation:
           parseInt(parsedSize) < 1073741824 ||
           parseInt(parsedSize) > limitSize[selectedStorageClass],
-        customValidationMessage: `Volume size must be greater than 1Gi and less than ${niceBytes(
-          limitSize[selectedStorageClass],
-          true
-        )}`,
+        customValidationMessage: i18n.t("tenants:minVolumeSizeErr", {num: `${niceBytes(limitSize[selectedStorageClass],true)}`}),
       },
       {
         fieldKey: "memory_per_node",
         required: true,
         value: memoryNode,
         customValidation: parseInt(memoryNode) < 2,
-        customValidationMessage: "Memory size must be greater than 2Gi",
+        customValidationMessage: i18n.t("tenants:minMemorySizeErr"),
       },
       {
         fieldKey: "drivesps",
         required: true,
         value: drivesPerServer,
         customValidation: parseInt(drivesPerServer) < 1,
-        customValidationMessage: "There must be at least one drive",
+        customValidationMessage: i18n.t("tenants:minNumDriveErr"),
       },
     ]);
 
@@ -298,9 +299,9 @@ const TenantSize = ({
   return (
     <Fragment>
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Tenant Size</h3>
+        <h3 className={classes.h3Section}>{t("tenantSize")}</h3>
         <span className={classes.descriptionText}>
-          Please select the desired capacity
+          {t("pleaseSelectDesired")}
         </span>
       </div>
       {distribution.error !== "" && (
@@ -318,7 +319,7 @@ const TenantSize = ({
             updateField("nodes", e.target.value);
             cleanValidation("nodes");
           }}
-          label="Number of Servers"
+          label={t("numberOfServers")}
           value={nodes}
           min="4"
           required
@@ -334,7 +335,7 @@ const TenantSize = ({
             updateField("drivesPerServer", e.target.value);
             cleanValidation("drivesps");
           }}
-          label="Number of Drives per Server"
+          label={t("numberOfDrivesPer")}
           value={drivesPerServer}
           min="1"
           required
@@ -352,7 +353,7 @@ const TenantSize = ({
                 updateField("volumeSize", e.target.value);
                 cleanValidation("volume_size");
               }}
-              label="Total Size"
+              label={t("totalSize")}
               value={volumeSize}
               required
               error={validationErrors["volume_size"] || ""}
@@ -361,7 +362,7 @@ const TenantSize = ({
           </div>
           <div className={classes.sizeFactorContainer}>
             <SelectWrapper
-              label={"Unit"}
+              label={t("unit")}
               id="size_factor"
               name="size_factor"
               value={sizeFactor}
@@ -384,7 +385,7 @@ const TenantSize = ({
                 updateField("memoryNode", e.target.value);
                 cleanValidation("memory_per_node");
               }}
-              label="Memory per Node [Gi]"
+              label={t("memoryPerNode")}
               value={memoryNode}
               required
               error={validationErrors["memory_per_node"] || ""}
@@ -398,23 +399,22 @@ const TenantSize = ({
               onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                 updateField("ecParity", e.target.value as string);
               }}
-              label="Erasure Code Parity"
+              label={t("erasureCodeParity")}
               value={ecParity}
               options={ecParityChoices}
             />
             <span className={classes.descriptionText}>
-              Please select the desired parity. This setting will change the max
-              usable capacity in the cluster
+              {t("pleaseSelectParity")}
             </span>
           </Grid>
         </Fragment>
       )}
-      <h4>Resource Allocation</h4>
-      <Table className={classes.table} aria-label="simple table">
+      <h4>{t("resourceAllocation")}</h4>
+      <Table className={classes.table} aria-label={t("simpleTable")}>
         <TableBody>
           <TableRow>
             <TableCell component="th" scope="row">
-              Number of Servers
+              {t("numberOfServers")}
             </TableCell>
             <TableCell align="right">
               {parseInt(nodes) > 0 ? nodes : "-"}
@@ -422,7 +422,7 @@ const TenantSize = ({
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row">
-              Drives per Server
+              {t("drivesPerServer")}
             </TableCell>
             <TableCell align="right">
               {distribution ? distribution.disks : "-"}
@@ -430,7 +430,7 @@ const TenantSize = ({
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row">
-              Drive Capacity
+              {t("driveCapacity")}
             </TableCell>
             <TableCell align="right">
               {distribution ? niceBytes(distribution.pvSize) : "-"}
@@ -438,7 +438,7 @@ const TenantSize = ({
           </TableRow>
           <TableRow>
             <TableCell component="th" scope="row">
-              Total Number of Volumes
+              {t("totalNumberOfVolumes")}
             </TableCell>
             <TableCell align="right">
               {distribution ? distribution.persistentVolumes : "-"}
@@ -447,7 +447,7 @@ const TenantSize = ({
           {!advancedMode && (
             <TableRow>
               <TableCell component="th" scope="row">
-                Memory per Node
+                {t("memoryPer")}
               </TableCell>
               <TableCell align="right">{memoryNode} Gi</TableCell>
             </TableRow>
@@ -456,12 +456,12 @@ const TenantSize = ({
       </Table>
       {ecParityCalc.error === 0 && usableInformation && (
         <Fragment>
-          <h4>Erasure Code Configuration</h4>
-          <Table className={classes.table} aria-label="simple table">
+          <h4>{t("erasureCodeConfig")}</h4>
+          <Table className={classes.table} aria-label={t("simpleTable")}>
             <TableBody>
               <TableRow>
                 <TableCell component="th" scope="row">
-                  EC Parity
+                  {t("ecParity")}
                 </TableCell>
                 <TableCell align="right">
                   {ecParity !== "" ? ecParity : "-"}
@@ -469,7 +469,7 @@ const TenantSize = ({
               </TableRow>
               <TableRow>
                 <TableCell component="th" scope="row">
-                  Raw Capacity
+                  {t("rawCapacity")}
                 </TableCell>
                 <TableCell align="right">
                   {niceBytes(ecParityCalc.rawCapacity)}
@@ -477,7 +477,7 @@ const TenantSize = ({
               </TableRow>
               <TableRow>
                 <TableCell component="th" scope="row">
-                  Usable Capacity
+                  {t("usableCapacity")}
                 </TableCell>
                 <TableCell align="right">
                   {niceBytes(usableInformation.maxCapacity)}
@@ -485,7 +485,7 @@ const TenantSize = ({
               </TableRow>
               <TableRow>
                 <TableCell component="th" scope="row">
-                  Number of server failures to tolerate
+                  {t("numberOfServerFailures")}
                 </TableCell>
                 <TableCell align="right">
                   {distribution

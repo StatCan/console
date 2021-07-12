@@ -27,6 +27,7 @@ import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import api from "../../../common/api";
 import CodeMirrorWrapper from "../Common/FormComponents/CodeMirrorWrapper/CodeMirrorWrapper";
 import FormSwitchWrapper from "../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -70,6 +71,8 @@ const AddUserServiceAccount = ({
   const [isRestrictedByPolicy, setIsRestrictedByPolicy] =
     useState<boolean>(false);
 
+  const { t } = useTranslation("users");
+
   useEffect(() => {
     if (addSending) {
       api
@@ -109,7 +112,7 @@ const AddUserServiceAccount = ({
       onClose={() => {
         closeModalAndRefresh(null);
       }}
-      title={`Create Service Account`}
+      title={t("createServiceAccount")}
     >
       <form
         noValidate
@@ -121,13 +124,7 @@ const AddUserServiceAccount = ({
         <Grid container className={classes.containerScrollable}>
           <Grid item xs={12}>
             <div className={classes.infoDetails}>
-              Service Accounts inherit the policy explicitly attached to the
-              parent user and the policy attached to each group in which the
-              parent user has membership. You can specify an optional
-              JSON-formatted policy below to restrict the Service Account access
-              to a subset of actions and resources explicitly allowed for the
-              parent user. You cannot modify the Service Account optional policy
-              after saving.
+              {t("serviceAccountsDetails")}
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -139,8 +136,8 @@ const AddUserServiceAccount = ({
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setIsRestrictedByPolicy(event.target.checked);
               }}
-              label={"Restrict with policy"}
-              indicatorLabels={["On", "Off"]}
+              label={t("restrictWithPolicy")}
+              indicatorLabels={[t("on"), t("off")]}
             />
           </Grid>
           {isRestrictedByPolicy && (
@@ -162,7 +159,7 @@ const AddUserServiceAccount = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -170,7 +167,7 @@ const AddUserServiceAccount = ({
               color="primary"
               disabled={addSending}
             >
-              Create
+              {t("create")}
             </Button>
           </Grid>
           {addSending && (

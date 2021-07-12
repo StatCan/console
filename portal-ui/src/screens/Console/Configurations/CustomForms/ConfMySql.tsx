@@ -24,6 +24,7 @@ import { modalBasic } from "../../Common/FormComponents/common/styleLibrary";
 import CommentBoxWrapper from "../../Common/FormComponents/CommentBoxWrapper/CommentBoxWrapper";
 import FormSwitchWrapper from "../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import PredefinedList from "../../Common/FormComponents/PredefinedList/PredefinedList";
+import { useTranslation } from "react-i18next"
 
 interface IConfMySqlProps {
   onChange: (newValue: IElementValue[]) => void;
@@ -50,6 +51,8 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
   const [queueDir, setQueueDir] = useState<string>("");
   const [queueLimit, setQueueLimit] = useState<string>("");
   const [comment, setComment] = useState<string>("");
+
+  const { t } = useTranslation("configurations");
 
   // dsn_string*  (string)             MySQL data-source-name connection string e.g. "<user>:<password>@tcp(<host>:<port>)/<database>"
   // table*       (string)             DB table name to store/update events, table is auto-created
@@ -134,13 +137,13 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
     <Grid container>
       <Grid item xs={12}>
         <FormSwitchWrapper
-          label={"Enter DNS String"}
+          label={t("enterDNSstr")}
           checked={useDsnString}
           id="checkedB"
           name="checkedB"
           onChange={switcherChangeEvt}
           value={"dnsString"}
-          indicatorLabels={["On", "Off"]}
+          indicatorLabels={[t("on"), t("off")]}
         />
       </Grid>
       {useDsnString ? (
@@ -149,7 +152,7 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
             <InputBoxWrapper
               id="dsn-string"
               name="dsn_string"
-              label="DSN String"
+              label={t("DNSstring")}
               value={dsnString}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setDsnString(e.target.value);
@@ -166,7 +169,7 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
                   id="host"
                   name="host"
                   label=""
-                  placeholder="Enter Host"
+                  placeholder={t("enterHost")}
                   value={host}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setHostname(e.target.value);
@@ -178,7 +181,7 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
                   id="db-name"
                   name="db-name"
                   label=""
-                  placeholder="Enter DB Name"
+                  placeholder={t("enterDBname")}
                   value={dbName}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setDbName(e.target.value);
@@ -190,7 +193,7 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
                   id="port"
                   name="port"
                   label=""
-                  placeholder="Enter Port"
+                  placeholder={t("enterPort")}
                   value={port}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setPort(e.target.value);
@@ -203,7 +206,7 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
                   id="user"
                   name="user"
                   label=""
-                  placeholder="Enter User"
+                  placeholder={t("enterUser")}
                   value={user}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setUser(e.target.value);
@@ -215,7 +218,7 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
                   id="password"
                   name="password"
                   label=""
-                  placeholder="Enter Password"
+                  placeholder={t("enterPassword")}
                   type="password"
                   value={password}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -225,7 +228,7 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <PredefinedList label={"Connection String"} content={dsnString} />
+          <PredefinedList label={t("connectionString")} content={dsnString} />
           <Grid item xs={12}>
             <br />
           </Grid>
@@ -235,10 +238,10 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
         <InputBoxWrapper
           id="table"
           name="table"
-          label="Table"
-          placeholder="Enter Table Name"
+          label={t("table")}
+          placeholder={t("enterTableName")}
           value={table}
-          tooltip="DB table name to store/update events, table is auto-created"
+          tooltip={t("tableNameTooltip")}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setTable(e.target.value);
           }}
@@ -249,14 +252,14 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
           currentSelection={format}
           id="format"
           name="format"
-          label="Format"
+          label={t("format")}
           onChange={(e) => {
             setFormat(e.target.value);
           }}
-          tooltip="'namespace' reflects current bucket/object list and 'access' reflects a journal of object operations, defaults to 'namespace'"
+          tooltip={t("formatTooltip")}
           selectorOptions={[
-            { label: "Namespace", value: "namespace" },
-            { label: "Access", value: "access" },
+            { label: t("namespace"), value: "namespace" },
+            { label: t("access"), value: "access" },
           ]}
         />
       </Grid>
@@ -264,10 +267,10 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
         <InputBoxWrapper
           id="queue-dir"
           name="queue_dir"
-          label="Queue Dir"
-          placeholder="Enter Queue Dir"
+          label={t("queueDir")}
+          placeholder={t("enterQueueDir")}
           value={queueDir}
-          tooltip="staging dir for undelivered messages e.g. '/home/events'"
+          tooltip={t("queueDirTooltip")}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setQueueDir(e.target.value);
           }}
@@ -277,11 +280,11 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
         <InputBoxWrapper
           id="queue-limit"
           name="queue_limit"
-          label="Queue Limit"
-          placeholder="Enter Queue Limit"
+          label={t("queueLimit")}
+          placeholder={t("enterQueueLimit")}
           type="number"
           value={queueLimit}
-          tooltip="maximum limit for undelivered messages, defaults to '10000'"
+          tooltip={t("queueLimitTooltip")}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setQueueLimit(e.target.value);
           }}
@@ -291,8 +294,8 @@ const ConfMySql = ({ onChange, classes }: IConfMySqlProps) => {
         <CommentBoxWrapper
           id="comment"
           name="comment"
-          label="Comment"
-          placeholder="Enter Comment"
+          label={t("comment")}
+          placeholder={t("enterComment")}
           value={comment}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setComment(e.target.value);

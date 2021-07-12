@@ -37,6 +37,7 @@ import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import SetPolicy from "../Policies/SetPolicy";
 import PageHeader from "../Common/PageHeader/PageHeader";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -91,6 +92,8 @@ const ListUsers = ({ classes, setErrorSnackMessage, history }: IUsersProps) => {
   const [filter, setFilter] = useState<string>("");
   const [checkedUsers, setCheckedUsers] = useState<string[]>([]);
   const [policyOpen, setPolicyOpen] = useState<boolean>(false);
+
+  const { t } = useTranslation("users");
 
   const fetchRecords = useCallback(() => {
     setLoading(true);
@@ -215,12 +218,12 @@ const ListUsers = ({ classes, setErrorSnackMessage, history }: IUsersProps) => {
           }}
         />
       )}
-      <PageHeader label={"Users"} />
+      <PageHeader label={t("users")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12} className={classes.actionsTray}>
             <TextField
-              placeholder="Search Users"
+              placeholder={t("searchUsers")}
               className={classes.searchField}
               id="search-resource"
               label=""
@@ -247,7 +250,7 @@ const ListUsers = ({ classes, setErrorSnackMessage, history }: IUsersProps) => {
                 }
               }}
             >
-              Add to Group
+              {t("addToGroup")}
             </Button>
             <Button
               variant="contained"
@@ -258,7 +261,7 @@ const ListUsers = ({ classes, setErrorSnackMessage, history }: IUsersProps) => {
                 setSelectedUser(null);
               }}
             >
-              Create User
+              {t("createUser")}
             </Button>
           </Grid>
 
@@ -268,12 +271,12 @@ const ListUsers = ({ classes, setErrorSnackMessage, history }: IUsersProps) => {
           <Grid item xs={12}>
             <TableWrapper
               itemActions={tableActions}
-              columns={[{ label: "Access Key", elementKey: "accessKey" }]}
+              columns={[{ label: t("accessKey"), elementKey: "accessKey" }]}
               onSelect={selectionChanged}
               selectedItems={checkedUsers}
               isLoading={loading}
               records={filteredRecords}
-              entityName="Users"
+              entityName={t("users")}
               idField="accessKey"
             />
           </Grid>

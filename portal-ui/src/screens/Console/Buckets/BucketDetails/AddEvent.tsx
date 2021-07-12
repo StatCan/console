@@ -33,6 +33,7 @@ import { ErrorResponseHandler } from "../../../../common/types";
 import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import AutocompleteWrapper from "../../Common/FormComponents/AutocompleteWrapper/AutocompleteWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -71,6 +72,7 @@ const AddEvent = ({
   const [arn, setArn] = useState<string>("");
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
   const [arnList, setArnList] = useState<string[]>([]);
+  const { t } = useTranslation("bucketsDetails");
 
   const addRecord = (event: React.FormEvent) => {
     event.preventDefault();
@@ -121,9 +123,9 @@ const AddEvent = ({
   }, [fetchArnList]);
 
   const events = [
-    { label: "PUT - Object Uploaded", value: "put" },
-    { label: "GET - Object accessed", value: "get" },
-    { label: "DELETE - Object Deleted", value: "delete" },
+    { label: t("putObjectUploaded"), value: "put" },
+    { label: t("getObjectAccessed"), value: "get" },
+    { label: t("deleteObjectDeleted"), value: "delete" },
   ];
 
   const handleClick = (
@@ -159,7 +161,7 @@ const AddEvent = ({
       onClose={() => {
         closeModalAndRefresh();
       }}
-      title="Subscribe To Event"
+      title={t("subscribeToEvent")}
     >
       <form
         noValidate
@@ -177,7 +179,7 @@ const AddEvent = ({
                 }}
                 id="select-access-policy"
                 name="select-access-policy"
-                label={"ARN"}
+                label={t("arn")}
                 value={arn}
                 options={arnValues}
               />
@@ -186,8 +188,8 @@ const AddEvent = ({
               <Table size="medium">
                 <TableHead className={classes.minTableHeader}>
                   <TableRow>
-                    <TableCell>Select</TableCell>
-                    <TableCell>Event</TableCell>
+                    <TableCell>{t("select")}</TableCell>
+                    <TableCell>{t("event")}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -201,7 +203,7 @@ const AddEvent = ({
                           value={row.value}
                           color="primary"
                           inputProps={{
-                            "aria-label": "secondary checkbox",
+                            "aria-label": t("secondaryCheckbox"),
                           }}
                           onChange={(event) => handleClick(event, row.value)}
                           checked={selectedEvents.includes(row.value)}
@@ -222,7 +224,7 @@ const AddEvent = ({
               <InputBoxWrapper
                 id="prefix-input"
                 name="prefix-input"
-                label="Prefix"
+                label={t("prefix")}
                 value={prefix}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setPrefix(e.target.value);
@@ -233,7 +235,7 @@ const AddEvent = ({
               <InputBoxWrapper
                 id="suffix-input"
                 name="suffix-input"
-                label="Suffix"
+                label={t("suffix")}
                 value={suffix}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setSuffix(e.target.value);
@@ -251,7 +253,7 @@ const AddEvent = ({
               color="primary"
               disabled={addLoading}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {addLoading && (

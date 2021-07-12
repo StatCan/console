@@ -23,6 +23,7 @@ import {
   niceDays,
   textToRGBColor,
 } from "../../../../common/utils";
+import i18n from "../../../../i18n";
 
 const dLocalStorageV = "dashboardConfig";
 
@@ -332,7 +333,7 @@ const roundNumber = (value: string) => {
 export const panelsConfiguration: IDashboardPanel[] = [
   {
     id: 1,
-    title: "Uptime",
+    title: i18n.t("dashboard:uptime"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-0",
@@ -340,21 +341,21 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 9,
-    title: "Total Online Disks",
+    title: i18n.t("dashboard:totalOnlineDisks"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-1",
   },
   {
     id: 78,
-    title: "Total Offline Disks",
+    title: i18n.t("dashboard:totalOfflineDisks"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-2",
   },
   {
     id: 50,
-    title: "Current Usable Capacity",
+    title: i18n.t("dashboard:currentUsableCapacity"),
     data: [],
     dataOuter: [{ name: "outer", value: 100 }],
     widgetConfiguration: {
@@ -380,7 +381,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 68,
-    title: "Data Usage Growth",
+    title: i18n.t("dashboard:dataUsageGrowth"),
     data: [],
     widgetConfiguration: [
       {
@@ -397,7 +398,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 52,
-    title: "Object size distribution",
+    title: i18n.t("dashboard:objectSizeDistribution"),
     data: [],
     widgetConfiguration: [
       {
@@ -409,30 +410,30 @@ export const panelsConfiguration: IDashboardPanel[] = [
       },
     ],
     customStructure: [
-      { originTag: "LESS_THAN_1024_B", displayTag: "Less than 1024B" },
+      { originTag: "LESS_THAN_1024_B", displayTag: i18n.t("dashboard:lessthan1024") },
       {
         originTag: "BETWEEN_1024_B_AND_1_MB",
-        displayTag: "Between 1024B and 1MB",
+        displayTag: i18n.t("dashboard:between1024and1"),
       },
       {
         originTag: "BETWEEN_1_MB_AND_10_MB",
-        displayTag: "Between 1MB and 10MB",
+        displayTag: i18n.t("dashboard:between1and10"),
       },
       {
         originTag: "BETWEEN_10_MB_AND_64_MB",
-        displayTag: "Between 10MB and 64MB",
+        displayTag: i18n.t("dashboard:between10and64"),
       },
       {
         originTag: "BETWEEN_64_MB_AND_128_MB",
-        displayTag: "Between 64MB and 128MB",
+        displayTag: i18n.t("dashboard:between64and128"),
       },
       {
         originTag: "BETWEEN_128_MB_AND_512_MB",
-        displayTag: "Between 128MB and 512MB",
+        displayTag: i18n.t("dashboard:between128and512"),
       },
       {
         originTag: "GREATER_THAN_512_MB",
-        displayTag: "Greater than 512MB",
+        displayTag: i18n.t("dashboard:greaterThan512"),
       },
     ],
     type: widgetType.barChart,
@@ -440,21 +441,21 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 53,
-    title: "Total Online Servers",
+    title: i18n.t("dashboard:totalOnlineServers"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-6",
   },
   {
     id: 69,
-    title: "Total Offline Servers",
+    title: i18n.t("dashboard:totalOfflineServers"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-7",
   },
   {
     id: 66,
-    title: "Number of Buckets",
+    title: i18n.t("dashboard:numberOfBuckets"),
     data: [],
     innerLabel: "N/A",
     type: widgetType.singleRep,
@@ -464,7 +465,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 44,
-    title: "Number of Objects",
+    title: i18n.t("dashboard:numberOfObjects"),
     data: [],
     innerLabel: "N/A",
     type: widgetType.singleRep,
@@ -474,7 +475,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 63,
-    title: "S3 API Data Received Rate",
+    title: i18n.t("dashboard:s3ApiDataRecievedRate"),
     data: [],
     widgetConfiguration: [
       {
@@ -491,7 +492,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 61,
-    title: "Total Open FDs",
+    title: i18n.t("dashboard:totalOpenFDs"),
     data: [],
     innerLabel: "N/A",
     type: widgetType.singleRep,
@@ -501,7 +502,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 62,
-    title: "Total Goroutines",
+    title: i18n.t("dashboard:totalGoroutines"),
     data: [],
     innerLabel: "N/A",
     type: widgetType.singleRep,
@@ -511,7 +512,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 77,
-    title: "Node CPU Usage",
+    title: i18n.t("dashboard:nodeCpuUsage"),
     data: [],
     widgetConfiguration: [
       {
@@ -528,7 +529,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 60,
-    title: "S3 API Request Rate",
+    title: i18n.t("dashboard:s3ApiRequestRate"),
     data: [],
     widgetConfiguration: [
       {
@@ -544,7 +545,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 70,
-    title: "S3 API Data Sent Rate",
+    title: i18n.t("dashboard:s3ApiDataSentRate"),
     data: [],
     widgetConfiguration: [
       {
@@ -561,7 +562,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 17,
-    title: "Internode Data Transfer",
+    title: i18n.t("dashboard:internodeDataTransfer"),
     data: [],
     widgetConfiguration: [
       {
@@ -578,7 +579,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 73,
-    title: "Node IO",
+    title: i18n.t("dashboard:nodeIO"),
     data: [],
     widgetConfiguration: [
       {
@@ -595,7 +596,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 80,
-    title: "Time Since Last Heal Activity",
+    title: i18n.t("dashboard:timeSinceLastHealActivity"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-20",
@@ -603,7 +604,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 81,
-    title: "Time Since Last Scan Activity",
+    title: i18n.t("dashboard:timeSinceLastScanActivity"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-21",
@@ -611,7 +612,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 71,
-    title: "S3 API Request Error Rate",
+    title: i18n.t("dashboard:s3ApiRequestErrorRate"),
     data: [],
     widgetConfiguration: [
       {
@@ -627,7 +628,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 76,
-    title: "Node Memory Usage",
+    title: i18n.t("dashboard:nodeMemoryUsage"),
     data: [],
     widgetConfiguration: [
       {
@@ -644,7 +645,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 74,
-    title: "Drive Used Capacity",
+    title:  i18n.t("dashboard:driveUsedCapacity"),
     data: [],
     widgetConfiguration: [
       {
@@ -661,7 +662,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 82,
-    title: "Drives Free Inodes",
+    title:  i18n.t("dashboard:drivesFreeInodes"),
     data: [],
     widgetConfiguration: [
       {
@@ -678,7 +679,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 11,
-    title: "Node Syscalls",
+    title: i18n.t("dashboard:nodeSyscalls"),
     data: [],
     widgetConfiguration: [
       {
@@ -695,7 +696,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 8,
-    title: "Node File Descriptors",
+    title: i18n.t("dashboard:nodeFileDescriptors"),
     data: [],
     widgetConfiguration: [
       {
@@ -712,7 +713,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 65,
-    title: "Total S3 Traffic Inbound",
+    title: i18n.t("dashboard:totalS3TrafficInbound"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-28",
@@ -720,7 +721,7 @@ export const panelsConfiguration: IDashboardPanel[] = [
   },
   {
     id: 64,
-    title: "Total S3 Traffic Outbound",
+    title: i18n.t("dashboard:totalS3TrafficOutbound"),
     data: "N/A",
     type: widgetType.singleValue,
     layoutIdentifier: "panel-29",

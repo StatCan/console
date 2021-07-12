@@ -33,6 +33,7 @@ import { fieldBasic, tooltipHelper } from "../common/styleLibrary";
 import HelpIcon from "../../../../../icons/HelpIcon";
 import FormSwitchWrapper from "../FormSwitchWrapper/FormSwitchWrapper";
 import { days, months, validDate, years } from "./utils";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -112,6 +113,8 @@ const DateSelector = forwardRef(
     const [day, setDay] = useState<string>("");
     const [year, setYear] = useState<string>("");
 
+    const { t } = useTranslation("common");
+
     useEffect(() => {
       // verify if there is a current value
       // assume is in the format "2021-12-30"
@@ -187,7 +190,7 @@ const DateSelector = forwardRef(
             </InputLabel>
             {addSwitch && (
               <FormSwitchWrapper
-                indicatorLabels={["Specific Date", "Default (7 Days)"]}
+                indicatorLabels={[t("specificDate"), t("defaultDays")]}
                 checked={dateEnabled}
                 value={"date_enabled"}
                 id="date-status"
@@ -217,7 +220,7 @@ const DateSelector = forwardRef(
               input={<SelectStyled />}
             >
               <MenuItem value="" disabled>
-                {"<Month>"}
+                {t("month")}
               </MenuItem>
               {months.map((option) => (
                 <MenuItem
@@ -242,7 +245,7 @@ const DateSelector = forwardRef(
               input={<SelectStyled />}
             >
               <MenuItem value="" disabled>
-                {"<Day>"}
+                {t("day")}
               </MenuItem>
               {days.map((dayNumber) => (
                 <MenuItem
@@ -267,7 +270,7 @@ const DateSelector = forwardRef(
               input={<SelectStyled />}
             >
               <MenuItem value="" disabled>
-                {"<Year>"}
+                {t("year")}
               </MenuItem>
               {years.map((year) => (
                 <MenuItem value={year} key={`select-${id}-yearOP-${year}`}>

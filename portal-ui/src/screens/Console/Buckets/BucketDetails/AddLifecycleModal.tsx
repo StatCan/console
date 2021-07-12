@@ -35,6 +35,7 @@ import DateSelector from "../../Common/FormComponents/DateSelector/DateSelector"
 import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapper";
 import QueryMultiSelector from "../../Common/FormComponents/QueryMultiSelector/QueryMultiSelector";
 import RadioGroupSelector from "../../Common/FormComponents/RadioGroupSelector/RadioGroupSelector";
+import { useTranslation } from "react-i18next";
 
 interface IReplicationModal {
   open: boolean;
@@ -90,6 +91,7 @@ const AddLifecycleModal = ({
   const [transitionDate, setTransitionDate] = useState<string>("");
   const [transitionType, setTransitionType] = useState<string>("date");
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   useEffect(() => {
     if (loadingTiers) {
@@ -223,7 +225,7 @@ const AddLifecycleModal = ({
       onClose={() => {
         closeModalAndRefresh(false);
       }}
-      title="Add Lifecycle Rule"
+      title={t("addLifecycleRule")}
     >
       {loadingTiers && (
         <Grid container className={classes.loadingBox}>
@@ -245,19 +247,19 @@ const AddLifecycleModal = ({
         >
           <Grid container>
             <Grid item xs={12} className={classes.formScrollable}>
-              <h3>Lifecycle Configuration</h3>
+              <h3> {t("lifecycleConfiguration")}</h3>
               <Grid item xs={12}>
                 <RadioGroupSelector
                   currentSelection={ilmType}
                   id="quota_type"
                   name="quota_type"
-                  label="ILM Rule"
+                  label={t("ilmRule")}
                   onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                     setIlmType(e.target.value as string);
                   }}
                   selectorOptions={[
-                    { value: "expiry", label: "Expiry" },
-                    { value: "transition", label: "Transition" },
+                    { value: "expiry", label: t("expiry") },
+                    { value: "transition", label: t("transition") },
                   ]}
                 />
               </Grid>
@@ -268,13 +270,13 @@ const AddLifecycleModal = ({
                       currentSelection={expiryType}
                       id="expiryType"
                       name="expiryType"
-                      label="Expiry Type"
+                      label={t("expiryType")}
                       onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                         setExpiryType(e.target.value as string);
                       }}
                       selectorOptions={[
-                        { value: "date", label: "Date" },
-                        { value: "days", label: "Days" },
+                        { value: "date", label: t("date") },
+                        { value: "days", label: t("days") },
                       ]}
                     />
                   </Grid>
@@ -282,7 +284,7 @@ const AddLifecycleModal = ({
                     {expiryType === "date" ? (
                       <DateSelector
                         id="expiry_date"
-                        label="Expiry Date"
+                        label={t("expiryDate")}
                         value={expiryDate}
                         borderBottom={true}
                         onDateChange={(date: string, isValid: boolean) => {
@@ -299,7 +301,7 @@ const AddLifecycleModal = ({
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setExpiryDays(e.target.value);
                         }}
-                        label="Expiry Days"
+                        label={t("expiryDays")}
                         value={expiryDays}
                         min="0"
                       />
@@ -313,7 +315,7 @@ const AddLifecycleModal = ({
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setNCExpirationDays(e.target.value);
                       }}
-                      label="Non-current Expiration Days"
+                      label={t("noncurrentExpirationDays")}
                       value={NCExpirationDays}
                       min="0"
                     />
@@ -326,13 +328,13 @@ const AddLifecycleModal = ({
                       currentSelection={transitionType}
                       id="transitionType"
                       name="transitionType"
-                      label="Transition Type"
+                      label={t("transitionType")}
                       onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                         setTransitionType(e.target.value as string);
                       }}
                       selectorOptions={[
-                        { value: "date", label: "Date" },
-                        { value: "days", label: "Days" },
+                        { value: "date", label: t("date") },
+                        { value: "days", label: t("days") },
                       ]}
                     />
                   </Grid>
@@ -340,7 +342,7 @@ const AddLifecycleModal = ({
                     {transitionType === "date" ? (
                       <DateSelector
                         id="transition_date"
-                        label="Transition Date"
+                        label={t("transitionDate")}
                         value={transitionDate}
                         borderBottom={true}
                         onDateChange={(date: string, isValid: boolean) => {
@@ -357,7 +359,7 @@ const AddLifecycleModal = ({
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setTransitionDays(e.target.value);
                         }}
-                        label="Transition Days"
+                        label={t("transitionDays")}
                         value={transitionDays}
                         min="0"
                       />
@@ -371,7 +373,7 @@ const AddLifecycleModal = ({
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setNCTransitionDays(e.target.value);
                       }}
-                      label="Non-current Transition Days"
+                      label={t("noncurrentExpirationDays")}
                       value={NCTransitionDays}
                       min="0"
                     />
@@ -383,14 +385,16 @@ const AddLifecycleModal = ({
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setNCTransitionSC(e.target.value);
                       }}
-                      placeholder="Set Non-current Version Transition Storage Class"
-                      label="Non-current Version Transition Storage Class"
+                      placeholder={t(
+                        "setNoncurrentVersionTransitionStorageClass"
+                      )}
+                      label={t("noncurrentVersionTransitionStorageClass")}
                       value={NCTransitionSC}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <SelectWrapper
-                      label="Storage Class"
+                      label={t("storageClass")}
                       id="storage_class"
                       name="storage_class"
                       value={storageClass}
@@ -402,7 +406,7 @@ const AddLifecycleModal = ({
                   </Grid>
                 </Fragment>
               )}
-              <h3>File Configuration</h3>
+              <h3>{t("fileConfig")}</h3>
               <Grid item xs={12}>
                 <InputBoxWrapper
                   id="prefix"
@@ -410,20 +414,20 @@ const AddLifecycleModal = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setPrefix(e.target.value);
                   }}
-                  label="Prefix"
+                  label={t("prefix")}
                   value={prefix}
                 />
               </Grid>
               <Grid item xs={12}>
                 <QueryMultiSelector
                   name="tags"
-                  label="Tags"
+                  label={t("tags")}
                   elements={""}
                   onChange={(vl: string) => {
                     setTags(vl);
                   }}
-                  keyPlaceholder="Tag Key"
-                  valuePlaceholder="Tag Value"
+                  keyPlaceholder={t("tagKey")}
+                  valuePlaceholder={t("tagValue")}
                   withBorder
                 />
               </Grid>
@@ -436,8 +440,8 @@ const AddLifecycleModal = ({
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     setExpiredObjectDM(event.target.checked);
                   }}
-                  label={"Expired Object Delete Marker"}
-                  indicatorLabels={["On", "Off"]}
+                  label={t("expiredObjectDeleteMarker")}
+                  indicatorLabels={[t("on"), t("off")]}
                 />
               </Grid>
             </Grid>
@@ -448,7 +452,7 @@ const AddLifecycleModal = ({
                 color="primary"
                 disabled={addLoading || !isFormValid}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
             {addLoading && (

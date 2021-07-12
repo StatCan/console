@@ -14,11 +14,13 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import i18n from "../../../i18n";
+
 export const menuGroups = [
   { label: "", group: "common", collapsible: false },
-  { label: "User", group: "User", collapsible: true },
-  { label: "Admin", group: "Admin", collapsible: true },
-  { label: "Tools", group: "Tools", collapsible: true },
-  { label: "Operator", group: "Operator", collapsible: false },
+  { label: i18n.t("menu:user"), group: "User", collapsible: true },
+  { label: i18n.t("menu:admin"), group: "Admin", collapsible: true },
+  { label: i18n.t("menu:tools"), group: "Tools", collapsible: true },
+  { label: i18n.t("menu:operator"), group: "Operator", collapsible: false },
   { label: "", group: "License", collapsible: false },
 ];

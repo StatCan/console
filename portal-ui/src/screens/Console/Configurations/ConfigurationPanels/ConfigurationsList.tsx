@@ -31,6 +31,7 @@ import {
 } from "../../Common/FormComponents/common/styleLibrary";
 import SlideOptions from "../../Common/SlideOptions/SlideOptions";
 import BackSettingsIcon from "../../../../icons/BackSettingsIcon";
+import { useTranslation } from "react-i18next";
 
 interface IListConfiguration {
   classes: any;
@@ -69,6 +70,7 @@ const ConfigurationsList = ({ classes }: IListConfiguration) => {
   const [selectedConfiguration, setSelectedConfiguration] =
     useState(initialConfiguration);
   const [currentConfiguration, setCurrentConfiguration] = useState<number>(0);
+  const { t } = useTranslation("configurations");
 
   const tableActions = [
     {
@@ -104,13 +106,13 @@ const ConfigurationsList = ({ classes }: IListConfiguration) => {
                       itemActions={tableActions}
                       columns={[
                         {
-                          label: "Configuration",
+                          label: t("configuration"),
                           elementKey: "configuration_id",
                         },
                       ]}
                       isLoading={false}
                       records={configurationElements}
-                      entityName="Configurations"
+                      entityName= {t("configurations")}
                       idField="configuration_id"
                       customPaperHeight={classes.customConfigurationPage}
                       noBackground
@@ -123,7 +125,7 @@ const ConfigurationsList = ({ classes }: IListConfiguration) => {
                         className={classes.backButton}
                       >
                         <BackSettingsIcon />
-                        Back To Configurations
+                        {t("backToConfigs")}
                       </button>
                     </Grid>
                     <Grid item xs={12}>

@@ -21,6 +21,7 @@ import { Grid } from "@material-ui/core";
 import BrowseBuckets from "./BrowseBuckets";
 import { containerForHeader } from "../Common/FormComponents/common/styleLibrary";
 import PageHeader from "../Common/PageHeader/PageHeader";
+import { useTranslation } from "react-i18next";
 
 interface IObjectBrowserProps {
   match: any;
@@ -74,10 +75,11 @@ const styles = (theme: Theme) =>
 
 const ObjectBrowser = ({ match, classes }: IObjectBrowserProps) => {
   const pathIn = get(match, "url", "");
-
+  const { t } = useTranslation("objectBrowser");
+  
   return (
     <React.Fragment>
-      <PageHeader label={"Object Browser"} />
+      <PageHeader label={t("objectBrowser")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           {pathIn === "/object-browser" && <BrowseBuckets />}

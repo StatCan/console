@@ -30,6 +30,7 @@ import { modalBasic } from "../../../../Common/FormComponents/common/styleLibrar
 import { setErrorSnackMessage } from "../../../../../../actions";
 import { ErrorResponseHandler } from "../../../../../../common/types";
 import api from "../../../../../../common/api";
+import { Trans, useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -85,6 +86,8 @@ const AddNamespaceModal = ({
     setAddNamespaceLoading(true);
   };
 
+  const { t } = useTranslation("tenants");
+
   return (
     <Dialog
       open={addNamespaceOpen}
@@ -94,12 +97,14 @@ const AddNamespaceModal = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Create new namespace</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("createNewNamespace")}</DialogTitle>
       <DialogContent>
         {addNamespaceLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to add a namespace called{" "}
-          <b className={classes.wrapText}>{namespace}</b>?
+          <Trans i18nKey="tenants:addNamespaceConfirmation">
+            Are you sure you want to add a namespace called{" "}
+            <b className={classes.wrapText}>{{namespace}}</b>?
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -112,7 +117,7 @@ const AddNamespaceModal = ({
           type="button"
           className={classes.clearButton}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={addNamespace}
@@ -121,7 +126,7 @@ const AddNamespaceModal = ({
           autoFocus
           disabled={addNamespaceLoading}
         >
-          Create Namespace
+          {t("createNamespace")}
         </Button>
       </DialogActions>
     </Dialog>

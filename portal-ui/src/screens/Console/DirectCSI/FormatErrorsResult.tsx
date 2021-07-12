@@ -25,6 +25,7 @@ import React from "react";
 import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import { IDirectCSIFormatResItem } from "./types";
+import { useTranslation } from "react-i18next";
 
 interface IFormatErrorsProps {
   open: boolean;
@@ -69,27 +70,28 @@ const FormatErrorsResult = ({
   errorsList,
   classes,
 }: IFormatErrorsProps) => {
+  const { t } = useTranslation("directCSI");
+  
   return (
     <ModalWrapper
       modalOpen={open}
-      title={"Format Errors"}
+      title={t("formatErrors")}
       onClose={onCloseFormatErrorsList}
     >
       <Grid container>
         <Grid item xs={12} className={classes.formScrollable}>
-          There were some issues trying to format the selected CSI Drives,
-          please fix the issues and try again.
+          {t("formatCSIdriveErr")}
           <br />
           <TableWrapper
             columns={[
               {
-                label: "Node",
+                label: t("node"),
                 elementKey: "node",
               },
-              { label: "Drive", elementKey: "drive" },
-              { label: "Message", elementKey: "error" },
+              { label: t("drive"), elementKey: "drive" },
+              { label: t("message"), elementKey: "error" },
             ]}
-            entityName="Format Errors"
+            entityName={t("formatErrors")}
             idField="drive"
             records={errorsList}
             isLoading={false}
@@ -105,10 +107,10 @@ const FormatErrorsResult = ({
             }}
             color="primary"
           >
-            Download
+            {t("download")}
           </Button>
           <Button onClick={onCloseFormatErrorsList} color="secondary" autoFocus>
-            Done
+            {t("done")}
           </Button>
         </Grid>
       </Grid>
