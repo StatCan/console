@@ -23,6 +23,7 @@ import {
   settingsCommon,
   typesSelection,
 } from "../../Common/FormComponents/common/styleLibrary";
+import { useTranslation } from "react-i18next";
 
 interface INotificationTypeSelector {
   classes: any;
@@ -46,12 +47,15 @@ const NotificationTypeSelector = ({
   classes,
   setService,
 }: INotificationTypeSelector) => {
+  
+  const { t } = useTranslation("configurations");
+
   return (
     <Fragment>
       <Grid container>
         <Grid item xs={12}>
           <Grid item xs={12} className={classes.customTitle}>
-            Pick a supported service
+            {t("pickSupportedService")}
           </Grid>
           <Grid item xs={12} className={classes.centerElements}>
             <div className={classes.nonIconContainer}>

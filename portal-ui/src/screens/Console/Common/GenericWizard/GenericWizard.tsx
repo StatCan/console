@@ -19,6 +19,7 @@ import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { IWizardMain } from "./types";
 import WizardPage from "./WizardPage";
 import { Grid } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -115,6 +116,7 @@ const GenericWizard = ({
   forModal,
 }: IWizardMain) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const { t } = useTranslation("common");
 
   const pageChange = (toElement: string | number) => {
     const lastPage = wizardSteps.length - 1;
@@ -185,7 +187,9 @@ const GenericWizard = ({
       {forModal ? (
         <Fragment>
           <div className={classes.stepsMasterContainer}>
-            <div className={`${classes.stepsLabel} stepsModalTitle`}>Steps</div>
+            <div className={`${classes.stepsLabel} stepsModalTitle`}>
+              {t("steps")}
+            </div>
             <div className={classes.modalWizardSteps}>{stepsList()}</div>
           </div>
         </Fragment>
@@ -193,7 +197,7 @@ const GenericWizard = ({
         <Fragment>
           <Grid item xs={12} sm={3} md={3} lg={3} xl={2}>
             <div className={classes.wizardSteps}>
-              <span className={classes.stepsLabel}>Steps</span>
+              <span className={classes.stepsLabel}>{t("steps")}</span>
               {stepsList()}
             </div>
           </Grid>

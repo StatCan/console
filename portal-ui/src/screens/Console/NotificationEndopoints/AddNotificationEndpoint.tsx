@@ -43,6 +43,7 @@ import ConfTargetGeneric from "../Configurations/ConfTargetGeneric";
 import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import ConfPostgres from "../Configurations/CustomForms/ConfPostgres";
 import api from "../../../common/api";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -146,6 +147,8 @@ const AddNotificationEndpoint = ({
   const [service, setService] = useState<string>("");
   const [valuesArr, setValueArr] = useState<IElementValue[]>([]);
   const [saving, setSaving] = useState<boolean>(false);
+
+  const { t } = useTranslation("notificationEndpoints");
 
   //Effects
   useEffect(() => {
@@ -276,7 +279,7 @@ const AddNotificationEndpoint = ({
       {service === "" && (
         <Grid container>
           <Grid item xs={12}>
-            <div className={classes.pickTitle}>Pick a supported service:</div>
+            <div className={classes.pickTitle}>{t("pickSupportedServiceColon")}</div>
             <div className={classes.nonIconContainer}>
               {nonLogos.map((item) => {
                 return (
@@ -342,7 +345,7 @@ const AddNotificationEndpoint = ({
                   {targetElement ? targetElement.targetTitle : ""}
                 </div>
                 <div className={classes.lambdaSubname}>
-                  Add Lambda Notification Target
+                  {t("addLambdaNotifTarget")}
                 </div>
               </div>
             </Grid>
@@ -356,7 +359,7 @@ const AddNotificationEndpoint = ({
                 className={classes.clearButton}
                 onClick={goBack}
               >
-                Back
+                {t("back")}
               </button>
               <Button
                 type="submit"
@@ -364,7 +367,7 @@ const AddNotificationEndpoint = ({
                 color="primary"
                 disabled={saving}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
             <Grid item xs={9} />

@@ -23,6 +23,7 @@ import { containerForHeader } from "../Common/FormComponents/common/styleLibrary
 import ErrorLogs from "./ErrorLogs/ErrorLogs";
 import LogsSearchMain from "./LogSearch/LogsSearchMain";
 import { AppState } from "../../../store";
+import { useTranslation } from "react-i18next";
 
 interface ILogsMainProps {
   classes: any;
@@ -45,9 +46,11 @@ const LogsMain = ({ classes, features }: ILogsMainProps) => {
 
   const logSearchEnabled = features && features.includes("log-search");
 
+  const { t } = useTranslation("logs");
+
   return (
     <Fragment>
-      <PageHeader label="Logs" />
+      <PageHeader label={t("logs")} />
       <Grid container className={classes.container}>
         <Grid item xs={2}>
           <List component="nav" dense={true}>
@@ -58,7 +61,7 @@ const LogsMain = ({ classes, features }: ILogsMainProps) => {
                 setCurrentTab(0);
               }}
             >
-              <ListItemText primary="Error Logs" />
+              <ListItemText primary={t("errorLogs")} />
             </ListItem>
             <ListItem
               button
@@ -68,20 +71,20 @@ const LogsMain = ({ classes, features }: ILogsMainProps) => {
                 setCurrentTab(1);
               }}
             >
-              <ListItemText primary="Audit Logs" />
+              <ListItemText primary={t("auditLogs")} />
             </ListItem>
           </List>
         </Grid>
         <Grid item xs={10}>
           {currentTab === 0 && (
             <Fragment>
-              <h1 className={classes.sectionTitle}>Error Logs</h1>
+              <h1 className={classes.sectionTitle}>{t("errorLogs")}</h1>
               <ErrorLogs />
             </Fragment>
           )}
           {currentTab === 1 && logSearchEnabled && (
             <Fragment>
-              <h1 className={classes.sectionTitle}>Audit Logs</h1>
+              <h1 className={classes.sectionTitle}>{t("auditLogs")}</h1>
               <LogsSearchMain />
             </Fragment>
           )}

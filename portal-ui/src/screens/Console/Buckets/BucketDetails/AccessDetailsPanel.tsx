@@ -30,6 +30,7 @@ import { ErrorResponseHandler } from "../../../../common/types";
 import TableWrapper from "../../Common/TableWrapper/TableWrapper";
 import api from "../../../../common/api";
 import history from "../../../../history";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) => createStyles({});
 
@@ -67,6 +68,7 @@ const AccessDetails = ({
   const [bucketPolicy, setBucketPolicy] = useState<Policy[]>([]);
   const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
   const [bucketUsers, setBucketUsers] = useState<User[]>([]);
+  const { t } = useTranslation("bucketsDetails");
 
   const bucketName = match.params["bucketName"];
 
@@ -129,7 +131,7 @@ const AccessDetails = ({
 
   return (
     <Fragment>
-      <h1 className={classes.sectionTitle}>Access Audit</h1>
+      <h1 className={classes.sectionTitle}>{t("accessAudit")}</h1>
       <Tabs
         value={curTab}
         onChange={(e: React.ChangeEvent<{}>, newValue: number) => {
@@ -137,22 +139,22 @@ const AccessDetails = ({
         }}
         indicatorColor="primary"
         textColor="primary"
-        aria-label="cluster-tabs"
+        aria-label={t("clusterTabs")}
         variant="scrollable"
         scrollButtons="auto"
       >
-        <Tab label="Policies" {...a11yProps(0)} />
-        {usersEnabled && <Tab label="Users" {...a11yProps(1)} />}
+        <Tab label={t("policies")} {...a11yProps(0)} />
+        {usersEnabled && <Tab label={t("users")} {...a11yProps(1)} />}
       </Tabs>
       <Paper>
         <TabPanel index={0} value={curTab}>
           <TableWrapper
             noBackground={true}
             itemActions={PolicyActions}
-            columns={[{ label: "Name", elementKey: "name" }]}
+            columns={[{ label: t("name"), elementKey: "name" }]}
             isLoading={loadingPolicies}
             records={bucketPolicy}
-            entityName="Policies"
+            entityName={t("policies")}
             idField="name"
           />
         </TabPanel>
@@ -161,10 +163,10 @@ const AccessDetails = ({
             <TableWrapper
               noBackground={true}
               itemActions={userTableActions}
-              columns={[{ label: "User", elementKey: "accessKey" }]}
+              columns={[{ label: t("user"), elementKey: "accessKey" }]}
               isLoading={loadingUsers}
               records={bucketUsers}
-              entityName="Users"
+              entityName={t("users")}
               idField="accessKey"
             />
           </TabPanel>

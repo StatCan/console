@@ -29,6 +29,7 @@ import api from "../../../common/api";
 import { PolicyList } from "./types";
 import { setErrorSnackMessage } from "../../../actions";
 import { ErrorResponseHandler } from "../../../common/types";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeletePolicyProps {
   closeDeleteModalAndRefresh: (refresh: boolean) => void;
@@ -44,6 +45,9 @@ const DeletePolicy = ({
   setErrorSnackMessage,
 }: IDeletePolicyProps) => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+
+  const { t } = useTranslation("policies");
+
   const removeRecord = () => {
     if (deleteLoading) {
       return;
@@ -70,11 +74,13 @@ const DeletePolicy = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Policy</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deletePolicy")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete policy <b>{selectedPolicy}</b>?.
+          <Trans i18nKey="policies:deletePolicyConfirmation">
+            Are you sure you want to delete policy <b>{{selectedPolicy}}</b>?.
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -85,7 +91,7 @@ const DeletePolicy = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -94,7 +100,7 @@ const DeletePolicy = ({
           color="secondary"
           autoFocus
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

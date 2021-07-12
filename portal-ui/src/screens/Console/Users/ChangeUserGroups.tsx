@@ -25,6 +25,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
 import GroupsSelectors from "./GroupsSelectors";
 import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -60,6 +61,8 @@ const ChangeUserGroups = ({
   const [secretKey, setSecretKey] = useState<string>("");
   const [enabled, setEnabled] = useState<boolean>(false);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+
+  const { t } = useTranslation("users");
 
   const getUserInformation = useCallback(() => {
     if (!selectedUser) {
@@ -149,7 +152,7 @@ const ChangeUserGroups = ({
         closeModalAndRefresh();
       }}
       modalOpen={open}
-      title={"Set Groups"}
+      title={t("setGroups")}
     >
       <React.Fragment>
         <form
@@ -179,7 +182,7 @@ const ChangeUserGroups = ({
                   resetForm();
                 }}
               >
-                Clear
+                {t("clear")}
               </button>
               <Button
                 type="submit"
@@ -187,7 +190,7 @@ const ChangeUserGroups = ({
                 color="primary"
                 disabled={addLoading || !sendEnabled}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
             {addLoading && (

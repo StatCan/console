@@ -84,6 +84,9 @@ import FolderIcon from "../../../../../../icons/FolderIcon";
 import RefreshIcon from "../../../../../../icons/RefreshIcon";
 import SearchIcon from "../../../../../../icons/SearchIcon";
 import UploadIcon from "../../../../../../icons/UploadIcon";
+import { useTranslation } from "react-i18next";
+import i18next from "i18next";
+import "moment/min/locales";
 
 const commonIcon = {
   backgroundRepeat: "no-repeat",
@@ -218,7 +221,13 @@ function useInterval(callback: any, delay: number) {
   }, [delay]);
 }
 
-const defLoading = <Typography component="h3">Loading...</Typography>;
+const defLoading = (
+  <Typography component="h3">
+    {i18next.loadNamespaces("listBuckets").then(() => {
+      i18next.t("listBuckets:loading");
+    })}
+  </Typography>
+);
 
 const ListObjects = ({
   classes,
@@ -249,6 +258,9 @@ const ListObjects = ({
   const [selectedBucket, setSelectedBucket] = useState<string>("");
   const [filterObjects, setFilterObjects] = useState<string>("");
   const [loadingStartTime, setLoadingStartTime] = useState<number>(0);
+
+  const { i18n, t } = useTranslation("listBuckets");
+
   const [loadingMessage, setLoadingMessage] =
     useState<React.ReactNode>(defLoading);
   const [loadingVersioning, setLoadingVersioning] = useState<boolean>(true);
@@ -273,16 +285,15 @@ const ListObjects = ({
       setLoadingMessage(
         <React.Fragment>
           <Typography component="h3">
-            This operation is taking longer than expected... (
-            {Math.ceil(timeDelta / 1000)}s)
+            {t("operationIsTakingLongerSeconds", {
+              seconds: Math.ceil(timeDelta / 1000),
+            })}
           </Typography>
         </React.Fragment>
       );
     } else if (timeDelta / 1000 >= 3) {
       setLoadingMessage(
-        <Typography component="h3">
-          This operation is taking longer than expected...
-        </Typography>
+        <Typography component="h3">{t("operationIsTakingLonger")}</Typography>
       );
     }
   };
@@ -472,7 +483,9 @@ const ListObjects = ({
     setDeleteOpen(false);
 
     if (refresh) {
-      setSnackBarMessage(`Object '${selectedObject}' deleted successfully.`);
+      setSnackBarMessage(
+        t("deleteObjectSuccess", { selectedObject: `${selectedObject}` })
+      );
       setLoading(true);
     }
   };
@@ -481,7 +494,7 @@ const ListObjects = ({
     setDeleteMultipleOpen(false);
 
     if (refresh) {
-      setSnackBarMessage(`Objects deleted successfully.`);
+      setSnackBarMessage(t("deleteObjectsSuccess"));
       setSelectedObjects([]);
       setLoading(true);
     }
@@ -508,14 +521,8 @@ const ListObjects = ({
       uploadUrl = `${uploadUrl}?prefix=${encodedPath}`;
     }
     let xhr = new XMLHttpRequest();
-    const areMultipleFiles = files.length > 1 ? true : false;
-    const errorMessage = `An error occurred while uploading the file${
-      areMultipleFiles ? "s" : ""
-    }.`;
-    const okMessage = `Object${
-      areMultipleFiles ? "s" : ``
-    } uploaded successfully.`;
-
+    const errorMessage = t("errorMessage", { count: files.length });
+    const okMessage = t("okMessage", { count: files.length });
     xhr.open("POST", uploadUrl, true);
 
     xhr.withCredentials = false;
@@ -565,7 +572,14 @@ const ListObjects = ({
     if (object.name.endsWith("/")) {
       return "";
     }
-    return <reactMoment.default>{object.last_modified}</reactMoment.default>;
+    return (
+      <reactMoment.default
+        locale={i18n.language}
+        format="ddd MMM DD YYYY HH:mm:ss ZZ"
+      >
+        {object.last_modified}
+      </reactMoment.default>
+    );
   };
 
   const displayNiceBytes = (object: BucketObject) => {
@@ -591,9 +605,7 @@ const ListObjects = ({
   const downloadObject = (object: BucketObject) => {
     if (object.size > 104857600) {
       // If file is bigger than 100MB we show a notification
-      setSnackBarMessage(
-        "Download process started, it may take a few moments to complete"
-      );
+      setSnackBarMessage(t("downloadStarted"));
     }
 
     download(
@@ -749,18 +761,18 @@ const ListObjects = ({
 
   const listModeColumns = [
     {
-      label: "Name",
+      label: t("name"),
       elementKey: "name",
       renderFunction: displayName,
     },
     {
-      label: "Last Modified",
+      label: t("lastModified"),
       elementKey: "last_modified",
       renderFunction: displayParsedDate,
       renderFullObject: true,
     },
     {
-      label: "Size",
+      label: t("size"),
       elementKey: "size",
       renderFunction: displayNiceBytes,
       renderFullObject: true,
@@ -771,18 +783,18 @@ const ListObjects = ({
 
   const rewindModeColumns = [
     {
-      label: "Name",
+      label: t("name"),
       elementKey: "name",
       renderFunction: displayName,
     },
     {
-      label: "Object Date",
+      label: t("objectDate"),
       elementKey: "last_modified",
       renderFunction: displayParsedDate,
       renderFullObject: true,
     },
     {
-      label: "Size",
+      label: t("size"),
       elementKey: "size",
       renderFunction: displayNiceBytes,
       renderFullObject: true,
@@ -790,7 +802,7 @@ const ListObjects = ({
       contentTextAlign: "right",
     },
     {
-      label: "Deleted",
+      label: t("deleted"),
       elementKey: "delete_flag",
       renderFunction: displayDeleteFlag,
       width: 60,
@@ -798,7 +810,7 @@ const ListObjects = ({
     },
   ];
 
-  let pageTitle = "Folder";
+  let pageTitle = t("folder");
 
   if (match) {
     if ("bucket" in match.params) {
@@ -850,7 +862,7 @@ const ListObjects = ({
         />
       )}
 
-      <PageHeader label="Object Browser" />
+      <PageHeader label={t("objectBrowser")} />
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <ScreenTitle
@@ -867,10 +879,10 @@ const ListObjects = ({
             }
             actions={
               <Fragment>
-                <Tooltip title={"Choose or create a new path"}>
+                <Tooltip title={t<string>("chooseOrCreatePath")}>
                   <IconButton
                     color="primary"
-                    aria-label="Add a new folder"
+                    aria-label={t("chooseOrCreatePath")}
                     component="span"
                     onClick={() => {
                       setCreateFolderOpen(true);
@@ -881,10 +893,10 @@ const ListObjects = ({
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title={"Upload file"}>
+                <Tooltip title={t<string>("uploadFile")}>
                   <IconButton
                     color="primary"
-                    aria-label="Refresh List"
+                    aria-label={t("refreshList")}
                     component="span"
                     onClick={() => {
                       if (fileUpload && fileUpload.current) {
@@ -905,7 +917,7 @@ const ListObjects = ({
                   style={{ display: "none" }}
                   ref={fileUpload}
                 />
-                <Tooltip title={"Rewind"}>
+                <Tooltip title={t<string>("rewind")}>
                   <Badge
                     badgeContent=" "
                     color="secondary"
@@ -915,7 +927,7 @@ const ListObjects = ({
                   >
                     <IconButton
                       color="primary"
-                      aria-label="Rewind"
+                      aria-label={t("rewind")}
                       component="span"
                       onClick={() => {
                         setRewindSelect(true);
@@ -926,10 +938,10 @@ const ListObjects = ({
                     </IconButton>
                   </Badge>
                 </Tooltip>
-                <Tooltip title={"Refresh list"}>
+                <Tooltip title={t<string>("refreshList")}>
                   <IconButton
                     color="primary"
-                    aria-label="Refresh List"
+                    aria-label={t("refreshList")}
                     component="span"
                     onClick={() => {
                       setLoading(true);
@@ -945,7 +957,7 @@ const ListObjects = ({
         </Grid>
         <Grid item xs={12} className={classes.actionsTray}>
           <TextField
-            placeholder="Search Objects"
+            placeholder={t("searchObjects")}
             className={classes.searchField}
             id="search-resource"
             label=""
@@ -971,7 +983,7 @@ const ListObjects = ({
             }}
             disabled={selectedObjects.length === 0}
           >
-            Delete Selected
+            {t("deleteSelected")}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -983,7 +995,7 @@ const ListObjects = ({
             columns={rewindEnabled ? rewindModeColumns : listModeColumns}
             isLoading={rewindEnabled ? loadingRewind : loading}
             loadingMessage={loadingMessage}
-            entityName="Rewind Objects"
+            entityName={t("rewindObjects")}
             idField="name"
             records={rewindEnabled ? rewind : filteredRecords}
             customPaperHeight={classes.browsePaper}

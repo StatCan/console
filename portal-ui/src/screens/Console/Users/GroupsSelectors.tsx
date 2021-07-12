@@ -34,6 +34,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
 import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IGroupsProps {
   classes: any;
@@ -114,6 +115,8 @@ const GroupsSelectors = ({
   setSelectedGroups,
   setModalErrorSnackMessage,
 }: IGroupsProps) => {
+  const { t } = useTranslation("users");
+
   // Local State
   const [records, setRecords] = useState<any[]>([]);
   const [loading, isLoading] = useState<boolean>(false);
@@ -180,9 +183,9 @@ const GroupsSelectors = ({
         {records != null && records.length > 0 ? (
           <React.Fragment>
             <Grid item xs={12} className={classes.actionsTray}>
-              <span className={classes.actionsTitle}>Assign Groups</span>
+              <span className={classes.actionsTitle}>{t("assignGroups")}</span>
               <TextField
-                placeholder="Filter by Group"
+                placeholder={t("filterByGroup")}
                 className={classes.filterField}
                 id="search-resource"
                 label=""
@@ -200,19 +203,19 @@ const GroupsSelectors = ({
             </Grid>
             <Grid item xs={12} className={classes.tableBlock}>
               <TableWrapper
-                columns={[{ label: "Group", elementKey: "" }]}
+                columns={[{ label: t("group"), elementKey: "" }]}
                 onSelect={selectionChanged}
                 selectedItems={selGroups}
                 isLoading={loading}
                 records={filteredRecords}
-                entityName="Groups"
+                entityName={t("groups")}
                 idField=""
                 customPaperHeight={classes.multiSelectTable}
               />
             </Grid>
           </React.Fragment>
         ) : (
-          <div className={classes.noFound}>No Groups Available</div>
+          <div className={classes.noFound}>{t("noGroupsAvailable")}</div>
         )}
       </Grid>
     </React.Fragment>

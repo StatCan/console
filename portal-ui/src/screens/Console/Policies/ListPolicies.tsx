@@ -38,6 +38,7 @@ import PageHeader from "../Common/PageHeader/PageHeader";
 import api from "../../../common/api";
 import history from "../../../history";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -84,6 +85,8 @@ const ListPolicies = ({ classes, setErrorSnackMessage }: IPoliciesProps) => {
   const [selectedPolicy, setSelectedPolicy] = useState<string>("");
   const [filterPolicies, setFilterPolicies] = useState<string>("");
   const [policyEdit, setPolicyEdit] = useState<any>(null);
+
+  const { t } = useTranslation("policies");
 
   useEffect(() => {
     fetchRecords();
@@ -172,12 +175,12 @@ const ListPolicies = ({ classes, setErrorSnackMessage }: IPoliciesProps) => {
           closeDeleteModalAndRefresh={closeDeleteModalAndRefresh}
         />
       )}
-      <PageHeader label="IAM Policies" />
+      <PageHeader label={t("iamPolicies")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12} className={classes.actionsTray}>
             <TextField
-              placeholder="Search Policies"
+              placeholder={t("searchPolicies")}
               className={classes.searchField}
               id="search-resource"
               label=""
@@ -202,7 +205,7 @@ const ListPolicies = ({ classes, setErrorSnackMessage }: IPoliciesProps) => {
                 setPolicyEdit(null);
               }}
             >
-              Create Policy
+              {t("createPolicy")}
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -211,10 +214,10 @@ const ListPolicies = ({ classes, setErrorSnackMessage }: IPoliciesProps) => {
           <Grid item xs={12}>
             <TableWrapper
               itemActions={tableActions}
-              columns={[{ label: "Name", elementKey: "name" }]}
+              columns={[{ label: t("name"), elementKey: "name" }]}
               isLoading={loading}
               records={filteredRecords}
-              entityName="Policies"
+              entityName={t("policies")}
               idField="name"
             />
           </Grid>

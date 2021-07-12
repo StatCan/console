@@ -32,6 +32,8 @@ import {
 import FormSwitchWrapper from "../../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import InputBoxWrapper from "../../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import SelectWrapper from "../../../Common/FormComponents/SelectWrapper/SelectWrapper";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../../i18n";
 
 interface IConfigureProps {
   updateAddField: typeof updateAddField;
@@ -104,6 +106,7 @@ const Configure = ({
   selectedStorageClass,
 }: IConfigureProps) => {
   const [validationErrors, setValidationErrors] = useState<any>({});
+  const { t } = useTranslation("tenants");
 
   // Common
   const updateField = useCallback(
@@ -125,7 +128,7 @@ const Configure = ({
           required: true,
           value: prometheusSelectedStorageClass,
           customValidation: prometheusSelectedStorageClass === "",
-          customValidationMessage: "Field cannot be empty",
+          customValidationMessage: i18n.t("tenants:fieldCannotBeEmpty"),
         },
         {
           fieldKey: "prometheus_volume_size",
@@ -133,7 +136,7 @@ const Configure = ({
           value: prometheusVolumeSize,
           customValidation:
             prometheusVolumeSize === "" || parseInt(prometheusVolumeSize) <= 0,
-          customValidationMessage: `Volume size must be present and be greatter than 0`,
+          customValidationMessage: i18n.t("tenants:minVolumeSize"),
         },
       ];
     }
@@ -145,7 +148,7 @@ const Configure = ({
           required: true,
           value: logSearchSelectedStorageClass,
           customValidation: logSearchSelectedStorageClass === "",
-          customValidationMessage: "Field cannot be empty",
+          customValidationMessage: i18n.t("tenants:fieldCannotBeEmpty"),
         },
         {
           fieldKey: "log_search_volume_size",
@@ -153,7 +156,7 @@ const Configure = ({
           value: logSearchVolumeSize,
           customValidation:
             logSearchVolumeSize === "" || parseInt(logSearchVolumeSize) <= 0,
-          customValidationMessage: `Volume size must be present and be greatter than 0`,
+          customValidationMessage: i18n.t("tenants:minVolumeSize"),
         },
       ];
     }
@@ -166,62 +169,56 @@ const Configure = ({
           required: false,
           value: imageName,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage: "Format must be of form: 'minio/minio:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPattern"),
         },
         {
           fieldKey: "logSearchImage",
           required: false,
           value: logSearchImage,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage:
-            "Format must be of form: 'minio/logsearchapi:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPatternLogSearch"),
         },
         {
           fieldKey: "kesImage",
           required: false,
           value: kesImage,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage: "Format must be of form: 'minio/kes:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPatternKes"),
         },
         {
           fieldKey: "logSearchPostgresImage",
           required: false,
           value: logSearchPostgresImage,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage:
-            "Format must be of form: 'library/postgres:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPatternPostgres"),
         },
         {
           fieldKey: "logSearchPostgresInitImage",
           required: false,
           value: logSearchPostgresInitImage,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage:
-            "Format must be of form: 'library/busybox:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPatternInit"),
         },
         {
           fieldKey: "prometheusImage",
           required: false,
           value: prometheusImage,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage:
-            "Format must be of form: 'minio/prometheus:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPatternPrometheus"),
         },
         {
           fieldKey: "prometheusSidecarImage",
           required: false,
           value: prometheusSidecarImage,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage:
-            "Format must be of form: 'project/container:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPatternSidecar"),
         },
         {
           fieldKey: "prometheusInitImage",
           required: false,
           value: prometheusInitImage,
           pattern: /^((.*?)\/(.*?):(.+))$/,
-          customPatternMessage:
-            "Format must be of form: 'library/busybox:VERSION'",
+          customPatternMessage: i18n.t("tenants:formatPatternInit"),
         },
       ];
       if (customDockerhub) {
@@ -306,9 +303,9 @@ const Configure = ({
   return (
     <Fragment>
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Configure</h3>
+        <h3 className={classes.h3Section}>{t("configure")}</h3>
         <span className={classes.descriptionText}>
-          Basic configurations for tenant management
+          {t("basicConfigurations")}
         </span>
       </div>
 
@@ -323,12 +320,12 @@ const Configure = ({
             const checked = targetD.checked;
             updateField("customImage", checked);
           }}
-          label={"Use custom image"}
+          label={t("useCustomImage")}
         />
       </Grid>
       {customImage && (
         <Fragment>
-          Please enter the MinIO docker image to use
+          {t("pleaseEnterMinioImage")}
           <Grid item xs={12}>
             <InputBoxWrapper
               id="image"
@@ -337,10 +334,12 @@ const Configure = ({
                 updateField("imageName", e.target.value);
                 cleanValidation("image");
               }}
-              label="MinIO's Image"
+              label={t("miniosImage")}
               value={imageName}
               error={validationErrors["image"] || ""}
-              placeholder="E.g. minio/minio:RELEASE.2021-08-20T18-32-01Z"
+              placeholder={t("imageExample", {
+                image: "minio/minio:RELEASE.2021-08-20T18-32-01Z",
+              })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -351,10 +350,12 @@ const Configure = ({
                 updateField("logSearchImage", e.target.value);
                 cleanValidation("logSearchImage");
               }}
-              label="Log Search API's Image"
+              label={t("logSearchImage")}
               value={logSearchImage}
               error={validationErrors["logSearchImage"] || ""}
-              placeholder="E.g. minio/logsearchapi:v4.1.1"
+              placeholder={t("imageExample", {
+                image: "minio/logsearchapi:v4.1.1",
+              })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -365,10 +366,10 @@ const Configure = ({
                 updateField("kesImage", e.target.value);
                 cleanValidation("kesImage");
               }}
-              label="KES Image"
+              label={t("kesImage")}
               value={kesImage}
               error={validationErrors["kesImage"] || ""}
-              placeholder="E.g. minio/kes:v0.14.0"
+              placeholder={t("imageExample", { image: "minio/kes:v0.14.0" })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -379,10 +380,12 @@ const Configure = ({
                 updateField("logSearchPostgresImage", e.target.value);
                 cleanValidation("logSearchPostgresImage");
               }}
-              label="Log Search Postgres's Image"
+              label={t("postgresImage")}
               value={logSearchPostgresImage}
               error={validationErrors["logSearchPostgresImage"] || ""}
-              placeholder="E.g. library/postgres:13"
+              placeholder={t("imageExample", {
+                image: "library/postgres:13",
+              })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -393,10 +396,12 @@ const Configure = ({
                 updateField("logSearchPostgresInitImage", e.target.value);
                 cleanValidation("logSearchPostgresInitImage");
               }}
-              label="Log Search Postgres's Init Image"
+              label={t("postgresInitImage")}
               value={logSearchPostgresInitImage}
               error={validationErrors["logSearchPostgresInitImage"] || ""}
-              placeholder="E.g. library/busybox:1.33.1"
+              placeholder={t("imageExample", {
+                image: "library/busybox:1.33.1",
+              })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -407,10 +412,12 @@ const Configure = ({
                 updateField("prometheusImage", e.target.value);
                 cleanValidation("prometheusImage");
               }}
-              label="Prometheus Image"
+              label={t("prometheusImage")}
               value={prometheusImage}
               error={validationErrors["prometheusImage"] || ""}
-              placeholder="E.g. quay.io/prometheus/prometheus:latest"
+              placeholder={t("imageExample", {
+                image: "quay.io/prometheus/prometheus:latest",
+              })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -421,10 +428,12 @@ const Configure = ({
                 updateField("prometheusSidecarImage", e.target.value);
                 cleanValidation("prometheusSidecarImage");
               }}
-              label="Prometheus Sidecar Image"
+              label={t("prometheusSidecarImage")}
               value={prometheusSidecarImage}
               error={validationErrors["prometheusSidecarImage"] || ""}
-              placeholder="E.g. quay.io/prometheus/prometheus:latest"
+              placeholder={t("imageExample", {
+                image: "quay.io/prometheus/prometheus:latest",
+              })}
             />
           </Grid>
           <Grid item xs={12}>
@@ -435,10 +444,12 @@ const Configure = ({
                 updateField("prometheusInitImage", e.target.value);
                 cleanValidation("prometheusInitImage");
               }}
-              label="Prometheus Init Image"
+              label={t("prometheusInitImage")}
               value={prometheusInitImage}
               error={validationErrors["prometheusInitImage"] || ""}
-              placeholder="E.g. quay.io/prometheus/prometheus:latest"
+              placeholder={t("imageExample", {
+                image: "quay.io/prometheus/prometheus:latest",
+              })}
             />
           </Grid>
         </Fragment>
@@ -457,7 +468,7 @@ const Configure = ({
 
                 updateField("customDockerhub", checked);
               }}
-              label={"Set/Update Image Registry"}
+              label={t("setUpdateImageRegistry")}
             />
           </Grid>
         </Fragment>
@@ -471,10 +482,12 @@ const Configure = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("imageRegistry", e.target.value);
               }}
-              label="Endpoint"
+              label={t("endpoint")}
               value={imageRegistry}
               error={validationErrors["registry"] || ""}
-              placeholder="E.g. https://index.docker.io/v1/"
+              placeholder={t("endpointExample", {
+                link: "https://index.docker.io/v1/",
+              })}
               required
             />
           </Grid>
@@ -485,7 +498,7 @@ const Configure = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("imageRegistryUsername", e.target.value);
               }}
-              label="Username"
+              label={t("username")}
               value={imageRegistryUsername}
               error={validationErrors["registryUsername"] || ""}
               required
@@ -498,7 +511,7 @@ const Configure = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 updateField("imageRegistryPassword", e.target.value);
               }}
-              label="Password"
+              label={t("password")}
               value={imageRegistryPassword}
               error={validationErrors["registryPassword"] || ""}
               required
@@ -507,9 +520,9 @@ const Configure = ({
         </Fragment>
       )}
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Expose Services</h3>
+        <h3 className={classes.h3Section}>{t("exposeService")}</h3>
         <span className={classes.descriptionText}>
-          Whether the tenant's services should request an external IP.
+          {t("whetherTenantService")}
         </span>
       </div>
       <Grid item xs={12}>
@@ -524,7 +537,7 @@ const Configure = ({
 
             updateField("exposeMinIO", checked);
           }}
-          label={"Expose MiniO Service"}
+          label={t("exposeMinioService")}
         />
       </Grid>
       <Grid item xs={12}>
@@ -539,15 +552,14 @@ const Configure = ({
 
             updateField("exposeConsole", checked);
           }}
-          label={"Expose Console Service"}
+          label={t("exposeConsoleService")}
         />
       </Grid>
 
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Additional Configurations</h3>
+        <h3 className={classes.h3Section}>{t("additionalConfigs")}</h3>
         <span className={classes.descriptionText}>
-          Configure Storage Classes & Storage size for Log Search and Prometheus
-          add-ons
+          {t("configureStorageClasses")}
         </span>
       </div>
       <Grid item xs={12}>
@@ -562,7 +574,7 @@ const Configure = ({
 
             updateField("logSearchCustom", checked);
           }}
-          label={"Override Log Search defaults"}
+          label={t("overrideLogSearch")}
         />
       </Grid>
       {logSearchCustom && (
@@ -577,7 +589,7 @@ const Configure = ({
                   e.target.value as string
                 );
               }}
-              label="Log Search Storage Class"
+              label={t("logSearchStorageClass")}
               value={logSearchSelectedStorageClass}
               options={storageClasses}
               disabled={storageClasses.length < 1}
@@ -594,7 +606,7 @@ const Configure = ({
                     updateField("logSearchVolumeSize", e.target.value);
                     cleanValidation("log_search_volume_size");
                   }}
-                  label="Storage Size [Gi]"
+                  label={t("storageSize")}
                   value={logSearchVolumeSize}
                   required
                   error={validationErrors["log_search_volume_size"] || ""}
@@ -618,7 +630,7 @@ const Configure = ({
 
             updateField("prometheusCustom", checked);
           }}
-          label={"Override Prometheus defaults"}
+          label={t("overridePrometheusdefaults")}
         />
       </Grid>
       {prometheusCustom && (
@@ -633,7 +645,7 @@ const Configure = ({
                   e.target.value as string
                 );
               }}
-              label="Prometheus Storage Class"
+              label={t("prometheusStorageClass")}
               value={prometheusSelectedStorageClass}
               options={storageClasses}
               disabled={storageClasses.length < 1}
@@ -650,7 +662,7 @@ const Configure = ({
                     updateField("prometheusVolumeSize", e.target.value);
                     cleanValidation("prometheus_volume_size");
                   }}
-                  label="Storage Size [Gi]"
+                  label={t("storageSize")}
                   value={prometheusVolumeSize}
                   required
                   error={validationErrors["prometheus_volume_size"] || ""}

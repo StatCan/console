@@ -18,10 +18,14 @@ import React, { FC, useEffect, useState } from "react"; // eslint-disable-line @
 import { RouteComponentProps } from "react-router";
 import storage from "local-storage-fallback";
 import api from "../../common/api";
+import { useTranslation } from "react-i18next";
 
 const LoginCallback: FC<RouteComponentProps> = ({ location }) => {
   const [error, setError] = useState<string>("");
   const [errorDescription, setErrorDescription] = useState<string>("");
+
+  const { t } = useTranslation("other");
+
   useEffect(() => {
     const code = (location.search.match(/code=([^&]+)/) || [])[1];
     const state = (location.search.match(/state=([^&]+)/) || [])[1];
@@ -51,7 +55,7 @@ const LoginCallback: FC<RouteComponentProps> = ({ location }) => {
   }, [location.search]);
   return error !== "" || errorDescription !== "" ? (
     <div>
-      <h2>IDP Error:</h2>
+      <h2>{t("idpErrorColon")}</h2>
       <p>{error}</p>
       <p>{errorDescription}</p>
     </div>

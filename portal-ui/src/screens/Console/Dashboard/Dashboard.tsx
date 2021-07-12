@@ -29,6 +29,8 @@ import { Usage } from "./types";
 import { setErrorSnackMessage } from "../../../actions";
 import { ErrorResponseHandler } from "../../../common/types";
 
+import { useTranslation } from "react-i18next";
+
 interface IDashboardSimple {
   classes: any;
   displayErrorMessage: typeof setErrorSnackMessage;
@@ -42,6 +44,7 @@ const styles = (theme: Theme) =>
 const Dashboard = ({ classes, displayErrorMessage }: IDashboardSimple) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [basicResult, setBasicResult] = useState<Usage | null>(null);
+  const { t } = useTranslation("dashboard");
 
   const fetchUsage = useCallback(() => {
     api
@@ -66,7 +69,7 @@ const Dashboard = ({ classes, displayErrorMessage }: IDashboardSimple) => {
 
   return (
     <Fragment>
-      <PageHeader label="Dashboard" />
+      <PageHeader label={t("dashboard")} />
       {loading ? (
         <Grid container>
           <Grid item xs={12} className={classes.container}>

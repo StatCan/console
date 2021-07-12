@@ -26,6 +26,7 @@ import { IconButton } from "@material-ui/core";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
+import { useTranslation } from "react-i18next";
 
 const useStyles1 = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +41,8 @@ export function MinTablePaginationActions(props: TablePaginationActionsProps) {
   const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
+
+  const { t } = useTranslation("other");
 
   const handleFirstPageButtonClick = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -70,14 +73,14 @@ export function MinTablePaginationActions(props: TablePaginationActionsProps) {
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
-        aria-label="first page"
+        aria-label={t("firstPage")}
       >
         {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
         disabled={page === 0}
-        aria-label="previous page"
+        aria-label={t("previousPage")}
       >
         {theme.direction === "rtl" ? (
           <KeyboardArrowRight />
@@ -88,7 +91,7 @@ export function MinTablePaginationActions(props: TablePaginationActionsProps) {
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
+        aria-label={t("nextPage")}
       >
         {theme.direction === "rtl" ? (
           <KeyboardArrowLeft />
@@ -99,7 +102,7 @@ export function MinTablePaginationActions(props: TablePaginationActionsProps) {
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
+        aria-label={t("lastPage")}
       >
         {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>

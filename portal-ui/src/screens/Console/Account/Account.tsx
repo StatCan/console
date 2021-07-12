@@ -40,6 +40,7 @@ import {
 import { ErrorResponseHandler } from "../../../common/types";
 import ChangePasswordModal from "./ChangePasswordModal";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -108,6 +109,7 @@ const Account = ({
     useState<NewServiceAccount | null>(null);
   const [changePasswordModalOpen, setChangePasswordModalOpen] =
     useState<boolean>(false);
+  const { t } = useTranslation("accounts");
 
   useEffect(() => {
     fetchRecords();
@@ -202,7 +204,7 @@ const Account = ({
           closeModal={() => {
             closeCredentialsModal();
           }}
-          entity="Service Account"
+          entity={t("serviceAccount")}
         />
       )}
       <ChangePasswordModal
@@ -210,14 +212,14 @@ const Account = ({
         closeModal={() => setChangePasswordModalOpen(false)}
       />
       <PageHeader
-        label="Account"
+        label={t("account")}
         actions={
           <React.Fragment>
             {changePassword && (
-              <Tooltip title="Change Password">
+              <Tooltip title={t<string>("changePassword")}>
                 <IconButton
                   color="primary"
-                  aria-label="Change Password"
+                  aria-label={t("changePassword")}
                   component="span"
                   onClick={() => setChangePasswordModalOpen(true)}
                 >
@@ -232,7 +234,7 @@ const Account = ({
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12}>
             <Typography variant="h5" component="h5">
-              Service Accounts
+              {t("serviceAccounts")}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -240,7 +242,7 @@ const Account = ({
           </Grid>
           <Grid item xs={12} className={classes.actionsTray}>
             <TextField
-              placeholder="Search Service Accounts"
+              placeholder={t("searchServiceAccounts")}
               className={classes.searchField}
               id="search-resource"
               label=""
@@ -265,7 +267,7 @@ const Account = ({
                 setSelectedServiceAccount(null);
               }}
             >
-              Create service account
+              {t("createServiceAccount")}
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -275,9 +277,9 @@ const Account = ({
             <TableWrapper
               isLoading={loading}
               records={filteredRecords}
-              entityName={"Service Accounts"}
+              entityName={t("serviceAccounts")}
               idField={""}
-              columns={[{ label: "Service Account", elementKey: "" }]}
+              columns={[{ label: t("serviceAccount"), elementKey: "" }]}
               itemActions={tableActions}
             />
           </Grid>

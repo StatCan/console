@@ -14,19 +14,21 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import i18n from '../../../../../i18n';
+
 export const months = [
-  { value: "01", label: "January" },
-  { value: "02", label: "February" },
-  { value: "03", label: "March" },
-  { value: "04", label: "April" },
-  { value: "05", label: "May" },
-  { value: "06", label: "June" },
-  { value: "07", label: "July" },
-  { value: "08", label: "August" },
-  { value: "09", label: "September" },
-  { value: "10", label: "October" },
-  { value: "11", label: "November" },
-  { value: "12", label: "December" },
+  { value: "01", label: i18n.t("common:january")},
+  { value: "02", label: i18n.t("common:february") },
+  { value: "03", label: i18n.t("common:march") },
+  { value: "04", label: i18n.t("common:april") },
+  { value: "05", label: i18n.t("common:may") },
+  { value: "06", label: i18n.t("common:june") },
+  { value: "07", label: i18n.t("common:july") },
+  { value: "08", label: i18n.t("common:august") },
+  { value: "09", label: i18n.t("common:september") },
+  { value: "10", label: i18n.t("common:october") },
+  { value: "11", label: i18n.t("common:november") },
+  { value: "12", label: i18n.t("common:december") },
 ];
 
 export const days = Array.from(Array(31), (_, num) => num + 1);

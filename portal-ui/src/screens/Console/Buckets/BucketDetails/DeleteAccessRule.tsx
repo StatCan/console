@@ -30,6 +30,7 @@ import api from "../../../../common/api";
 import { ErrorResponseHandler } from "../../../../common/types";
 import { setErrorSnackMessage } from "../../../../actions";
 import { AppState } from "../../../../store";
+import { useTranslation } from "react-i18next";
 
 const mapState = (state: AppState) => ({
   session: state.console.session,
@@ -62,6 +63,8 @@ const DeleteAccessRule = ({
   bucket,
   toDelete,
 }: IDeleteAccessRule) => {
+  const { t } = useTranslation("bucketsDetails");
+
   const deleteProcess = () => {
     api
       .invoke("DELETE", `/api/v1/bucket/${bucket}/access-rules`, {
@@ -80,15 +83,15 @@ const DeleteAccessRule = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Access Rule</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deleteAccessRule")}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this access rule?
+          {t("deleteAccessRuleConfirmation")}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -98,7 +101,7 @@ const DeleteAccessRule = ({
           color="secondary"
           autoFocus
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

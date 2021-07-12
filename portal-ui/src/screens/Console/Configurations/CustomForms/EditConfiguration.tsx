@@ -30,6 +30,7 @@ import {
 import { fieldsConfigurations, removeEmptyFields } from "../utils";
 import { IConfigurationElement, IElementValue } from "../types";
 import { ErrorResponseHandler } from "../../../../common/types";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -69,6 +70,8 @@ const EditConfiguration = ({
   setErrorSnackMessage,
   classes,
 }: IAddNotificationEndpointProps) => {
+  const { t } = useTranslation("configurations");
+
   //Local States
   const [valuesObj, setValueObj] = useState<IElementValue[]>([]);
   const [saving, setSaving] = useState<boolean>(false);
@@ -166,7 +169,7 @@ const EditConfiguration = ({
                 color="primary"
                 disabled={saving}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
           </Grid>

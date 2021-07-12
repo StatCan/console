@@ -36,6 +36,7 @@ import { AppState } from "../../../../../store";
 import { KeyPair } from "../../ListTenants/utils";
 import FormSwitchWrapper from "../../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import FileSelector from "../../../Common/FormComponents/FileSelector/FileSelector";
+import { useTranslation } from "react-i18next";
 
 interface ISecurityProps {
   classes: any;
@@ -87,6 +88,8 @@ const Security = ({
     [updateAddField]
   );
 
+  const { t } = useTranslation("tenants");
+
   // Validation
 
   useEffect(() => {
@@ -122,19 +125,18 @@ const Security = ({
 
             updateField("enableTLS", checked);
           }}
-          label={"Enable TLS"}
+          label={t("enableTLS")}
         />
-        Enable TLS for the tenant, this is required for Encryption Configuration
+        {t("enableTLSfor")}
         {enableTLS && (
           <Fragment>
             <br />
             <br />
             <Typography variant="caption" display="block" gutterBottom>
-              AutoCert: MinIO Operator will generate all TLS certificates
-              automatically
+              {t("autoCertMinio")}
             </Typography>
             <Typography variant="caption" display="block" gutterBottom>
-              Custom certificates: Allow user to provide your own certificates
+              {t("customCert")}
             </Typography>
             <br />
           </Fragment>
@@ -154,7 +156,7 @@ const Security = ({
 
                 updateField("enableAutoCert", checked);
               }}
-              label={"Enable AutoCert"}
+              label={t("enableAutoCert")}
             />
             <FormSwitchWrapper
               value="enableCustomCerts"
@@ -167,7 +169,7 @@ const Security = ({
 
                 updateField("enableCustomCerts", checked);
               }}
-              label={"Custom Certificates"}
+              label={t("customCertificates")}
             />
           </Grid>
           {enableCustomCerts && (
@@ -175,7 +177,7 @@ const Security = ({
               <Grid container>
                 <Grid item xs={12}>
                   <Typography variant="overline" display="block" gutterBottom>
-                    MinIO Certificates
+                    {t("minioCertificates")}
                   </Typography>
                 </Grid>
                 {minioCertificates.map((keyPair: KeyPair) => (
@@ -193,7 +195,7 @@ const Security = ({
                         accept=".cer,.crt,.cert,.pem"
                         id="tlsCert"
                         name="tlsCert"
-                        label="Cert"
+                        label={t("cert")}
                         value={keyPair.cert}
                       />
                     </Grid>
@@ -210,7 +212,7 @@ const Security = ({
                         accept=".key,.pem"
                         id="tlsKey"
                         name="tlsKey"
-                        label="Key"
+                        label={t("key")}
                         value={keyPair.key}
                       />
                     </Grid>
@@ -221,14 +223,14 @@ const Security = ({
                         }}
                         color="secondary"
                       >
-                        Remove
+                        {t("remove")}
                       </Button>
                     </Grid>
                   </Fragment>
                 ))}
                 <Grid item xs={12}>
                   <Button onClick={addKeyPair} color="primary">
-                    Add More
+                    {t("addMore")}
                   </Button>
                 </Grid>
               </Grid>
@@ -242,7 +244,7 @@ const Security = ({
               <Grid container>
                 <Grid item xs={12}>
                   <Typography variant="overline" display="block" gutterBottom>
-                    MinIO CA Certificates
+                    {t("minioCACertificates")}
                   </Typography>
                 </Grid>
                 {caCertificates.map((keyPair: KeyPair) => (
@@ -260,7 +262,7 @@ const Security = ({
                         accept=".cer,.crt,.cert,.pem"
                         id="tlsCert"
                         name="tlsCert"
-                        label="Cert"
+                        label={t("cert")}
                         value={keyPair.cert}
                       />
                     </Grid>
@@ -271,14 +273,14 @@ const Security = ({
                         }}
                         color="secondary"
                       >
-                        Remove
+                        {t("remove")}
                       </Button>
                     </Grid>
                   </Fragment>
                 ))}
                 <Grid item xs={12}>
                   <Button onClick={addCaCertificate} color="primary">
-                    Add More
+                    {t("addMore")}
                   </Button>
                 </Grid>
               </Grid>

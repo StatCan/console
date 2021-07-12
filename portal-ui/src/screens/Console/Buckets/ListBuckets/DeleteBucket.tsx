@@ -29,6 +29,7 @@ import { BucketList } from "../types";
 import { setErrorSnackMessage } from "../../../../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
 import api from "../../../../common/api";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeleteBucketProps {
   closeDeleteModalAndRefresh: (refresh: boolean) => void;
@@ -44,6 +45,7 @@ const DeleteBucket = ({
   setErrorSnackMessage,
 }: IDeleteBucketProps) => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const { t } = useTranslation("listBuckets");
 
   const removeRecord = () => {
     if (!deleteLoading) {
@@ -73,12 +75,15 @@ const DeleteBucket = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Bucket</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deleteBucket")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete bucket <b>{selectedBucket}</b>? <br />
-          A bucket can only be deleted if it's empty.
+          <Trans i18nKey="listBuckets:deleteBucketsDialog">
+            Are you sure you want to delete bucket
+            <b>{{ selectedBucket }}</b>? <br />A bucket can only be deleted if
+            it's empty.
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -89,7 +94,7 @@ const DeleteBucket = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -98,7 +103,7 @@ const DeleteBucket = ({
           color="secondary"
           autoFocus
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

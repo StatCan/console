@@ -39,6 +39,8 @@ import { SelectorTypes } from "../../Common/FormComponents/RadioGroupSelector/Ra
 import { getBytes, k8sfactorForDropdown } from "../../../../common/utils";
 import { ErrorResponseHandler } from "../../../../common/types";
 
+import { useTranslation } from "react-i18next";
+
 interface IBulkReplicationModal {
   open: boolean;
   closeModalAndRefresh: (clearSelection: boolean) => any;
@@ -102,6 +104,7 @@ const AddBulkReplicationModal = ({
   const [relationBuckets, setRelationBuckets] = useState<string[]>([]);
   const [remoteBucketsOpts, setRemoteBucketOpts] = useState<string[]>([]);
   const [responseItem, setResponseItem] = useState<BulkReplicationItem[]>([]);
+  const { t } = useTranslation("listBuckets");
 
   const optionsForBucketsDrop: SelectorTypes[] = remoteBucketsOpts.map(
     (remoteBucketName: string) => {
@@ -322,24 +325,24 @@ const AddBulkReplicationModal = ({
       onClose={() => {
         closeModalAndRefresh(false);
       }}
-      title="Set Multiple Bucket Replication"
+      title={t("setMultipleBucketReplication")}
     >
       <GenericWizard
         loadingStep={addLoading || externalLoading}
         wizardSteps={[
           {
-            label: "Remote Configuration",
+            label: t("remoteConfiguration"),
             componentRender: (
               <Fragment>
                 <Grid item xs={12}>
                   <PredefinedList
-                    label="Local Buckets to replicate"
+                    label={t("localBucketsToReplicate")}
                     content={bucketsToAlter.join(", ")}
                   />
                 </Grid>
-                <h4>Remote Endpoint Configuration</h4>
+                <h4>{t("remoteEndpointConfiguration")}</h4>
                 <span className={classes.descriptionText}>
-                  Please avoid the use of root credentials for this feature
+                  {t("rootCredentials")}
                 </span>
                 <br />
                 <br />
@@ -350,7 +353,7 @@ const AddBulkReplicationModal = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setAccessKey(e.target.value);
                     }}
-                    label="Access Key"
+                    label={t("accessKey")}
                     value={accessKey}
                   />
                 </Grid>
@@ -361,7 +364,7 @@ const AddBulkReplicationModal = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setSecretKey(e.target.value);
                     }}
-                    label="Secret Key"
+                    label={t("secretKey")}
                     value={secretKey}
                   />
                 </Grid>
@@ -373,7 +376,7 @@ const AddBulkReplicationModal = ({
                       setTargetURL(e.target.value);
                     }}
                     placeholder="play.min.io:9000"
-                    label="Target URL"
+                    label={t("targetUrl")}
                     value={targetURL}
                   />
                 </Grid>
@@ -382,7 +385,7 @@ const AddBulkReplicationModal = ({
                     checked={useTLS}
                     id="useTLS"
                     name="useTLS"
-                    label="Use TLS"
+                    label={t("UseTls")}
                     onChange={(e) => {
                       setUseTLS(e.target.checked);
                     }}
@@ -396,7 +399,7 @@ const AddBulkReplicationModal = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setRegion(e.target.value);
                     }}
-                    label="Region"
+                    label={t("region")}
                     value={region}
                   />
                 </Grid>
@@ -407,11 +410,11 @@ const AddBulkReplicationModal = ({
                     onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                       setReplicationMode(e.target.value as string);
                     }}
-                    label="Replication Mode"
+                    label={t("replicationMode")}
                     value={replicationMode}
                     options={[
-                      { label: "Asynchronous", value: "async" },
-                      { label: "Synchronous", value: "sync" },
+                      { label: t("asynchronous"), value: "async" },
+                      { label: t("synchronous"), value: "sync" },
                     ]}
                   />
                 </Grid>
@@ -428,14 +431,14 @@ const AddBulkReplicationModal = ({
                           ) => {
                             setBandwidthScalar(e.target.value as string);
                           }}
-                          label="Bandwidth"
+                          label={t("bandwidth")}
                           value={bandwidthScalar}
                           min="0"
                         />
                       </div>
                       <div className={classes.sizeFactorContainer}>
                         <SelectWrapper
-                          label={"Unit"}
+                          label={t("unit")}
                           id="bandwidth_unit"
                           name="bandwidth_unit"
                           value={bandwidthUnit}
@@ -457,7 +460,7 @@ const AddBulkReplicationModal = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setHealthCheck(e.target.value as string);
                     }}
-                    label="Health Check Duration"
+                    label={t("healthCheckDuration")}
                     value={healthCheck}
                   />
                 </Grid>
@@ -466,20 +469,19 @@ const AddBulkReplicationModal = ({
             buttons: [
               {
                 type: "custom",
-                label: "Next",
+                label: t("next"),
                 enabled: !externalLoading,
                 action: retrieveRemoteBuckets,
               },
             ],
           },
           {
-            label: "Buckets Assignation",
+            label: t("bucketsAssignation"),
             componentRender: (
               <Fragment>
-                <h3>Remote Buckets Assignation</h3>
+                <h3>{t("remoteBucketsAssignation")}</h3>
                 <span className={classes.descriptionText}>
-                  Please select / type the desired remote bucket were you want
-                  the local data to be replicated.
+                  {t("remoteBucketsAssignationDialog")}
                 </span>
                 <div className={classes.remoteBucketList}>
                   {bucketsToAlter.map((bucketName: string, index: number) => {
@@ -508,12 +510,12 @@ const AddBulkReplicationModal = ({
             buttons: [
               {
                 type: "back",
-                label: "Back",
+                label: t("back"),
                 enabled: true,
               },
               {
                 type: "next",
-                label: "Create",
+                label: t("create"),
                 enabled: !addLoading,
                 action: addRecord,
               },

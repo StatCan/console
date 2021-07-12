@@ -21,6 +21,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Copyright from "../common/Copyright";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -36,13 +37,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const NotFound: React.FC = () => {
+  const { t } = useTranslation("other");
+
   const classes = useStyles();
   return (
     <Container component="main">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography variant="h1" component="h1">
-          404 Not Found
+          {t("notFound")}
         </Typography>
       </div>
       <Box mt={5}>

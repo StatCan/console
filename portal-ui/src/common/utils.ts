@@ -17,23 +17,31 @@
 import storage from "local-storage-fallback";
 import { ICapacity, IErasureCodeCalc, IStorageFactors } from "./types";
 import { IPool } from "../screens/Console/Tenants/ListTenants/types";
+import i18n from "../i18n";
 
 const minStReq = 1073741824; // Minimal Space required for MinIO
 const minMemReq = 2147483648; // Minimal Memory required for MinIO in bytes
 
 export const units = [
-  "B",
-  "KiB",
-  "MiB",
-  "GiB",
-  "TiB",
-  "PiB",
-  "EiB",
-  "ZiB",
-  "YiB",
+  i18n.t("other:byte"),
+  i18n.t("other:kibibyte"),
+  i18n.t("other:mebibyte"),
+  i18n.t("other:gibibyte"),
+  i18n.t("other:tebibyte"),
+  i18n.t("other:pebibyte"),
+  i18n.t("other:exbibyte"),
+  i18n.t("other:zebibyte"),
+  i18n.t("other:yobibyte"),
 ];
-export const k8sUnits = ["Ki", "Mi", "Gi", "Ti", "Pi", "Ei"];
-export const k8sCalcUnits = ["B", ...k8sUnits];
+export const k8sUnits = [
+  i18n.t("other:kibi"),
+  i18n.t("other:mebi"),
+  i18n.t("other:gibi"),
+  i18n.t("other:tebi"),
+  i18n.t("other:pebi"),
+  i18n.t("other:exbi"),
+];
+export const k8sCalcUnits = [i18n.t("other:byte"), ...k8sUnits];
 
 export const niceBytes = (x: string, showK8sUnits: boolean = false) => {
   let n = parseInt(x, 10) || 0;
@@ -49,7 +57,7 @@ export const niceBytesInt = (n: number, showK8sUnits: boolean = false) => {
   }
   //include a decimal point and a tenths-place digit if presenting
   //less than ten of KB or greater units
-  const k8sUnitsN = ["B", ...k8sUnits];
+  const k8sUnitsN = [i18n.t("other:byte"), ...k8sUnits];
   return (
     n.toFixed(n < 10 && l > 0 ? 1 : 0) +
     " " +
@@ -134,11 +142,15 @@ export const setMemoryResource = (
   maxMemorySize: number
 ) => {
   // value always comes as Gi
-  const requestedSizeBytes = getBytes(memorySize.toString(10), "Gi", true);
+  const requestedSizeBytes = getBytes(
+    memorySize.toString(10),
+    i18n.t("other:gibi"),
+    true
+  );
   const memReqSize = parseInt(requestedSizeBytes, 10);
   if (maxMemorySize === 0) {
     return {
-      error: "There is no memory available for the selected number of nodes",
+      error: i18n.t("other:numOfNodesMemoryErr"),
       request: 0,
       limit: 0,
     };
@@ -146,7 +158,7 @@ export const setMemoryResource = (
 
   if (maxMemorySize < minMemReq) {
     return {
-      error: "There are not enough memory resources available",
+      error: i18n.t("other:memoryResourcesAvailableEr"),
       request: 0,
       limit: 0,
     };
@@ -154,15 +166,14 @@ export const setMemoryResource = (
 
   if (memReqSize < minMemReq) {
     return {
-      error: "The requested memory size must be greater than 2Gi",
+      error: i18n.t("other:minMemorySizeErr"),
       request: 0,
       limit: 0,
     };
   }
   if (memReqSize > maxMemorySize) {
     return {
-      error:
-        "The requested memory is greater than the max available memory for the selected number of nodes",
+      error: i18n.t("other:maxMemorySizeErr"),
       request: 0,
       limit: 0,
     };
@@ -172,25 +183,25 @@ export const setMemoryResource = (
   let memLimitSize = memReqSize;
   // set memory limit based on the capacitySize
   // if capacity size is lower than 1TiB we use the limit equal to request
-  if (capSize >= parseInt(getBytes("1", "Pi", true), 10)) {
+  if (capSize >= parseInt(getBytes("1", i18n.t("other:pebi"), true), 10)) {
     memLimitSize = Math.max(
       memReqSize,
-      parseInt(getBytes("64", "Gi", true), 10)
+      parseInt(getBytes("64", i18n.t("other:gibi"), true), 10)
     );
-  } else if (capSize >= parseInt(getBytes("100", "Ti"), 10)) {
+  } else if (capSize >= parseInt(getBytes("100", i18n.t("other:tebi")), 10)) {
     memLimitSize = Math.max(
       memReqSize,
-      parseInt(getBytes("32", "Gi", true), 10)
+      parseInt(getBytes("32", i18n.t("other:gibi"), true), 10)
     );
-  } else if (capSize >= parseInt(getBytes("10", "Ti"), 10)) {
+  } else if (capSize >= parseInt(getBytes("10", i18n.t("other:tebi")), 10)) {
     memLimitSize = Math.max(
       memReqSize,
-      parseInt(getBytes("16", "Gi", true), 10)
+      parseInt(getBytes("16", i18n.t("other:gibi"), true), 10)
     );
-  } else if (capSize >= parseInt(getBytes("1", "Ti"), 10)) {
+  } else if (capSize >= parseInt(getBytes("1", i18n.t("other:tebi")), 10)) {
     memLimitSize = Math.max(
       memReqSize,
-      parseInt(getBytes("8", "Gi", true), 10)
+      parseInt(getBytes("8", i18n.t("other:gibi"), true), 10)
     );
   }
 
@@ -216,7 +227,7 @@ export const calculateDistribution = (
 
   if (parseInt(requestedSizeBytes, 10) < minStReq) {
     return {
-      error: "The pool size must be greater than 1Gi",
+      error: i18n.t("other:minPoolSizeErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,
@@ -226,7 +237,7 @@ export const calculateDistribution = (
 
   if (drivesPerServer <= 0) {
     return {
-      error: "Number of drives must be at least 1",
+      error: i18n.t("other:minNumOfDrivesErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,
@@ -278,7 +289,7 @@ const structureCalc = (
     isNaN(maxClusterSize)
   ) {
     return {
-      error: "Some provided data is invalid, please try again.",
+      error: i18n.t("other:invalidDataErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,
@@ -319,7 +330,7 @@ const structureCalc = (
 
     if (limitSize > maxClusterSize) {
       return {
-        error: "We were not able to allocate this server.",
+        error: i18n.t("other:serverAllocationErr"),
         nodes: 0,
         persistentVolumes: 0,
         disks: 0,
@@ -330,8 +341,7 @@ const structureCalc = (
 
   if (persistentVolumeSize < minStReq) {
     return {
-      error:
-        "Disk Size with this combination would be less than 1Gi, please try another combination",
+      error: i18n.t("other:diskSizeCombinationErr"),
       nodes: 0,
       persistentVolumes: 0,
       disks: 0,
@@ -444,35 +454,42 @@ export const niceDaysInt = (seconds: number, timeVariant: string = "s") => {
 
   if (days > 365) {
     const years = days / 365;
-    return `${years} year${Math.floor(years) === 1 ? "" : "s"}`;
+    return i18n.t("other:niceDaysYear", { count: Math.floor(years), years });
   }
 
   if (days > 30) {
     const months = Math.floor(days / 30);
     const diffDays = days - months * 30;
 
-    return `${months} month${Math.floor(months) === 1 ? "" : "s"} ${
-      diffDays > 0 ? `${diffDays} day${diffDays > 1 ? "s" : ""}` : ""
+    return `${i18n.t("other:niceDaysMonth", {
+      count: Math.floor(months),
+      months,
+    })} ${
+      diffDays > 0
+        ? i18n.t("other:niceDaysDay", {
+            count: diffDays,
+          })
+        : ""
     }`;
   }
 
   if (days >= 7 && days <= 30) {
     const weeks = Math.floor(days / 7);
 
-    return `${Math.floor(weeks)} week${weeks === 1 ? "" : "s"}`;
+    return i18n.t("other:niceDaysWeek", { count: Math.floor(weeks), weeks });
   }
 
   if (days >= 1 && days <= 6) {
-    return `${days} day${days > 1 ? "s" : ""}`;
+    return i18n.t("other:niceDaysDay", { count: days });
   }
 
-  return `${hours >= 1 ? `${hours} hour${hours > 1 ? "s" : ""}` : ""} ${
+  return `${hours >= 1 ? i18n.t("other:niceDaysHour", { count: hours }) : ""} ${
     minutes >= 1 && hours === 0
-      ? `${minutes} minute${minutes > 1 ? "s" : ""}`
+      ? i18n.t("other:niceDaysMinutes", { count: minutes })
       : ""
   } ${
     seconds >= 1 && minutes === 0 && hours === 0
-      ? `${seconds} second${seconds > 1 ? "s" : ""}`
+      ? i18n.t("other:niceDaysSecond", { count: seconds })
       : ""
   }`;
 };
@@ -534,7 +551,7 @@ export const nsToSeconds = (nanoseconds: number) => {
   const conversion = nanoseconds * 0.000000001;
   const round = Math.round((conversion + Number.EPSILON) * 10000) / 10000;
 
-  return `${round} s`;
+  return i18n.t("other:nanosecsInSeconds", { num: `${round}` });
 };
 
 export const textToRGBColor = (text: string) => {

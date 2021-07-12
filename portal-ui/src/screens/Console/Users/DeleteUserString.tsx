@@ -30,6 +30,7 @@ import { UsersList } from "./types";
 import { ErrorResponseHandler } from "../../../common/types";
 import history from "../../../history";
 import api from "../../../common/api";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeleteUserProps {
   closeDeleteModalAndRefresh: (refresh: boolean) => void;
@@ -45,6 +46,7 @@ const DeleteUserString = ({
   setErrorSnackMessage,
 }: IDeleteUserProps) => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const { t } = useTranslation("users");
 
   const removeRecord = () => {
     if (deleteLoading) {
@@ -81,11 +83,13 @@ const DeleteUserString = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete User</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deleteUser")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete user <b>{userName}</b>?
+          <Trans i18nKey="users:deleteUserConfirmation">
+            Are you sure you want to delete user <b>{{accessKey: userName}}</b>?
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -96,7 +100,7 @@ const DeleteUserString = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -107,7 +111,7 @@ const DeleteUserString = ({
           color="secondary"
           autoFocus
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

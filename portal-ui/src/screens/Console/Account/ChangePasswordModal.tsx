@@ -30,6 +30,7 @@ import { ChangePasswordRequest } from "../Buckets/types";
 import { setModalErrorSnackMessage } from "../../../actions";
 import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -58,13 +59,14 @@ const ChangePassword = ({
   const [newPassword, setNewPassword] = useState<string>("");
   const [reNewPassword, setReNewPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const { t } = useTranslation("accounts");
 
   const changePassword = (event: React.FormEvent) => {
     event.preventDefault();
 
     if (newPassword !== reNewPassword) {
       setModalErrorSnackMessage({
-        errorMessage: "New passwords don't match",
+        errorMessage: t("newPasswordsMatchError"),
         detailedError: "",
       });
       return;
@@ -72,7 +74,7 @@ const ChangePassword = ({
 
     if (newPassword.length < 8) {
       setModalErrorSnackMessage({
-        errorMessage: "Passwords must be at least 8 characters long",
+        errorMessage: t("minPasswordLengthError"),
         detailedError: "",
       });
       return;
@@ -108,7 +110,7 @@ const ChangePassword = ({
 
   return open ? (
     <ModalWrapper
-      title="Change Password"
+      title={t("changePassword")}
       modalOpen={open}
       onClose={() => {
         setNewPassword("");
@@ -135,7 +137,7 @@ const ChangePassword = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setCurrentPassword(event.target.value);
                 }}
-                label="Current Password"
+                label={t("currentPassword")}
                 type="password"
                 value={currentPassword}
               />
@@ -147,7 +149,7 @@ const ChangePassword = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setNewPassword(event.target.value);
                 }}
-                label="New Password"
+                label={t("newPassword")}
                 type="password"
                 value={newPassword}
               />
@@ -159,7 +161,7 @@ const ChangePassword = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setReNewPassword(event.target.value);
                 }}
-                label="Type New Password Again"
+                label={t("typeNewPasswordAgain")}
                 type="password"
                 value={reNewPassword}
               />
@@ -179,7 +181,7 @@ const ChangePassword = ({
                 )
               }
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {loading && (

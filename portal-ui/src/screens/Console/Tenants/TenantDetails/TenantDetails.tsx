@@ -55,6 +55,7 @@ import ScreenTitle from "../../Common/ScreenTitle/ScreenTitle";
 import EditIcon from "../../../../icons/EditIcon";
 import RefreshIcon from "../../../../icons/RefreshIcon";
 import TenantsIcon from "../../../../icons/TenantsIcon";
+import { useTranslation } from "react-i18next";
 
 interface ITenantDetailsProps {
   classes: any;
@@ -135,6 +136,8 @@ const TenantDetails = ({
   const tenantName = match.params["tenantName"];
   const tenantNamespace = match.params["tenantNamespace"];
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
+
+  const { t } = useTranslation("tenants");
 
   useEffect(() => {
     if (!loadingTenant) {
@@ -225,7 +228,7 @@ const TenantDetails = ({
     setDeleteOpen(false);
 
     if (reloadData) {
-      setSnackBarMessage("Tenant Deleted");
+      setSnackBarMessage(t("tenantDeleted"));
       history.push(`/tenants`);
     }
   };
@@ -261,7 +264,7 @@ const TenantDetails = ({
         label={
           <Fragment>
             <Link to={"/tenants"} className={classes.breadcrumLink}>
-              Tenants
+              {t("tenants")}
             </Link>
           </Fragment>
         }
@@ -294,10 +297,10 @@ const TenantDetails = ({
             }
             actions={
               <Fragment>
-                <Tooltip title={"Delete"}>
+                <Tooltip title={t<string>("delete")}>
                   <IconButton
                     color="primary"
-                    aria-label="Delete"
+                    aria-label={t("delete")}
                     component="span"
                     onClick={() => {
                       confirmDeleteTenant();
@@ -306,10 +309,10 @@ const TenantDetails = ({
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title={"Edit YAML"}>
+                <Tooltip title={t<string>("editYAML")}>
                   <IconButton
                     color="primary"
-                    aria-label="Edit YAML"
+                    aria-label={t("editYAML")}
                     component="span"
                     onClick={() => {
                       editYaml();
@@ -318,10 +321,10 @@ const TenantDetails = ({
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title={"Refresh"}>
+                <Tooltip title={t<string>("refresh")}>
                   <IconButton
                     color="primary"
-                    aria-label="Refresh List"
+                    aria-label={t("refreshList")}
                     component="span"
                     onClick={() => {
                       setTenantDetailsLoad(true);
@@ -343,7 +346,7 @@ const TenantDetails = ({
                 changeRoute("summary");
               }}
             >
-              <ListItemText primary="Summary" />
+              <ListItemText primary={t("summary")} />
             </ListItem>
             <ListItem
               button
@@ -352,7 +355,7 @@ const TenantDetails = ({
                 changeRoute("metrics");
               }}
             >
-              <ListItemText primary="Metrics" />
+              <ListItemText primary={t("metrics")} />
             </ListItem>
             <ListItem
               button
@@ -361,7 +364,7 @@ const TenantDetails = ({
                 changeRoute("security");
               }}
             >
-              <ListItemText primary="Security" />
+              <ListItemText primary={t("security")} />
             </ListItem>
             <ListItem
               button
@@ -370,7 +373,7 @@ const TenantDetails = ({
                 changeRoute("pools");
               }}
             >
-              <ListItemText primary="Pools" />
+              <ListItemText primary={t("pools")} />
             </ListItem>
             <ListItem
               button
@@ -379,7 +382,7 @@ const TenantDetails = ({
                 changeRoute("pods");
               }}
             >
-              <ListItemText primary="Pods" />
+              <ListItemText primary={t("pods")} />
             </ListItem>
             <ListItem
               button
@@ -388,7 +391,7 @@ const TenantDetails = ({
                 changeRoute("license");
               }}
             >
-              <ListItemText primary="License" />
+              <ListItemText primary={t("license")} />
             </ListItem>
           </List>
         </Grid>

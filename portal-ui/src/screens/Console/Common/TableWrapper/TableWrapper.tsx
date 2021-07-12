@@ -38,6 +38,8 @@ import {
   radioIcons,
 } from "../FormComponents/common/styleLibrary";
 import CheckboxWrapper from "../FormComponents/CheckboxWrapper/CheckboxWrapper";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../i18n";
 
 //Interfaces for table Items
 
@@ -47,7 +49,6 @@ export interface ItemActions {
   sendOnlyId?: boolean;
   disableButtonFunction?: (itemValue: any) => boolean;
   showLoaderFunction?: (itemValue: any) => boolean;
-
   onClick?(valueToSend: any): any;
 }
 
@@ -500,7 +501,7 @@ const TableWrapper = ({
   onSelect,
   records,
   isLoading,
-  loadingMessage = <Typography component="h3">Loading...</Typography>,
+  loadingMessage = <Typography component="h3">{i18n.t("common:loading")}</Typography>,
   entityName,
   selectedItems,
   idField,
@@ -519,6 +520,7 @@ const TableWrapper = ({
 }: TableWrapperProps) => {
   const [columnSelectorOpen, setColumnSelectorOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<any>(null);
+  const { t } = useTranslation("common");
 
   const findView = itemActions
     ? itemActions.find((el) => el.type === "view")
@@ -573,7 +575,7 @@ const TableWrapper = ({
           onClose={closeColumnSelector}
           className={classes.popoverContainer}
         >
-          <div className={classes.shownColumnsLabel}>Shown Columns</div>
+          <div className={classes.shownColumnsLabel}>{t("shownColumns")}</div>
           <div className={classes.popoverContent}>
             {columns.map((column: IColumns) => {
               return (
@@ -663,7 +665,9 @@ const TableWrapper = ({
                         <Fragment>
                           {customEmptyMessage !== ""
                             ? customEmptyMessage
-                            : `There are no ${entityName} yet.`}
+                            : t("noEntityNameError", {
+                                entityName: `${entityName}`,
+                              })}
                         </Fragment>
                       )}
                       overscanRowCount={10}
@@ -689,7 +693,7 @@ const TableWrapper = ({
                     >
                       {hasSelect && (
                         <Column
-                          headerRenderer={() => <Fragment>Select</Fragment>}
+                          headerRenderer={() => <Fragment>{t("select")}</Fragment>}
                           dataKey={idField}
                           width={selectWidth}
                           cellRenderer={({ rowData }) => {
@@ -706,7 +710,7 @@ const TableWrapper = ({
                                 }
                                 color="primary"
                                 inputProps={{
-                                  "aria-label": "secondary checkbox",
+                                  "aria-label": t("secondaryCheckbox"),
                                 }}
                                 checked={isSelected}
                                 onChange={onSelect}
@@ -751,7 +755,7 @@ const TableWrapper = ({
                       )}
                       {hasOptions && (
                         <Column
-                          headerRenderer={() => <Fragment>Options</Fragment>}
+                          headerRenderer={() => <Fragment>{t("options")}</Fragment>}
                           dataKey={idField}
                           width={optionsWidth}
                           headerClassName="optionsAlignment"
@@ -783,7 +787,7 @@ const TableWrapper = ({
               <div>
                 {customEmptyMessage !== ""
                   ? customEmptyMessage
-                  : `There are no ${entityName} yet.`}
+                  : t("noEntityNameError", { entityName: `${entityName}` })}
               </div>
             )}
           </Fragment>

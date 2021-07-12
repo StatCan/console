@@ -26,6 +26,7 @@ import { ErrorResponseHandler } from "../../../../common/types";
 import { setErrorSnackMessage } from "../../../../actions";
 import { AppState } from "../../../../store";
 import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapper";
+import { useTranslation } from "react-i18next";
 
 const mapState = (state: AppState) => ({
   session: state.console.session,
@@ -61,10 +62,12 @@ const AddAccessRule = ({
   const [prefix, setPrefix] = useState("");
   const [selectedAccess, setSelectedAccess] = useState<any>("readonly");
 
+  const { t } = useTranslation("bucketsDetails");
+
   const accessOptions = [
-    { label: "readonly", value: "readonly" },
-    { label: "writeonly", value: "writeonly" },
-    { label: "readwrite", value: "readwrite" },
+    { label: t("readonly"), value: "readonly" },
+    { label: t("writeonly"), value: "writeonly" },
+    { label: t("readwrite"), value: "readwrite" },
   ];
 
   const resetForm = () => {
@@ -91,17 +94,17 @@ const AddAccessRule = ({
     <React.Fragment>
       <ModalWrapper
         modalOpen={modalOpen}
-        title="Add Access Rule"
+        title={t("addAccessRule")}
         onClose={onClose}
       >
         <Grid container>
           <Grid item xs={12}>
             <InputBoxWrapper
               value={prefix}
-              label={"Prefix"}
+              label={t("prefix")}
               id={"prefix"}
               name={"prefix"}
-              placeholder={"Enter Prefix"}
+              placeholder={t("enterPrefix")}
               onChange={(e) => {
                 setPrefix(e.target.value);
               }}
@@ -112,7 +115,7 @@ const AddAccessRule = ({
               onChange={(e) => {
                 setSelectedAccess(e.target.value);
               }}
-              label="Access"
+              label={t("access")}
               value={selectedAccess}
               options={accessOptions}
               disabled={false}
@@ -125,7 +128,7 @@ const AddAccessRule = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -134,7 +137,7 @@ const AddAccessRule = ({
               disabled={prefix.trim() === ""}
               onClick={createProcess}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
         </Grid>

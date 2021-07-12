@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core";
 import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { containerForHeader } from "../Common/FormComponents/common/styleLibrary";
 import ListTenants from "./ListTenants/ListTenants";
+import { useTranslation } from "react-i18next";
 
 interface IConfigurationMain {
   classes: any;
@@ -21,9 +22,10 @@ const styles = (theme: Theme) =>
   });
 
 const TenantsMain = ({ classes }: IConfigurationMain) => {
+  const { t } = useTranslation("tenants")
   return (
     <Fragment>
-      <PageHeader label="Tenants" />
+      <PageHeader label={t("tenants")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <ListTenants />

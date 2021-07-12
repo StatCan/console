@@ -31,6 +31,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
 import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IStorageVolumesProps {
   classes: any;
@@ -65,6 +66,8 @@ const StorageVolumes = ({
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { t } = useTranslation("storage");
+
   useEffect(() => {
     if (loading) {
       api
@@ -98,10 +101,10 @@ const StorageVolumes = ({
 
   return (
     <Fragment>
-      <h1 className={classes.sectionTitle}>Volumes</h1>
+      <h1 className={classes.sectionTitle}>{t("volumes")}</h1>
       <Grid item xs={12} className={classes.actionsTray}>
         <TextField
-          placeholder="Search Volumes (PVCs)"
+          placeholder={t("searchPVC")}
           className={classes.searchField}
           id="search-resource"
           label=""
@@ -126,38 +129,38 @@ const StorageVolumes = ({
           itemActions={tableActions}
           columns={[
             {
-              label: "Name",
+              label: t("name"),
               elementKey: "name",
             },
             {
-              label: "Namespace",
+              label: t("namespace"),
               elementKey: "namespace",
               width: 90,
             },
             {
-              label: "Status",
+              label: t("status"),
               elementKey: "status",
               width: 120,
             },
             {
-              label: "Tenant",
+              label: t("tenant"),
               renderFullObject: true,
               renderFunction: (record: any) =>
                 `${record.namespace}/${record.tenant}`,
             },
             {
-              label: "Capacity",
+              label: t("capacity"),
               elementKey: "capacity",
               width: 90,
             },
             {
-              label: "Storage Class",
+              label: t("storageClass"),
               elementKey: "storageClass",
             },
           ]}
           isLoading={loading}
           records={filteredRecords}
-          entityName="PVCs"
+          entityName={t("pvcs")}
           idField="name"
           customPaperHeight={classes.tableWrapper}
         />

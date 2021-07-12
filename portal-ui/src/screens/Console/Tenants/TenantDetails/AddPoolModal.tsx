@@ -14,6 +14,7 @@ import { getDefaultAffinity } from "./utils";
 
 import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapper";
 import { IQuotaElement, IQuotas, Opts } from "../ListTenants/utils";
+import { useTranslation } from "react-i18next";
 
 interface IAddPoolProps {
   tenant: ITenant;
@@ -77,6 +78,8 @@ const AddPoolModal = ({
   const instanceCapacity: number = volumeSize * 1073741824 * volumesPerServer;
   const totalCapacity: number = instanceCapacity * numberOfNodes;
 
+  const { t } = useTranslation("tenants");
+
   useEffect(() => {
     setSelectedStorageClass("");
 
@@ -111,7 +114,7 @@ const AddPoolModal = ({
     <ModalWrapper
       onClose={() => onClosePoolAndReload(false)}
       modalOpen={open}
-      title="Add Pool"
+      title={t("addPool")}
     >
       <form
         noValidate
@@ -163,7 +166,7 @@ const AddPoolModal = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setNumberOfNodes(parseInt(e.target.value));
             }}
-            label="Number o Nodes"
+            label={t("numOfNodes")}
             value={numberOfNodes.toString(10)}
           />
         </Grid>
@@ -175,7 +178,7 @@ const AddPoolModal = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setVolumeSize(parseInt(e.target.value));
             }}
-            label="Volume Size (Gi)"
+            label={t("volumeSize")}
             value={volumeSize.toString(10)}
           />
         </Grid>
@@ -187,7 +190,7 @@ const AddPoolModal = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setVolumesPerSever(parseInt(e.target.value));
             }}
-            label="Volumes per Server"
+            label={t("volumePerServer")}
             value={volumesPerServer.toString(10)}
           />
         </Grid>
@@ -198,7 +201,7 @@ const AddPoolModal = ({
             onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
               setSelectedStorageClass(e.target.value as string);
             }}
-            label="Storage Class"
+            label={t("storageClass")}
             value={selectedStorageClass}
             options={storageClasses}
             disabled={storageClasses.length < 1}
@@ -211,13 +214,13 @@ const AddPoolModal = ({
                 <div className={classes.sizeNumber}>
                   {niceBytes(instanceCapacity.toString(10))}
                 </div>
-                <div className={classes.sizeDescription}>Instance Capacity</div>
+                <div className={classes.sizeDescription}>{t("instanceCapacity")}</div>
               </div>
               <div>
                 <div className={classes.sizeNumber}>
                   {niceBytes(totalCapacity.toString(10))}
                 </div>
-                <div className={classes.sizeDescription}>Total Capacity</div>
+                <div className={classes.sizeDescription}>{t("totalCapacity")}</div>
               </div>
             </div>
             <div className={classes.buttonContainer}>
@@ -227,7 +230,7 @@ const AddPoolModal = ({
                 color="primary"
                 disabled={addSending}
               >
-                Save
+                {t("save")}
               </Button>
             </div>
           </Grid>

@@ -13,6 +13,7 @@ import {
   DialogTitle,
   LinearProgress,
 } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 interface IConfirmationDialog {
   classes: any;
@@ -44,6 +45,8 @@ const ConfirmationDialog = ({
   description,
 }: IConfirmationDialog) => {
   const [isSending, setIsSending] = useState<boolean>(false);
+  const { t } = useTranslation("tenants");
+  
   const onClick = () => {
     setIsSending(true);
     if (okOnClick !== null) {
@@ -68,10 +71,10 @@ const ConfirmationDialog = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={cancelOnClick} color="primary" disabled={isSending}>
-          {cancelLabel || "Cancel"}
+          {cancelLabel || t("cancel")}
         </Button>
         <Button onClick={onClick} color="secondary" autoFocus>
-          {okLabel || "Ok"}
+          {okLabel || t("ok")}
         </Button>
       </DialogActions>
     </Dialog>

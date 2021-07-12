@@ -19,6 +19,7 @@ import { createStyles, withStyles } from "@material-ui/core/styles";
 import { Grid, LinearProgress } from "@material-ui/core";
 import { BucketObject } from "../ListObjects/types";
 import { extensionPreview } from "../utils";
+import { useTranslation } from "react-i18next";
 
 const styles = () =>
   createStyles({
@@ -68,6 +69,7 @@ const PreviewFile = ({
   classes,
 }: IPreviewFileProps) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const { t } = useTranslation("listBuckets");
 
   let path = "";
 
@@ -95,14 +97,14 @@ const PreviewFile = ({
       <div className={`${loading ? classes.iframeHidden : ""} iframeBase`}>
         <iframe
           src={path}
-          title="File Preview"
+          title={t("filePreview")}
           allowTransparency
           className={`${classes.iframeContainer} ${
             isFullscreen ? "fullHeight" : objectType
           }`}
           onLoad={iframeLoaded}
         >
-          File couldn't be loaded. Please try Download instead
+          {t("fileCouldNotBeLoaded")}
         </iframe>
       </div>
     </Fragment>

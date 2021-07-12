@@ -46,6 +46,7 @@ import BackSettingsIcon from "../../../../icons/BackSettingsIcon";
 import NotificationTypeSelector from "./NotificationTypeSelector";
 import RefreshIcon from "../../../../icons/RefreshIcon";
 import SearchIcon from "../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IListNotificationEndpoints {
   classes: any;
@@ -93,6 +94,7 @@ const ListNotificationEndpoints = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPanel, setCurrentPanel] = useState<number>(0);
   const [service, setService] = useState<string>("");
+  const { t } = useTranslation("configurations");
 
   //Effects
   // load records on mount
@@ -172,7 +174,7 @@ const ListNotificationEndpoints = ({
                     <Grid item xs={12} className={classes.lambdaContainer}>
                       <Grid item xs={12} className={classes.actionsTray}>
                         <TextField
-                          placeholder="Filter"
+                          placeholder={t("filter")}
                           className={classes.searchField}
                           id="search-resource"
                           label=""
@@ -190,7 +192,7 @@ const ListNotificationEndpoints = ({
                         />
                         <IconButton
                           color="primary"
-                          aria-label="Refresh List"
+                          aria-label={t("refreshList")}
                           component="span"
                           onClick={() => {
                             setIsLoading(true);
@@ -204,7 +206,7 @@ const ListNotificationEndpoints = ({
                           startIcon={<AddIcon />}
                           onClick={openNewLambdaSelector}
                         >
-                          Add Notification Target
+                          {t("addNotifTarget")}
                         </Button>
                       </Grid>
                       <Grid item xs={12}>
@@ -212,16 +214,16 @@ const ListNotificationEndpoints = ({
                           itemActions={[]}
                           columns={[
                             {
-                              label: "Status",
+                              label: t("status"),
                               elementKey: "status",
                               renderFunction: statusDisplay,
                               width: 150,
                             },
-                            { label: "Service", elementKey: "service_name" },
+                            { label: t("service"), elementKey: "service_name" },
                           ]}
                           isLoading={isLoading}
                           records={filteredRecords}
-                          entityName="Lambda Notification Targets"
+                          entityName={t("lambdaNotifTargets")}
                           idField="service_name"
                           customPaperHeight={classes.customConfigurationPage}
                           noBackground
@@ -236,7 +238,7 @@ const ListNotificationEndpoints = ({
                         className={classes.backButton}
                       >
                         <BackSettingsIcon />
-                        Back To Lambda Notifications
+                        {t("backToLambdaNotifs")}
                       </button>
                     </Grid>
                     <Grid item xs={12}>
@@ -255,7 +257,7 @@ const ListNotificationEndpoints = ({
                         className={classes.backButton}
                       >
                         <BackSettingsIcon />
-                        Back To Supported Services
+                        {t("backToSupported")}
                       </button>
                     </Grid>
                     <Grid item xs={12}>

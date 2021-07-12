@@ -23,6 +23,7 @@ import { snackBarCommon } from "../FormComponents/common/styleLibrary";
 import { AppState } from "../../../../store";
 import { snackBarMessage } from "../../../../types";
 import { setModalSnackMessage } from "../../../../actions";
+import { useTranslation } from "react-i18next";
 
 interface IModalProps {
   classes: any;
@@ -124,6 +125,8 @@ const ModalWrapper = ({
 }: IModalProps) => {
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
 
+  const { t } = useTranslation("common");
+
   useEffect(() => {
     if (modalSnackMessage) {
       if (modalSnackMessage.message === "") {
@@ -191,7 +194,7 @@ const ModalWrapper = ({
         />
         <div className={classes.closeContainer}>
           <IconButton
-            aria-label="close"
+            aria-label={t("close")}
             className={classes.closeButton}
             onClick={onClose}
             disableRipple

@@ -4,6 +4,7 @@ import { LinearProgress } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ErrorBlock from "../../../shared/ErrorBlock";
+import { useTranslation } from "react-i18next";
 
 interface IProgressBar {
   maxValue: number;
@@ -61,6 +62,7 @@ const UsageBarWrapper = ({
   error,
 }: IProgressBar) => {
   const porcentualValue = (currValue * 100) / maxValue;
+  const { t } = useTranslation("common");
 
   const renderComponent = () => {
     if (!loading) {
@@ -74,7 +76,7 @@ const UsageBarWrapper = ({
           </Grid>
           <BorderLinearProgress variant="determinate" value={porcentualValue} />
           <Grid item xs={12} className={classes.currentUsage}>
-            Used:{" "}
+            {t("usedColon")}
             {renderFunction ? renderFunction(currValue.toString()) : currValue}
           </Grid>
         </React.Fragment>

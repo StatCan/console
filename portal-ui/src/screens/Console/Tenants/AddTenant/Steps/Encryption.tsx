@@ -43,6 +43,8 @@ import {
   IValidation,
 } from "../../../../../utils/validationFunctions";
 import { KeyPair } from "../../ListTenants/utils";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../../i18n";
 
 interface IEncryptionProps {
   classes: any;
@@ -150,6 +152,8 @@ const Encryption = ({
 }: IEncryptionProps) => {
   const [validationErrors, setValidationErrors] = useState<any>({});
 
+  const { t } = useTranslation("tenants");
+
   let encryptionAvailable = false;
   if (
     enableTLS &&
@@ -228,14 +232,14 @@ const Encryption = ({
             required: false,
             value: vaultPing,
             customValidation: parseInt(vaultPing) < 0,
-            customValidationMessage: "Value needs to be 0 or greater",
+            customValidationMessage: i18n.t("tenants:minSize")
           },
           {
             fieldKey: "vault_retry",
             required: false,
             value: vaultRetry,
             customValidation: parseInt(vaultRetry) < 0,
-            customValidationMessage: "Value needs to be 0 or greater",
+            customValidationMessage: i18n.t("tenants:minSize"),
           },
         ];
       }
@@ -289,7 +293,7 @@ const Encryption = ({
             required: false,
             value: gemaltoRetry,
             customValidation: parseInt(gemaltoRetry) < 0,
-            customValidationMessage: "Value needs to be 0 or greater",
+            customValidationMessage: i18n.t("tenants:minSize"),
           },
         ];
       }
@@ -330,9 +334,9 @@ const Encryption = ({
   return (
     <Fragment>
       <div className={classes.headerElement}>
-        <h3 className={classes.h3Section}>Encryption</h3>
+        <h3 className={classes.h3Section}>{t("encryption")}</h3>
         <span className={classes.descriptionText}>
-          How would you like to encrypt the information at rest.
+          {t("howWouldYouLikeEncrypt")}
         </span>
       </div>
       <Grid item xs={12}>
@@ -347,7 +351,7 @@ const Encryption = ({
 
             updateField("enableEncryption", checked);
           }}
-          label={"Enable Server Side Encryption"}
+          label={t("enableServerSideEncrypt")}
           disabled={!encryptionAvailable}
         />
       </Grid>
@@ -358,15 +362,15 @@ const Encryption = ({
               currentSelection={encryptionType}
               id="encryptionType"
               name="encryptionType"
-              label="Encryption Options"
+              label={t("encryptionOptions")}
               onChange={(e) => {
                 updateField("encryptionType", e.target.value);
               }}
               selectorOptions={[
-                { label: "Vault", value: "vault" },
-                { label: "AWS", value: "aws" },
-                { label: "Gemalto", value: "gemalto" },
-                { label: "GCP", value: "gcp" },
+                { label: t("vault"), value: "vault" },
+                { label: t("aws"), value: "aws" },
+                { label: t("gemalto"), value: "gemalto" },
+                { label: t("gcp"), value: "gcp" },
               ]}
             />
           </Grid>
@@ -384,7 +388,7 @@ const Encryption = ({
 
                     updateField("enableCustomCertsForKES", checked);
                   }}
-                  label={"Custom Certificates"}
+                  label={t("customCertificates")}
                   disabled={!enableAutoCert}
                 />
               </Grid>
@@ -392,7 +396,7 @@ const Encryption = ({
                 <Fragment>
                   <Grid item xs={12}>
                     <Typography variant="overline" display="block" gutterBottom>
-                      Encryption Service Certificates
+                      {t("encryptCertificates")}
                     </Typography>
                   </Grid>
                   <Grid container>
@@ -405,7 +409,7 @@ const Encryption = ({
                         accept=".key,.pem"
                         id="serverKey"
                         name="serverKey"
-                        label="Key"
+                        label={t("key")}
                         error={validationErrors["serverKey"] || ""}
                         value={serverCertificate.key}
                         required={!enableAutoCert}
@@ -420,7 +424,7 @@ const Encryption = ({
                         accept=".cer,.crt,.cert,.pem"
                         id="serverCert"
                         name="serverCert"
-                        label="Cert"
+                        label={t("cert")}
                         error={validationErrors["serverCert"] || ""}
                         value={serverCertificate.cert}
                         required={!enableAutoCert}
@@ -430,7 +434,7 @@ const Encryption = ({
 
                   <Grid item xs={12}>
                     <Typography variant="overline" display="block" gutterBottom>
-                      Mutual TLS authentication
+                      {t("mutualTLSAuth")}
                     </Typography>
                   </Grid>
                   <Grid container>
@@ -443,7 +447,7 @@ const Encryption = ({
                         accept=".key,.pem"
                         id="clientKey"
                         name="clientKey"
-                        label="Key"
+                        label={t("key")}
                         error={validationErrors["clientKey"] || ""}
                         value={clientCertificate.key}
                         required={!enableAutoCert}
@@ -458,7 +462,7 @@ const Encryption = ({
                         accept=".cer,.crt,.cert,.pem"
                         id="clientCert"
                         name="clientCert"
-                        label="Cert"
+                        label={t("cert")}
                         error={validationErrors["clientCert"] || ""}
                         value={clientCertificate.cert}
                         required={!enableAutoCert}
@@ -475,7 +479,7 @@ const Encryption = ({
                     updateField("vaultEndpoint", e.target.value);
                     cleanValidation("vault_endpoint");
                   }}
-                  label="Endpoint"
+                  label={t("endpoint")}
                   value={vaultEndpoint}
                   error={validationErrors["vault_endpoint"] || ""}
                   required
@@ -489,7 +493,7 @@ const Encryption = ({
                     updateField("vaultEngine", e.target.value);
                     cleanValidation("vault_engine");
                   }}
-                  label="Engine"
+                  label={t("engine")}
                   value={vaultEngine}
                 />
               </Grid>
@@ -500,7 +504,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("vaultNamespace", e.target.value);
                   }}
-                  label="Namespace"
+                  label={t("namespace")}
                   value={vaultNamespace}
                 />
               </Grid>
@@ -511,11 +515,11 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("vaultPrefix", e.target.value);
                   }}
-                  label="Prefix"
+                  label={t("prefix")}
                   value={vaultPrefix}
                 />
               </Grid>
-              <h5>App Role</h5>
+              <h5>{t("appRole")}</h5>
               <Grid item xs={12}>
                 <InputBoxWrapper
                   id="vault_approle_engine"
@@ -523,7 +527,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("vaultAppRoleEngine", e.target.value);
                   }}
-                  label="Engine"
+                  label={t("engine")}
                   value={vaultAppRoleEngine}
                 />
               </Grid>
@@ -535,7 +539,7 @@ const Encryption = ({
                     updateField("vaultId", e.target.value);
                     cleanValidation("vault_id");
                   }}
-                  label="AppRole ID"
+                  label={t("appRoleID")}
                   value={vaultId}
                   error={validationErrors["vault_id"] || ""}
                   required
@@ -549,7 +553,7 @@ const Encryption = ({
                     updateField("vaultSecret", e.target.value);
                     cleanValidation("vault_secret");
                   }}
-                  label="AppRole Secret"
+                  label={t("appRoleSecret")}
                   value={vaultSecret}
                   error={validationErrors["vault_secret"] || ""}
                   required
@@ -565,12 +569,12 @@ const Encryption = ({
                     updateField("vaultRetry", e.target.value);
                     cleanValidation("vault_retry");
                   }}
-                  label="Retry (Seconds)"
+                  label={t("retry")}
                   value={vaultRetry}
                   error={validationErrors["vault_retry"] || ""}
                 />
               </Grid>
-              <h5>Mutual TLS authentication (optional)</h5>
+              <h5>{t("mutualTLSAuthOptional")}</h5>
               <Grid container>
                 <Grid item xs={6}>
                   <FileSelector
@@ -581,7 +585,7 @@ const Encryption = ({
                     accept=".key,.pem"
                     id="vault_key"
                     name="vault_key"
-                    label="Key"
+                    label={t("key")}
                     value={vaultCertificate.key}
                   />
                 </Grid>
@@ -594,7 +598,7 @@ const Encryption = ({
                     accept=".cer,.crt,.cert,.pem"
                     id="vault_cert"
                     name="vault_cert"
-                    label="Cert"
+                    label={t("cert")}
                     value={vaultCertificate.cert}
                   />
                 </Grid>
@@ -608,11 +612,11 @@ const Encryption = ({
                   accept=".cer,.crt,.cert,.pem"
                   id="vault_ca"
                   name="vault_ca"
-                  label="CA"
+                  label={t("ca")}
                   value={vaultCA.cert}
                 />
               </Grid>
-              <h5>Status</h5>
+              <h5>{t("status")}</h5>
               <Grid item xs={12}>
                 <InputBoxWrapper
                   type="number"
@@ -623,7 +627,7 @@ const Encryption = ({
                     updateField("vaultPing", e.target.value);
                     cleanValidation("vault_ping");
                   }}
-                  label="Ping (Seconds)"
+                  label={t("pingSeconds")}
                   value={vaultPing}
                   error={validationErrors["vault_ping"] || ""}
                 />
@@ -639,7 +643,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("gcpProjectID", e.target.value);
                   }}
-                  label="Project ID"
+                  label={t("projectID")}
                   value={gcpProjectID}
                 />
               </Grid>
@@ -650,11 +654,11 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("gcpEndpoint", e.target.value);
                   }}
-                  label="Endpoint"
+                  label={t("endpoint")}
                   value={gcpEndpoint}
                 />
               </Grid>
-              <h5>Credentials</h5>
+              <h5>{t("credentials")}</h5>
               <Grid item xs={12}>
                 <InputBoxWrapper
                   id="gcp_client_email"
@@ -662,7 +666,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("gcpClientEmail", e.target.value);
                   }}
-                  label="Client Email"
+                  label={t("clientEmail")}
                   value={gcpClientEmail}
                 />
               </Grid>
@@ -673,7 +677,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("gcpClientID", e.target.value);
                   }}
-                  label="Client ID"
+                  label={t("clientID")}
                   value={gcpClientID}
                 />
               </Grid>
@@ -684,7 +688,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("gcpPrivateKeyID", e.target.value);
                   }}
-                  label="Private Key ID"
+                  label={t("privateKeyID")}
                   value={gcpPrivateKeyID}
                 />
               </Grid>
@@ -695,7 +699,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("gcpPrivateKey", e.target.value);
                   }}
-                  label="Private Key"
+                  label={t("privateKey")}
                   value={gcpPrivateKey}
                 />
               </Grid>
@@ -711,7 +715,7 @@ const Encryption = ({
                     updateField("awsEndpoint", e.target.value);
                     cleanValidation("aws_endpoint");
                   }}
-                  label="Endpoint"
+                  label={t("endpoint")}
                   value={awsEndpoint}
                   error={validationErrors["aws_endpoint"] || ""}
                   required
@@ -725,7 +729,7 @@ const Encryption = ({
                     updateField("awsRegion", e.target.value);
                     cleanValidation("aws_region");
                   }}
-                  label="Region"
+                  label={t("region")}
                   value={awsRegion}
                   error={validationErrors["aws_region"] || ""}
                   required
@@ -738,11 +742,11 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("awsKMSKey", e.target.value);
                   }}
-                  label="KMS Key"
+                  label={t("kmsKey")}
                   value={awsKMSKey}
                 />
               </Grid>
-              <h5>Credentials</h5>
+              <h5>{t("credentials")}</h5>
               <Grid item xs={12}>
                 <InputBoxWrapper
                   id="aws_accessKey"
@@ -751,7 +755,7 @@ const Encryption = ({
                     updateField("awsAccessKey", e.target.value);
                     cleanValidation("aws_accessKey");
                   }}
-                  label="Access Key"
+                  label={t("accessKey")}
                   value={awsAccessKey}
                   error={validationErrors["aws_accessKey"] || ""}
                   required
@@ -765,7 +769,7 @@ const Encryption = ({
                     updateField("awsSecretKey", e.target.value);
                     cleanValidation("aws_secretKey");
                   }}
-                  label="Secret Key"
+                  label={t("secretKey")}
                   value={awsSecretKey}
                   error={validationErrors["aws_secretKey"] || ""}
                   required
@@ -778,7 +782,7 @@ const Encryption = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     updateField("awsToken", e.target.value);
                   }}
-                  label="Token"
+                  label={t("token")}
                   value={awsToken}
                 />
               </Grid>
@@ -794,13 +798,13 @@ const Encryption = ({
                     updateField("gemaltoEndpoint", e.target.value);
                     cleanValidation("gemalto_endpoint");
                   }}
-                  label="Endpoint"
+                  label={t("endpoint")}
                   value={gemaltoEndpoint}
                   error={validationErrors["gemalto_endpoint"] || ""}
                   required
                 />
               </Grid>
-              <h5>Credentials</h5>
+              <h5>{t("credentials")}</h5>
               <Grid item xs={12}>
                 <InputBoxWrapper
                   id="gemalto_token"
@@ -809,7 +813,7 @@ const Encryption = ({
                     updateField("gemaltoToken", e.target.value);
                     cleanValidation("gemalto_token");
                   }}
-                  label="Token"
+                  label={t("token")}
                   value={gemaltoToken}
                   error={validationErrors["gemalto_token"] || ""}
                   required
@@ -823,7 +827,7 @@ const Encryption = ({
                     updateField("gemaltoDomain", e.target.value);
                     cleanValidation("gemalto_domain");
                   }}
-                  label="Domain"
+                  label={t("domain")}
                   value={gemaltoDomain}
                   error={validationErrors["gemalto_domain"] || ""}
                   required
@@ -839,12 +843,12 @@ const Encryption = ({
                     updateField("gemaltoRetry", e.target.value);
                     cleanValidation("gemalto_retry");
                   }}
-                  label="Retry (seconds)"
+                  label={t("retry")}
                   value={gemaltoRetry}
                   error={validationErrors["gemalto_retry"] || ""}
                 />
               </Grid>
-              <h5>Custom CA Root certificate verification</h5>
+              <h5>{t("customCACert")}</h5>
               <Grid item xs={12}>
                 <FileSelector
                   onChange={(encodedValue, fileName) => {
@@ -854,7 +858,7 @@ const Encryption = ({
                   accept=".cer,.crt,.cert,.pem"
                   id="gemalto_ca"
                   name="gemalto_ca"
-                  label="CA"
+                  label={t("ca")}
                   value={gemaltoCA.cert}
                 />
               </Grid>

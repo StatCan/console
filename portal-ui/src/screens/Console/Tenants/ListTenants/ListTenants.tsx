@@ -43,6 +43,7 @@ import SlideOptions from "../../Common/SlideOptions/SlideOptions";
 import BackSettingsIcon from "../../../../icons/BackSettingsIcon";
 import RefreshIcon from "../../../../icons/RefreshIcon";
 import SearchIcon from "../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface ITenantsList {
   classes: any;
@@ -150,6 +151,8 @@ const ListTenants = ({
   const [showNewCredentials, setShowNewCredentials] = useState<boolean>(false);
   const [createdAccount, setCreatedAccount] =
     useState<NewServiceAccount | null>(null);
+
+  const { t } = useTranslation("tenants");
 
   const closeAddModalAndRefresh = (reloadData: boolean) => {
     setCurrentPanel(0);
@@ -273,7 +276,7 @@ const ListTenants = ({
           closeModal={() => {
             closeCredentialsModal();
           }}
-          entity="Tenant"
+          entity={t("tenant")}
         />
       )}
       <Grid container>
@@ -285,7 +288,7 @@ const ListTenants = ({
                   <Grid item xs={12} className={classes.tenantsContainer}>
                     <Grid item xs={12} className={classes.actionsTray}>
                       <TextField
-                        placeholder="Search Tenants"
+                        placeholder={t("searchTenants")}
                         className={classes.searchField}
                         id="search-resource"
                         label=""
@@ -303,7 +306,7 @@ const ListTenants = ({
                       />
                       <IconButton
                         color="primary"
-                        aria-label="Refresh Tenant List"
+                        aria-label={t("refreshTenantList")}
                         component="span"
                         onClick={() => {
                           setIsLoading(true);
@@ -317,7 +320,7 @@ const ListTenants = ({
                         startIcon={<AddIcon />}
                         onClick={createTenant}
                       >
-                        Create Tenant
+                        {t("createTenant")}
                       </Button>
                     </Grid>
                     <Grid item xs={12} className={classes.tenantsContainer}>
@@ -325,7 +328,7 @@ const ListTenants = ({
                         itemActions={tableActions}
                         columns={[
                           {
-                            label: "Name",
+                            label: t("name"),
                             elementKey: "name",
                             renderFullObject: true,
                             renderFunction: (t) => {
@@ -343,14 +346,14 @@ const ListTenants = ({
                               );
                             },
                           },
-                          { label: "Namespace", elementKey: "namespace" },
-                          { label: "Capacity", elementKey: "capacity" },
-                          { label: "# of Pools", elementKey: "pool_count" },
-                          { label: "State", elementKey: "currentState" },
+                          { label: t("namespace"), elementKey: "namespace" },
+                          { label: t("capacity"), elementKey: "capacity" },
+                          { label: t("numOfPools"), elementKey: "pool_count" },
+                          { label: t("state"), elementKey: "currentState" },
                         ]}
                         isLoading={isLoading}
                         records={filteredRecords}
-                        entityName="Tenants"
+                        entityName={t("tenants")}
                         idField="name"
                         customPaperHeight={classes.customConfigurationPage}
                         noBackground
@@ -362,7 +365,7 @@ const ListTenants = ({
                   <Grid item xs={12} className={classes.backContainer}>
                     <button onClick={backClick} className={classes.backButton}>
                       <BackSettingsIcon />
-                      Back To Tenants List
+                      {t("backToTenantsList")}
                     </button>
                   </Grid>
                   <Grid item xs={12}>

@@ -23,6 +23,7 @@ import InputBoxWrapper from "../Common/FormComponents/InputBoxWrapper/InputBoxWr
 import CSVMultiSelector from "../Common/FormComponents/CSVMultiSelector/CSVMultiSelector";
 import CommentBoxWrapper from "../Common/FormComponents/CommentBoxWrapper/CommentBoxWrapper";
 import FormSwitchWrapper from "../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
+import { useTranslation } from "react-i18next";
 
 interface IConfGenericProps {
   onChange: (newValue: IElementValue[]) => void;
@@ -65,6 +66,7 @@ const ConfTargetGeneric = ({
   const [valueHolder, setValueHolder] = useState<IElementValue[]>([]);
   const fieldsElements = !fields ? [] : fields;
   const defValList = !defaultVals ? [] : defaultVals;
+  const { t } = useTranslation("configurations");
 
   // Effect to create all the values to hold
   useEffect(() => {
@@ -100,7 +102,7 @@ const ConfTargetGeneric = ({
 
         return (
           <FormSwitchWrapper
-            indicatorLabels={["On", "Off"]}
+            indicatorLabels={[t("on"), t("off")]}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               const value = e.target.checked ? "true" : "false";
               setValueElement(field.name, value, item);

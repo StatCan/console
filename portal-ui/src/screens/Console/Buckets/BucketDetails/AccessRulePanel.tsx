@@ -35,6 +35,7 @@ import {
   objectBrowserCommon,
   searchField,
 } from "../../Common/FormComponents/common/styleLibrary";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -137,6 +138,8 @@ const AccessRule = ({
 
   const bucketName = match.params["bucketName"];
 
+  const { t } = useTranslation("bucketsDetails");
+
   useEffect(() => {
     if (loadingBucket) {
       setLoadingAccessRules(true);
@@ -218,7 +221,7 @@ const AccessRule = ({
         />
       )}
       <Grid item xs={12} className={classes.actionsTray}>
-        <h1 className={classes.sectionTitle}>Access Rules</h1>
+        <h1 className={classes.sectionTitle}>{t("accessRules")}</h1>
         <Button
           variant="contained"
           color="primary"
@@ -229,7 +232,7 @@ const AccessRule = ({
           }}
           className={classes.listButton}
         >
-          Add Access Rule
+          {t("addAccessRule")}
         </Button>
       </Grid>
       <Grid item xs={12}>
@@ -240,12 +243,12 @@ const AccessRule = ({
           noBackground={true}
           itemActions={AccessRuleActions}
           columns={[
-            { label: "Prefix", elementKey: "prefix" },
-            { label: "Access", elementKey: "access" },
+            { label: t("prefix"), elementKey: "prefix" },
+            { label: t("access"), elementKey: "access" },
           ]}
           isLoading={loadingAccessRules}
           records={accessRules}
-          entityName="Access Rules"
+          entityName={t("accessRules")}
           idField="prefix"
         />
       </Paper>

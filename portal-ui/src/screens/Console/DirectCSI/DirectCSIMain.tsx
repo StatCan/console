@@ -28,6 +28,7 @@ import { selectDrive } from "./actions";
 import PageHeader from "../Common/PageHeader/PageHeader";
 import DirectCSIDrives from "./DirectCSIDrives";
 import DirectCSIVolumes from "./DirectCSIVolumes";
+import { useTranslation } from "react-i18next";
 
 interface IDirectCSIMain {
   classes: any;
@@ -58,9 +59,11 @@ const DirectCSIMain = ({
 }: IDirectCSIMain) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
 
+  const { t } = useTranslation("directCSI");
+
   return (
     <Fragment>
-      <PageHeader label={"Direct CSI"} />
+      <PageHeader label={t("directCSI")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12} className={classes.tabsContainer}>
@@ -71,10 +74,10 @@ const DirectCSIMain = ({
               }}
               indicatorColor="primary"
               textColor="primary"
-              aria-label="cluster-tabs"
+              aria-label={t("clusterTabs")}
             >
-              <Tab label="Drives" />
-              <Tab label="Volumes" />
+              <Tab label={t("drives")} />
+              <Tab label={t("volumes")} />
             </Tabs>
           </Grid>
           {selectedTab === 0 && <DirectCSIDrives />}

@@ -34,6 +34,8 @@ import api from "../../../../../../common/api";
 import ModalWrapper from "../../../../Common/ModalWrapper/ModalWrapper";
 import DateSelector from "../../../../Common/FormComponents/DateSelector/DateSelector";
 import PredefinedList from "../../../../Common/FormComponents/PredefinedList/PredefinedList";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -71,6 +73,7 @@ const ShareFile = ({
   const [isLoadingFile, setIsLoadingFile] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [dateValid, setDateValid] = useState<boolean>(true);
+  const { t } = useTranslation("listBuckets");
 
   const dateChanged = (newDate: string, isValid: boolean) => {
     setDateValid(isValid);
@@ -95,7 +98,7 @@ const ShareFile = ({
 
       if (diffDate < 0) {
         setModalErrorSnackMessage({
-          errorMessage: "Selected date must be greater than current time.",
+          errorMessage: i18n.t("listBuckets:selectedDateErr"),
           detailedError: "",
         });
         setShareURL("");
@@ -106,7 +109,7 @@ const ShareFile = ({
 
       if (diffDate > 604800000) {
         setModalErrorSnackMessage({
-          errorMessage: "You can share a file only for less than 7 days.",
+          errorMessage: i18n.t("listBuckets:shareFileTimeErr"),
           detailedError: "",
         });
         setShareURL("");
@@ -148,7 +151,7 @@ const ShareFile = ({
   return (
     <React.Fragment>
       <ModalWrapper
-        title="Share File"
+        title={t("shareFile")}
         modalOpen={open}
         onClose={() => {
           closeModalAndRefresh();
@@ -158,7 +161,7 @@ const ShareFile = ({
           <Grid item xs={12} className={classes.dateContainer}>
             <DateSelector
               id="date"
-              label="Active until"
+              label={t("activeUntil")}
               borderBottom={false}
               addSwitch={true}
               onDateChange={dateChanged}
@@ -175,11 +178,11 @@ const ShareFile = ({
                   color="primary"
                   startIcon={<CopyIcon />}
                   onClick={() => {
-                    setModalSnackMessage("Share URL Copied to clipboard");
+                    setModalSnackMessage(t("shareUrl"));
                   }}
                   disabled={shareURL === "" || isLoadingFile}
                 >
-                  Copy
+                  {t("copy")}
                 </Button>
               </CopyToClipboard>
             </Grid>

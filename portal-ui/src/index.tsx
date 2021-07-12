@@ -27,6 +27,7 @@ import "react-resizable/css/styles.css";
 
 import "./index.css";
 import theme from "./theme/main";
+import "./i18n";
 
 const GlobalCss = withStyles({
   // @global is handled by jss-plugin-global.

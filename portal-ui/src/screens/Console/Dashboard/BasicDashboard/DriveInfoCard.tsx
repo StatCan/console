@@ -21,6 +21,7 @@ import { IDriveInfo } from "../types";
 import { niceBytes } from "../../../../common/utils";
 import { Card, CardHeader } from "@material-ui/core";
 import { CircleIcon, StorageIcon } from "../../../../icons";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -98,6 +99,8 @@ const DriveInfoCard = ({ classes, drive }: ICardProps) => {
     }
   };
 
+  const { t } = useTranslation("dashboard");
+
   return (
     <Fragment>
       <Card>
@@ -119,14 +122,15 @@ const DriveInfoCard = ({ classes, drive }: ICardProps) => {
           subheader={
             <Grid item xs={12} className={classes.stateContainer}>
               <span className={classes.infoValue}>
-                <strong>Capacity:</strong>{" "}
+                <strong>{t("capacityColon")}</strong>{" "}
                 {niceBytes(drive.totalSpace.toString())}
               </span>
               <span className={classes.infoValue}>
-                <strong>Used:</strong> {niceBytes(drive.usedSpace.toString())}
+                <strong>{t("usedColon")}</strong>{" "}
+                {niceBytes(drive.usedSpace.toString())}
               </span>
               <span className={classes.infoValue}>
-                <strong>Available:</strong>{" "}
+                <strong>{t("availableColon")}</strong>{" "}
                 {niceBytes(drive.availableSpace.toString())}
               </span>
             </Grid>

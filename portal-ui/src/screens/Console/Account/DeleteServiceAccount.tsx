@@ -29,6 +29,7 @@ import {
 import { setErrorSnackMessage } from "../../../actions";
 import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
+import { Trans, useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -55,6 +56,7 @@ const DeleteServiceAccount = ({
   setErrorSnackMessage,
 }: IDeleteServiceAccountProps) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const { t } = useTranslation("accounts");
 
   useEffect(() => {
     if (deleteLoading) {
@@ -93,12 +95,16 @@ const DeleteServiceAccount = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete ServiceAccount</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {t("deleteServiceAccount")}
+      </DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete service account{" "}
-          <b className={classes.wrapText}>{selectedServiceAccount}</b>?
+          <Trans i18nKey="accounts:deleteServiceAccountConfirm">
+            Are you sure you want to delete service account{" "}
+            <b className={classes.wrapText}>{{ selectedServiceAccount }}</b>?
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -109,7 +115,7 @@ const DeleteServiceAccount = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={removeRecord}
@@ -117,7 +123,7 @@ const DeleteServiceAccount = ({
           autoFocus
           disabled={deleteLoading}
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

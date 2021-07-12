@@ -28,6 +28,7 @@ import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import api from "../../../common/api";
 import PolicySelectors from "./PolicySelectors";
 import PredefinedList from "../Common/FormComponents/PredefinedList/PredefinedList";
+import { useTranslation } from "react-i18next";
 
 interface ISetPolicyProps {
   classes: any;
@@ -58,6 +59,8 @@ const SetPolicy = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [actualPolicy, setActualPolicy] = useState<string[]>([]);
   const [selectedPolicy, setSelectedPolicy] = useState<string[]>([]);
+
+  const { t } = useTranslation("policies");
 
   const setPolicyAction = () => {
     let entity = "user";
@@ -130,17 +133,17 @@ const SetPolicy = ({
         closeModalAndRefresh();
       }}
       modalOpen={open}
-      title="Set Policies"
+      title={t("setPolicies")}
     >
       <Grid item xs={12}>
         <PredefinedList
-          label={`Selected ${selectedGroup !== null ? "Group" : "User"}`}
+          label={selectedGroup !== null ? t("selectedGroup") : t("selectedUser")}
           content={selectedGroup !== null ? selectedGroup : userName}
         />
       </Grid>
       <Grid item xs={12}>
         <PredefinedList
-          label={"Current Policy"}
+          label={t("currentPolicy")}
           content={actualPolicy.join(", ")}
         />
       </Grid>
@@ -158,7 +161,7 @@ const SetPolicy = ({
           className={classes.clearButton}
           onClick={resetSelection}
         >
-          Clear
+          {t("clear")}
         </button>
         <Button
           type="button"
@@ -167,7 +170,7 @@ const SetPolicy = ({
           disabled={loading}
           onClick={setPolicyAction}
         >
-          Save
+          {t("save")}
         </Button>
       </Grid>
       {loading && (

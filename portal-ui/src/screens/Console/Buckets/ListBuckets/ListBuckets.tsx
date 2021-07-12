@@ -42,6 +42,8 @@ import DeleteBucket from "./DeleteBucket";
 import PageHeader from "../../Common/PageHeader/PageHeader";
 import BulkReplicationModal from "./BulkReplicationModal";
 import SearchIcon from "../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
+import "moment/min/locales";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -100,6 +102,7 @@ const ListBuckets = ({
   const [selectedBuckets, setSelectedBuckets] = useState<string[]>([]);
   const [replicationModalOpen, setReplicationModalOpen] =
     useState<boolean>(false);
+  const { t, i18n } = useTranslation("listBuckets");
 
   // check the permissions for creating bucket
   useEffect(() => {
@@ -184,7 +187,11 @@ const ListBuckets = ({
   ];
 
   const displayParsedDate = (date: string) => {
-    return <Moment>{date}</Moment>;
+    return (
+      <Moment locale={i18n.language} format="ddd MMM DD YYYY HH:mm:ss ZZ">
+        {date}
+      </Moment>
+    );
   };
 
   const filteredRecords = records.filter((b: Bucket) => {
@@ -250,12 +257,12 @@ const ListBuckets = ({
           closeModalAndRefresh={closeBulkReplicationModal}
         />
       )}
-      <PageHeader label={"Buckets"} />
+      <PageHeader label={t("buckets")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12} className={classes.actionsTray}>
             <TextField
-              placeholder="Filter Buckets"
+              placeholder={t("filterBuckets")}
               className={classes.searchField}
               id="search-resource"
               label=""
@@ -280,7 +287,7 @@ const ListBuckets = ({
               }}
               disabled={selectedBuckets.length === 0}
             >
-              Set Replication
+              {t("setReplication")}
             </Button>
             {canCreateBucket && (
               <Button
@@ -291,7 +298,7 @@ const ListBuckets = ({
                   addBucketOpen(true);
                 }}
               >
-                Create Bucket
+                {t("createBucket")}
               </Button>
             )}
           </Grid>
@@ -302,14 +309,14 @@ const ListBuckets = ({
             <TableWrapper
               itemActions={tableActions}
               columns={[
-                { label: "Name", elementKey: "name" },
+                { label: t("name"), elementKey: "name" },
                 {
-                  label: "Creation Date",
+                  label: t("creationDate"),
                   elementKey: "creation_date",
                   renderFunction: displayParsedDate,
                 },
                 {
-                  label: "Size",
+                  label: t("size"),
                   elementKey: "size",
                   renderFunction: niceBytes,
                   width: 60,
@@ -318,7 +325,7 @@ const ListBuckets = ({
               ]}
               isLoading={loading}
               records={filteredRecords}
-              entityName="Buckets"
+              entityName={t("buckets")}
               idField="name"
               selectedItems={selectedBuckets}
               onSelect={selectListBuckets}

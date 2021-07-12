@@ -28,6 +28,7 @@ import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import InputBoxWrapper from "../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import FormSwitchWrapper from "../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import PredefinedList from "../Common/FormComponents/PredefinedList/PredefinedList";
+import { useTranslation } from "react-i18next";
 
 interface IGroupProps {
   open: boolean;
@@ -71,6 +72,8 @@ const AddGroup = ({
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [loadingGroup, isLoadingGroup] = useState<boolean>(false);
   const [validGroup, setValidGroup] = useState<boolean>(false);
+
+  const { t } = useTranslation("groups");
 
   //Effects
   useEffect(() => {
@@ -170,12 +173,12 @@ const AddGroup = ({
     <ModalWrapper
       modalOpen={open}
       onClose={closeModalAndRefresh}
-      title={selectedGroup !== null ? `Edit Group` : "Create Group"}
+      title={selectedGroup !== null ? t("editGroup") : t("createGroup")}
     >
       {selectedGroup !== null && (
         <div className={classes.floatingEnabled}>
           <FormSwitchWrapper
-            indicatorLabels={["Enabled", "Disabled"]}
+            indicatorLabels={[t("enabled"), t("disabled")]}
             checked={groupEnabled}
             value={"group_enabled"}
             id="group-status"
@@ -196,7 +199,7 @@ const AddGroup = ({
                   <InputBoxWrapper
                     id="group-name"
                     name="group-name"
-                    label="Group Name"
+                    label={t("groupName")}
                     value={groupName}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setGroupName(e.target.value);
@@ -206,7 +209,7 @@ const AddGroup = ({
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <PredefinedList label={"Group Name"} content={selectedGroup} />
+                <PredefinedList label={t("groupName")} content={selectedGroup} />
               </React.Fragment>
             )}
             <Grid item xs={12}>
@@ -224,7 +227,7 @@ const AddGroup = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -232,7 +235,7 @@ const AddGroup = ({
               color="primary"
               disabled={saving || !validGroup}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {saving && (

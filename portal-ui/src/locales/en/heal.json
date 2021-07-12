@@ -1,0 +1,19 @@
+{
+  "afterHealing": "After Healing",
+  "beforeHealing": "Before Healing",
+  "forceStart": "Force Start",
+  "forceStop": "Force Stop",
+  "green": "Green",
+  "grey": "Grey",
+  "heal": "Heal",
+  "healingTimeColon": "<0>Healing time:</0> {{healDuration}}s",
+  "itemsHealthStatus": "Item's Health Status [%]",
+  "objectsHealedColon": "<0>Objects healed:</0> objectsHealed / objectsScanned",
+  "prefix": "Prefix",
+  "recursive": "Recursive",
+  "red": "Red",
+  "selectBucket": "Select Bucket",
+  "sizeScannedColon": "<0>Size scanned:</0> {{sizeScanned}}",
+  "start": "Start",
+  "yellow": "Yellow"
+}

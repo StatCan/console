@@ -54,6 +54,7 @@ import SettingsIcon from "../../../icons/SettingsIcon";
 import StorageIcon from "../../../icons/StorageIcon";
 import TenantsOutlinedIcon from "../../../icons/TenantsOutlineIcon";
 import ObjectBrowserIcon from "../../../icons/ObjectBrowserIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -171,6 +172,8 @@ const Menu = ({
 }: IMenuProps) => {
   const [menuOpen, setMenuOpen] = useState<any>(menuStateBuilder());
 
+  const { t } = useTranslation("menu");
+
   const logout = () => {
     const deleteSession = () => {
       clearSession();
@@ -196,7 +199,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/dashboard",
-      name: "Dashboard",
+      name: t("dashboard"),
       icon: <DashboardIcon />,
     },
     {
@@ -204,7 +207,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/object-browser",
-      name: "Object Browser",
+      name: t("objectBrowser"),
       icon: <ObjectBrowserIcon />,
     },
     {
@@ -212,7 +215,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/account",
-      name: "Service Accounts",
+      name: t("serviceAccounts"),
       icon: <AccountIcon />,
     },
     {
@@ -220,7 +223,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/buckets",
-      name: "Buckets",
+      name: t("buckets"),
       icon: <BucketsIcon />,
     },
     {
@@ -228,7 +231,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/users",
-      name: "Users",
+      name: t("users"),
       icon: <UsersIcon />,
     },
     {
@@ -236,7 +239,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/groups",
-      name: "Groups",
+      name: t("groups"),
       icon: <GroupsIcon />,
     },
     {
@@ -244,7 +247,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/policies",
-      name: "IAM Policies",
+      name: t("iamPolicies"),
       icon: <IAMPoliciesIcon />,
     },
     {
@@ -252,7 +255,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/logs",
-      name: "Logs",
+      name: t("logs"),
       icon: <LogsIcon />,
     },
     {
@@ -260,7 +263,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/watch",
-      name: "Watch",
+      name: t("watch"),
       icon: <WatchIcon />,
     },
     {
@@ -268,7 +271,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/trace",
-      name: "Trace",
+      name: t("trace"),
       icon: <TraceIcon />,
     },
     {
@@ -276,7 +279,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/heal",
-      name: "Heal",
+      name: t("heal"),
       icon: <HealIcon />,
       fsHidden: distributedSetup,
     },
@@ -285,7 +288,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/health-info",
-      name: "Diagnostic",
+      name: t("diagnostic"),
       icon: <DiagnosticsIcon />,
     },
     {
@@ -293,7 +296,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/settings",
-      name: "Settings",
+      name: t("settings"),
       icon: <SettingsIcon />,
     },
     {
@@ -301,7 +304,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/tenants",
-      name: "Tenants",
+      name: t("tenants"),
       icon: <TenantsOutlinedIcon />,
     },
     {
@@ -309,7 +312,7 @@ const Menu = ({
       type: "item",
       component: NavLink,
       to: "/storage",
-      name: "Storage",
+      name: t("storage"),
       icon: <StorageIcon />,
     },
   ];
@@ -324,7 +327,7 @@ const Menu = ({
     type: "item",
     component: NavLink,
     to: "/documentation",
-    name: "Documentation",
+    name: t("documentation"),
     icon: <DocumentationIcon />,
     forceDisplay: true,
   };
@@ -337,7 +340,7 @@ const Menu = ({
         type: "item",
         component: NavLink,
         to: "/license",
-        name: "License",
+        name: t("license"),
         icon: <LicenseIcon />,
       },
       {
@@ -364,7 +367,7 @@ const Menu = ({
         type: "item",
         component: NavLink,
         to: "/license",
-        name: "License",
+        name: t("license"),
         icon: <LicenseIcon />,
       },
       {
@@ -496,7 +499,7 @@ const Menu = ({
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
-          <ListItemText primary="Logout" />
+          <ListItemText primary={t("logout")} />
         </ListItem>
       </List>
     </React.Fragment>

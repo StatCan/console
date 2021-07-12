@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import i18n from "../i18n";
+
 export interface IValidation {
   fieldKey: string;
   required: boolean;
@@ -29,7 +31,7 @@ export const commonFormValidation = (fieldsValidate: IValidation[]) => {
 
   fieldsValidate.forEach((field) => {
     if (field.required && field.value.trim() === "") {
-      returnErrors[field.fieldKey] = "Field cannot be empty";
+      returnErrors[field.fieldKey] = i18n.t("other:fieldCannotBeEmpty");
       return;
     }
     // if it's not required and the value is empty, we are done here

@@ -25,6 +25,8 @@ import AddIcon from "@material-ui/icons/Add";
 import TableWrapper from "../../Common/TableWrapper/TableWrapper";
 import EditConfiguration from "../CustomForms/EditConfiguration";
 import SearchIcon from "../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../i18n";
 
 interface IMatchParams {
   isExact: boolean;
@@ -69,22 +71,22 @@ const styles = (theme: Theme) =>
 const panels = {
   logger: {
     main: "logger",
-    title: "Logger Webhook Configuration",
-    modalTitle: "Logger Webhook",
+    title: i18n.t("configurations:loggerWebhookConfig"),
+    modalTitle: i18n.t("configurations:loggerWebhook"),
     apiURL: "",
     configuration: {
       configuration_id: "logger_webhook",
-      configuration_label: "Logger Webhook",
+      configuration_label: i18n.t("configurations:loggerWebhook"),
     },
   },
   audit: {
     main: "audit",
-    title: "Audit Webhook Configuration",
-    modalTitle: "Audit Webhook",
+    title: i18n.t("configurations:auditWebhookConfig"),
+    modalTitle: i18n.t("configurations:auditWebhook"),
     apiURL: "",
     configuration: {
       configuration_id: "audit_webhook",
-      configuration_label: "Audit Webhook",
+      configuration_label: i18n.t("configurations:auditWebhook"),
     },
   },
 };
@@ -94,6 +96,7 @@ const WebhookPanel = ({ match, classes }: IWebhookPanel) => {
   const [filter, setFilter] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [webhooks, setWebhooks] = useState<IWebhook[]>([]);
+  const { t } = useTranslation("configurations");
 
   const pathIn = get(match, "path", "");
   const panelToDisplay = pathIn.split("/");
@@ -136,7 +139,7 @@ const WebhookPanel = ({ match, classes }: IWebhookPanel) => {
         </Grid>
         <Grid item xs={12} className={classes.actionsTray}>
           <TextField
-            placeholder="Filter"
+            placeholder={t("filter")}
             className={classes.searchField}
             id="search-resource"
             label=""
@@ -160,7 +163,7 @@ const WebhookPanel = ({ match, classes }: IWebhookPanel) => {
               setAddWebhookOpen(true);
             }}
           >
-            Add Webhook Configuration
+            {t("addWebhookConfig")}
           </Button>
         </Grid>
         <Grid item xs={12}>
@@ -169,10 +172,10 @@ const WebhookPanel = ({ match, classes }: IWebhookPanel) => {
         <Grid item xs={12}>
           <TableWrapper
             itemActions={tableActions}
-            columns={[{ label: "Name", elementKey: "name" }]}
+            columns={[{ label: t("name"), elementKey: "name" }]}
             isLoading={isLoading}
             records={filteredRecords}
-            entityName="Webhook Configurations"
+            entityName={t("webhookConfigs")}
             idField="name"
           />
         </Grid>
