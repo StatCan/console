@@ -26,6 +26,7 @@ import enTenants from "./locales/en/tenants.json";
 import enTrace from "./locales/en/trace.json";
 import enUsers from "./locales/en/users.json";
 import enWatch from "./locales/en/watch.json";
+import enErrors from "./locales/en/errors.json";
 
 //french namespaces
 import frAccounts from "./locales/fr/accounts.json";
@@ -47,10 +48,11 @@ import frObjectBrowser from "./locales/fr/objectBrowser.json";
 import frOther from "./locales/fr/other.json";
 import frPolicies from "./locales/fr/policies.json";
 import frStorage from "./locales/fr/storage.json";
-import frTenants from "./locales/fr/tenants.json"; 
+import frTenants from "./locales/fr/tenants.json";
 import frTrace from "./locales/fr/trace.json";
 import frUsers from "./locales/fr/users.json";
 import frWatch from "./locales/fr/watch.json";
+import frErrors from "./locales/fr/errors.json";
 
 const resources = {
   en: {
@@ -67,7 +69,7 @@ const resources = {
     global: enGlobal,
     license: enLicense,
     logs: enLogs,
-    menu: enMenu, 
+    menu: enMenu,
     notificationEndpoints: enNotifEndpoint,
     objectBrowser: enObjectBrowser,
     other: enOther,
@@ -77,6 +79,7 @@ const resources = {
     trace: enTrace,
     users: enUsers,
     watch: enWatch,
+    errors: enErrors,
   },
   fr: {
     accounts: frAccounts,
@@ -102,11 +105,12 @@ const resources = {
     trace: frTrace,
     users: frUsers,
     watch: frWatch,
-  }
+    errors: frErrors,
+  },
 };
 
 const options = {
-  order: ['navigator']
+  order: ["navigator"],
 };
 
 i18n

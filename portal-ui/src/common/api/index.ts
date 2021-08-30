@@ -19,6 +19,7 @@ import get from "lodash/get";
 import { clearSession } from "../utils";
 import { baseUrl } from "../../history";
 import { ErrorResponseHandler } from "../types";
+import i18n from "../../i18n";
 
 export class API {
   invoke(method: string, url: string, data?: object) {
@@ -59,7 +60,9 @@ export class API {
         detailedMessage.charAt(0).toUpperCase() + detailedMessage.slice(1);
 
       const throwMessage: ErrorResponseHandler = {
-        errorMessage: capMessage,
+        errorMessage: i18n.exists("errors:" + errMessage)
+          ? i18n.t("errors:" + errMessage)
+          : capMessage,
         detailedError: capDetailed,
       };
 
