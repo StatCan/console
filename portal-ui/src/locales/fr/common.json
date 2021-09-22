@@ -4,7 +4,7 @@
   "august": "Aout",
   "close": "fermer",
   "consoleCreds": "Références de la console",
-  "day": "<Day>",
+  "day": "<jour>",
   "december": "Décembre",
   "defaultDays": "Par défaut (7 jours)",
   "details": "Détails",
@@ -18,7 +18,7 @@
   "loading": "Chargement en cours...",
   "march": "Mars",
   "may": "Mai",
-  "month": "<Month>",
+  "month": "<mois>",
   "newEntityCreated": "Nouvelle {{entity}} Créée",
   "newEntityDetails": "Une nouvelle {{entity}} a été créée avec les détails suivants :",
   "noEntityNameError": "Il n'y a pas encore de {{entityName}}.",
@@ -36,5 +36,5 @@
   "steps": "Étapes",
   "uploadPicture": "télécharger une photo",
   "usedColon": "Utilisée :",
-  "year": "<Year>"
+  "year": "<année>"
 }
