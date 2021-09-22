@@ -26,6 +26,7 @@
   "october": "Octobre",
   "oneTimeSecret": "Notez-les, car c'est la seule fois où le secret sera affiché.",
   "options": "Options",
+  "pleaseLoginVia": "__STRING_NOT_TRANSLATED__",
   "primaryCheckbox": "case à cocher primaire",
   "secondaryCheckbox": "case à cocher secondaire",
   "secretKeyColon": "Clé secrète :",

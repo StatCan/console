@@ -13,6 +13,7 @@
   "dateDeposit": "NOT_TRANSLATED",
   "drivesFreeInodes": "__STRING_NOT_TRANSLATED__",
   "driveUsedCapacity": "__STRING_NOT_TRANSLATED__",
+  "endpoint": "__STRING_NOT_TRANSLATED__",
   "endTime": "NOT_TRANSLATED",
   "greaterThan512": "__STRING_NOT_TRANSLATED__",
   "internodeDataTransfer": "__STRING_NOT_TRANSLATED__",
@@ -38,8 +39,10 @@
   "saleAmount": "NOT_TRANSLATED",
   "sales": "NOT_TRANSLATED",
   "seeMoreOrders": "NOT_TRANSLATED",
+  "servers": "__STRING_NOT_TRANSLATED__",
   "shipTo": "NOT_TRANSLATED",
   "startTime": "NOT_TRANSLATED",
+  "status": "__STRING_NOT_TRANSLATED__",
   "summary": "NOT_TRANSLATED",
   "sync": "NOT_TRANSLATED",
   "timeSinceLastHealActivity": "__STRING_NOT_TRANSLATED__",
@@ -57,6 +60,7 @@
   "traffic": "NOT_TRANSLATED",
   "uptime": "__STRING_NOT_TRANSLATED__",
   "usage": "NOT_TRANSLATED",
+  "version": "__STRING_NOT_TRANSLATED__",
   "viewBalance": "NOT_TRANSLATED",
   "widgetInfoErr": "NOT_TRANSLATED"
 }
