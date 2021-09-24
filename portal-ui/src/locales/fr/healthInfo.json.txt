@@ -1,9 +1,0 @@
-{
-  "diagnostic": "Diagnostique",
-  "diagnosticFileReady": "Le fichier de diagnostic est prêt à être téléchargé.",
-  "diagnosticStarted": "Le diagnostic a démarré. Veuillez ne pas actualiser la page pendant le diagnostic.",
-  "download": "Télécharger",
-  "getDiagnosticFilesErr": "Une erreur s'est produite lors de l'obtention du fichier de diagnostic.",
-  "startDiagnostic": "Démarrer le diagnostic"
-}
-
