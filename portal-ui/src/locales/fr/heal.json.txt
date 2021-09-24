@@ -1,0 +1,19 @@
+{
+  "afterHealing": "Après la guérison",
+  "beforeHealing": "Avant de guérir",
+  "forceStart": "Démarrage forcé",
+  "forceStop": "Forcer l'arrêt",
+  "green": "Vert",
+  "grey": "Gris",
+  "heal": "Soigner",
+  "healingTimeColon": "<0>Temps de guérison :</0> {{healDuration}} s",
+  "itemsHealthStatus": "État de santé de l'objet [%]",
+  "objectsHealedColon": "<0>Objets guéris :</0> objets guéris / objets numérisés",
+  "prefix": "Préfixe",
+  "recursive": "Récursif",
+  "red": "rouge",
+  "selectBucket": "Sélectionnez le compartiment",
+  "sizeScannedColon": "<0>Taille numérisée :</0> {{sizeScanned}}",
+  "start": "Début",
+  "yellow": "Jaune"
+}

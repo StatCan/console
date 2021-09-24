@@ -1,0 +1,6 @@
+{
+  "addLambdaNotifTarget": "Ajouter une cible de notification Lambda",
+  "back": "Arrière",
+  "pickSupportedServiceColon": "Choisissez un service pris en charge :",
+  "save": "sauvegarder"
+}

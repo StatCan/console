@@ -1,0 +1,22 @@
+{
+  "accessKey": "Clé d'accès",
+  "assignUsers": "Attribuer des utilisateurs",
+  "cancel": "Annuler",
+  "clear": "Dégager",
+  "createGroup": "Créer un groupe",
+  "delete": "Effacer",
+  "deleteGroupConfirmation": "Voulez-vous vraiment supprimer le groupe <1>{{selectedGroup}}</1> ?",
+  "deleteUser": "Supprimer l'utilisateur",
+  "disabled": "Désactivée",
+  "editGroup": "Modifier le groupe",
+  "editMembers": "Modifier les membres",
+  "enabled": "Activée",
+  "filterUsers": "Filtrer les utilisateurs",
+  "groupName": "Nom de groupe",
+  "groups": "Groupes",
+  "name": "Nom",
+  "noUsersAvailable": "Aucun utilisateur disponible",
+  "save": "sauvegarder",
+  "searchGroups": "Groupes de recherche",
+  "users": "Utilisateurs"
+}

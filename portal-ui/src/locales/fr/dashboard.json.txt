@@ -1,0 +1,84 @@
+{
+  "allBuckets": "Tous les seaux",
+  "between1024and1": "Entre 1024B et 1Mo",
+  "between10and64": "Entre 10 Mo et 64 Mo",
+  "between128and512": "Entre 128 Mo et 512 Mo",
+  "between1and10": "Entre 1Mo et 10Mo",
+  "between64and128": "Entre 64 Mo et 128 Mo",
+  "clusterTabs": "onglets de cluster",
+  "currentUsableCapacity": "Capacité utile actuelle",
+  "dashboard": "Tableau de bord",
+  "dataUsageGrowth": "Croissance de l'utilisation des données",
+  "date": "Date",
+  "dateDeposit": "le 15 mars 2019",
+  "drivesFreeInodes": "Lecteurs d'inodes libres",
+  "driveUsedCapacity": "Capacité utilisée du lecteur",
+  "endpoint": "Point de terminaison",
+  "endTime": "Heure de fin",
+  "greaterThan512": "Plus de 512 Mo",
+  "internodeDataTransfer": "Transfert de données entre nœuds",
+  "lessthan1024": "Moins de 1024B",
+  "name": "Nom",
+  "nodeCpuUsage": "Utilisation du processeur du nœud",
+  "nodeFileDescriptors": "Descripteurs de fichiers de nœuds",
+  "nodeIO": "E/S de nœud",
+  "nodeMemoryUsage": "Utilisation de la mémoire du nœud",
+  "nodeSyscalls": "Appels système de nœud",
+  "numberOfBuckets": "Nombre de seaux",
+  "numberOfObjects": "Nombre d'objets",
+  "numForMoney": "3 024,00 $",
+  "objectSizeDistribution": "Distribution de la taille des objets",
+  "paymentMethod": "Mode de paiement",
+  "recentDeposits": "Dépôts récents",
+  "recentOrders": "Dernières commandes",
+  "resources": "Ressources",
+  "s3ApiDataRecievedRate": "Taux de réception des données API S3",
+  "s3ApiDataSentRate": "Taux d'envoi de données API S3",
+  "s3ApiRequestErrorRate": "Taux d'erreur de demande d'API S3",
+  "s3ApiRequestRate": "Taux de demande d'API S3",
+  "saleAmount": "Montant de la vente",
+  "sales": "Ventes ($)",
+  "seeMoreOrders": "Voir plus de commandes",
+  "servers": "Les serveurs",
+  "shipTo": "Envoyez à",
+  "startTime": "Heure de début",
+  "status": "Statut",
+  "summary": "Sommaire",
+  "sync": "Synchroniser",
+  "timeSinceLastHealActivity": "Temps écoulé depuis la dernière activité de guérison",
+  "timeSinceLastScanActivity": "Temps écoulé depuis la dernière activité d'analyse",
+  "today": "Aujourd'hui",
+  "totalGoroutines": "Total Goroutines",
+  "totalObjects": "Nombre total d'objets",
+  "totalOfflineDisks": "Nombre total de disques hors ligne",
+  "totalOfflineServers": "Nombre total de serveurs hors ligne",
+  "totalOnlineDisks": "Nombre total de disques en ligne",
+  "totalOnlineServers": "Serveurs en ligne totaux",
+  "totalOpenFDs": "Total des FD ouverts",
+  "totalS3TrafficInbound": "Trafic S3 total entrant",
+  "totalS3TrafficOutbound": "Trafic S3 total sortant",
+  "traffic": "Trafic",
+  "uptime": "Disponibilité",
+  "usage": "Usage",
+  "version": "Version",
+  "viewBalance": "Voir le solde",
+  "widgetInfoErr": "Les informations du widget n'ont pas pu être récupérées pour le moment. Veuillez réessayer"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
