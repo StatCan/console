@@ -1,6 +1,6 @@
 {
-  "addLambdaNotifTarget": "__STRING_NOT_TRANSLATED__",
-  "back": "__STRING_NOT_TRANSLATED__",
-  "pickSupportedServiceColon": "__STRING_NOT_TRANSLATED__",
-  "save": "__STRING_NOT_TRANSLATED__"
+  "addLambdaNotifTarget": "Ajouter une cible de notification Lambda",
+  "back": "Arrière",
+  "pickSupportedServiceColon": "Choisissez un service pris en charge :",
+  "save": "sauvegarder"
 }
