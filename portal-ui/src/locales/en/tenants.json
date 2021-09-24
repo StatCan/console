@@ -215,7 +215,7 @@
   "reason": "Reason",
   "refresh": "Refresh",
   "refreshList": "Refresh List",
-  "refreshTenantList": "__STRING_NOT_TRANSLATED__",
+  "refreshTenantList": "Refresh tenant list",
   "region": "Region",
   "registeredCapacity": "Registered Capacity",
   "remoteCluster": "Remote Cluster",
