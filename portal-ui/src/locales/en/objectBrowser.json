@@ -2,10 +2,10 @@
   "allBuckets": "All Buckets",
   "buckets": "Buckets",
   "createBucket": "Create Bucket",
+  "filterBuckets": "Filter Buckets",
   "name": "Name",
   "objectBrowser": "Object Browser",
   "refreshList": "Refresh List",
   "rewindColon": "Rewind: ",
-  "searchBuckets": "Search Buckets",
   "usedSpace": "Used Space"
 }

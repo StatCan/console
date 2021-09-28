@@ -1,12 +1,12 @@
 {
-  "noChangesAtTime": "__STRING_NOT_TRANSLATED__",
-  "path": "__STRING_NOT_TRANSLATED__",
-  "prefix": "__STRING_NOT_TRANSLATED__",
-  "selectBucket": "__STRING_NOT_TRANSLATED__",
-  "size": "__STRING_NOT_TRANSLATED__",
-  "start": "__STRING_NOT_TRANSLATED__",
-  "suffix": "__STRING_NOT_TRANSLATED__",
-  "time": "__STRING_NOT_TRANSLATED__",
-  "type": "__STRING_NOT_TRANSLATED__",
-  "watch": "__STRING_NOT_TRANSLATED__"
+  "noChangesAtTime" : "Aucun changement pour le moment",
+  "path" : "Chemin d'accès",
+  "prefix" : "Préfixe",
+  "selectBucket" : "Selectionner un compartiment",
+  "size" : "Taille",
+  "start" : "Démarrer",
+  "suffix" : "Suffixe",
+  "time" : "Temps",
+  "type" : "Type",
+  "watch" : "Montrer"
 }
