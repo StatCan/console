@@ -1,0 +1,8 @@
+{
+  "diagnostic": "Diagnostic",
+  "diagnosticFileReady": "Diagnostic file is ready to be downloaded.",
+  "diagnosticStarted": "Diagnostic started. Please do not refresh page during diagnosis.",
+  "download": "Download",
+  "getDiagnosticFilesErr": "An error occurred while getting Diagnostic file.",
+  "startDiagnostic": "Start Diagnostic"
+}

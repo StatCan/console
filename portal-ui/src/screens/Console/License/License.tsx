@@ -35,6 +35,7 @@ import PageHeader from "../Common/PageHeader/PageHeader";
 import ActivationModal from "./ActivationModal";
 import LicenseModal from "./LicenseModal";
 import api from "../../../common/api";
+import { useTranslation } from "react-i18next";
 
 const mapState = (state: AppState) => ({
   operatorMode: state.system.operatorMode,
@@ -341,6 +342,8 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
   const [loadingRefreshLicense, setLoadingRefreshLicense] =
     useState<boolean>(false);
 
+  const { t } = useTranslation("license");
+
   useEffect(() => {
     fetchLicenseInfo();
   }, []);
@@ -355,7 +358,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
   return (
     <Fragment>
       <Fragment>
-        <PageHeader label="License" />
+        <PageHeader label={t("license")} />
         <Grid container>
           <Grid container xs={12} className={classes.container}>
             <Grid item xs={12} lg={8} className={`${classes.licenseContainer}`}>
@@ -369,7 +372,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                         gutterBottom
                         className={classes.licenseInfoTitle}
                       >
-                        License
+                        {t("license")}
                       </Typography>
                       <Typography
                         variant="overline"
@@ -377,7 +380,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                         gutterBottom
                         className={classes.licenseInfoValue}
                       >
-                        Commercial License
+                        {t("commercialLicense")}
                       </Typography>
                       <Typography
                         variant="button"
@@ -385,7 +388,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                         gutterBottom
                         className={classes.licenseInfoTitle}
                       >
-                        Organization
+                        {t("organization")}
                       </Typography>
                       <Typography
                         variant="overline"
@@ -401,7 +404,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                         gutterBottom
                         className={classes.licenseInfoTitle}
                       >
-                        Registered Capacity
+                        {t("registeredCapacity")}
                       </Typography>
                       <Typography
                         variant="overline"
@@ -420,7 +423,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                         gutterBottom
                         className={classes.licenseInfoTitle}
                       >
-                        Expiry Date
+                        {t("expiryDate")}
                       </Typography>
                       <Typography
                         variant="overline"
@@ -440,7 +443,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                         gutterBottom
                         className={classes.licenseInfoTitle}
                       >
-                        Subscription Plan
+                        {t("subcriptionPlan")}
                       </Typography>
                       <Typography
                         variant="overline"
@@ -456,7 +459,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                         gutterBottom
                         className={classes.licenseInfoTitle}
                       >
-                        Requester
+                        {t("requester")}
                       </Typography>
                       <Typography
                         variant="overline"
@@ -470,7 +473,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                     <img
                       className={classes.verifiedIcon}
                       src={"/verified.svg"}
-                      alt="verified"
+                      alt={t("verified")}
                     />
                   </Grid>
                 </Fragment>
@@ -481,11 +484,11 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                     closeModal={() => setLicenseModal(false)}
                   />
                   <Grid container>
-                    <img src="/agpl.svg" height={40} alt="agpl" />
+                    <img src="/agpl.svg" height={40} alt={t("agpl")} />
                   </Grid>
                   <Grid container>
                     <Typography component="h2" variant="h6">
-                      GNU Affero General Public License
+                      {t("gnuGeneralPublicLicense")}
                     </Typography>
                   </Grid>
                   <Grid container className={classes.licenseDescription}>
@@ -493,12 +496,11 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                       onClick={() => setLicenseModal(true)}
                       className={classes.clickableBlock}
                     >
-                      <Typography component="h3">Version 3</Typography>
+                      <Typography component="h3">
+                        {t("versionThree")}
+                      </Typography>
                       <Typography component="h6">
-                        The GNU Affero General Public License is a free,
-                        copyleft license for software and other kinds of works,
-                        specifically designed to ensure cooperation with the
-                        Community in the case of network server software.
+                        {t("gnuPublicLicenseDesc")}
                       </Typography>
                     </div>
                   </Grid>
@@ -513,11 +515,10 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                     variant="h6"
                     className={classes.pageTitle}
                   >
-                    Login to MinIO SUBNET !
+                    {t("loginToMinioSubnet")}
                   </Typography>
                   <Typography component="h6" className={classes.subnetSubTitle}>
-                    It combines a commercial license with a support experience
-                    unlike any other.
+                    {t("subnetDesc")}
                   </Typography>
                   <br />
                   <Button
@@ -530,7 +531,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                       operatorMode ? "op" : "con"
                     }`}
                   >
-                    Login to SUBNET
+                    {t("loginToSubnet")}
                   </Button>
                   {operatorMode && (
                     <Fragment>
@@ -544,7 +545,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                           refreshLicense();
                         }}
                       >
-                        Refresh Licence
+                        {t("refreshLicense")}
                       </button>
                       {loadingRefreshLicense && (
                         <CircularProgress
@@ -562,15 +563,10 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                     variant="h6"
                     className={classes.pageTitle}
                   >
-                    Choosing between GNU AGPL v3 and Commercial License
+                    {t("choosingBetweenLicenses")}
                   </Typography>
                   <Typography component="h6">
-                    If you are building proprietary applications, you may want
-                    to choose the commercial license included as part of the
-                    Standard and Enterprise subscription plans. Applications
-                    must otherwise comply with all the GNU AGPLv3 License &
-                    Trademark obligations. Follow the links below to learn more
-                    about the compliance policy.
+                    {t("choosingBetweenLicensesDesc")}
                   </Typography>
                   <br />
                   <a
@@ -581,7 +577,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                     target="_blank"
                     rel="nofollow noopener noreferrer"
                   >
-                    Open Source Policy Compliance
+                    {t("openSourcePolicyComp")}
                   </a>
                   <br />
                   <br />
@@ -593,7 +589,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                     target="_blank"
                     rel="nofollow noopener noreferrer"
                   >
-                    Trademark Policy
+                    {t("trademarkPolicy")}
                   </a>
                 </Fragment>
               )}
@@ -616,7 +612,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                     <Grid item xs={3} className={classes.detailsContainer} />
                     {planDetails.map((details: any) => {
                       let currentPlan =
-                        (!licenseInfo && details.title === "Community") ||
+                        (!licenseInfo && details.title === t("community")) ||
                         (licenseInfo &&
                           licenseInfo.plan.toLowerCase() ===
                             details.title.toLowerCase());
@@ -631,7 +627,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                             classes.detailsContainerBorder,
                             {
                               [classes.detailsContainerBorderHighlighted]:
-                                details.title !== "Community",
+                                details.title !== t("community"),
                             },
                             currentPlan ? classes.currentPlanBG : ""
                           )}
@@ -645,7 +641,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                                 : classes.planHeader
                             }
                           >
-                            {currentPlan ? "Current Plan" : "\u00A0"}
+                            {currentPlan ? t("currentPlan") : "\u00A0"}
                           </Grid>
                           <Grid item xs={12} className={classes.detailsTitle}>
                             {details.title}
@@ -778,7 +774,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                               : "",
                             {
                               [classes.buttonContainerHighlighted]:
-                                button.text === "Subscribe",
+                                button.text === t("subscribe"),
                             }
                           )}
                         >
@@ -816,7 +812,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                             </Button>
                           </Grid>
                           {operatorMode &&
-                            button.text === "Subscribe" &&
+                            button.text === t("subscribe") &&
                             !(
                               licenseInfo &&
                               licenseInfo.plan.toLowerCase() ===
@@ -830,7 +826,7 @@ const License = ({ classes, operatorMode }: ILicenseProps) => {
                                     setActivateProductModal(true);
                                   }}
                                 >
-                                  Activate
+                                  {t("activate")}
                                 </button>
                               </Grid>
                             )}

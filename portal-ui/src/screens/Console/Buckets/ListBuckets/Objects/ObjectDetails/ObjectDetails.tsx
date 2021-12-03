@@ -83,6 +83,8 @@ import SearchIcon from "../../../../../../icons/SearchIcon";
 import ObjectBrowserIcon from "../../../../../../icons/ObjectBrowserIcon";
 import PreviewFileContent from "../Preview/PreviewFileContent";
 import { BucketObject } from "../ListObjects/types";
+import { useTranslation } from "react-i18next";
+import "moment/min/locales";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -271,6 +273,7 @@ const ObjectDetails = ({
   const objectName = allPathData[allPathData.length - 1];
   const bucketName = allPathData[2];
   const pathInBucket = allPathData.slice(3).join("/");
+  const { i18n, t } = useTranslation("listBuckets");
 
   const previewObject: BucketObject = {
     name: actualInfo.name,
@@ -376,9 +379,7 @@ const ObjectDetails = ({
   const downloadObject = (object: IFileInfo, includeVersion?: boolean) => {
     if (object.size && parseInt(object.size) > 104857600) {
       // If file is bigger than 100MB we show a notification
-      setSnackBarMessage(
-        "Download process started, it may take a few moments to complete"
-      );
+      setSnackBarMessage(t("downloadStarted"));
     }
     download(
       bucketName,
@@ -425,7 +426,14 @@ const ObjectDetails = ({
   });
 
   const displayParsedDate = (date: string) => {
-    return <reactMoment.default>{date}</reactMoment.default>;
+    return (
+      <reactMoment.default
+        locale={i18n.language}
+        format="ddd MMM DD YYYY HH:mm:ss ZZ"
+      >
+        {date}
+      </reactMoment.default>
+    );
   };
 
   const closeDeleteModal = (redirectBack: boolean) => {
@@ -520,7 +528,7 @@ const ObjectDetails = ({
           actualInfo={actualInfo}
         />
       )}
-      <PageHeader label={"Object Browser"} />
+      <PageHeader label={t("objectBrowser")} />
 
       <Grid container className={classes.container}>
         <Grid item xs={12}>
@@ -538,10 +546,10 @@ const ObjectDetails = ({
             }
             actions={
               <Fragment>
-                <Tooltip title="Share">
+                <Tooltip title={t<string>("share")}>
                   <IconButton
                     color="primary"
-                    aria-label="share"
+                    aria-label={t("share")}
                     onClick={() => {
                       shareObject();
                     }}
@@ -562,10 +570,10 @@ const ObjectDetails = ({
                     />
                   </div>
                 ) : (
-                  <Tooltip title="Download">
+                  <Tooltip title={t<string>("download")}>
                     <IconButton
                       color="primary"
-                      aria-label="download"
+                      aria-label={t("download")}
                       onClick={() => {
                         downloadObject(actualInfo);
                       }}
@@ -576,10 +584,10 @@ const ObjectDetails = ({
                   </Tooltip>
                 )}
 
-                <Tooltip title="Delete Object">
+                <Tooltip title={t<string>("deleteObject")}>
                   <IconButton
                     color="primary"
-                    aria-label="delete"
+                    aria-label={t("delete")}
                     onClick={() => {
                       setDeleteOpen(true);
                     }}
@@ -601,7 +609,7 @@ const ObjectDetails = ({
                 setSelectedTab(0);
               }}
             >
-              <ListItemText primary="Details" />
+              <ListItemText primary={t("details")} />
             </ListItem>
             <ListItem
               button
@@ -613,7 +621,7 @@ const ObjectDetails = ({
                 !(actualInfo.version_id && actualInfo.version_id !== "null")
               }
             >
-              <ListItemText primary="Versions" />
+              <ListItemText primary={t("versions")} />
             </ListItem>
             <ListItem
               button
@@ -623,7 +631,7 @@ const ObjectDetails = ({
               }}
               disabled={extensionPreview(objectName) === "none"}
             >
-              <ListItemText primary="Preview" />
+              <ListItemText primary={t("preview")} />
             </ListItem>
           </List>
         </Grid>
@@ -631,7 +639,7 @@ const ObjectDetails = ({
           <Grid item xs={12}>
             <TabPanel index={0} value={selectedTab}>
               <div className={classes.actionsTray}>
-                <h1 className={classes.sectionTitle}>Details</h1>
+                <h1 className={classes.sectionTitle}>{t("details")}</h1>
               </div>
               <br />
               <Paper className={classes.paperContainer}>
@@ -640,17 +648,19 @@ const ObjectDetails = ({
                     <table width={"100%"}>
                       <tbody>
                         <tr>
-                          <td className={classes.titleCol}>Legal Hold:</td>
+                          <td className={classes.titleCol}>
+                            {t("legalHoldColon")}
+                          </td>
                           <td className={classes.capitalizeFirst}>
                             {actualInfo.version_id &&
                             actualInfo.version_id !== "null" ? (
                               <Fragment>
                                 {actualInfo.legal_hold_status
                                   ? actualInfo.legal_hold_status.toLowerCase()
-                                  : "Off"}
+                                  : t("off")}
                                 <IconButton
                                   color="primary"
-                                  aria-label="legal-hold"
+                                  aria-label={t("legalHold")}
                                   size="small"
                                   className={classes.propertiesIcon}
                                   onClick={() => {
@@ -661,19 +671,21 @@ const ObjectDetails = ({
                                 </IconButton>
                               </Fragment>
                             ) : (
-                              "Disabled"
+                              t("disabled")
                             )}
                           </td>
                         </tr>
                         <tr>
-                          <td className={classes.titleCol}>Retention:</td>
+                          <td className={classes.titleCol}>
+                            {t("retentionColon")}
+                          </td>
                           <td className={classes.capitalizeFirst}>
                             {actualInfo.retention_mode
                               ? actualInfo.retention_mode.toLowerCase()
-                              : "Undefined"}
+                              : t("undefined")}
                             <IconButton
                               color="primary"
-                              aria-label="retention"
+                              aria-label={t("retention")}
                               size="small"
                               className={classes.propertiesIcon}
                               onClick={() => {
@@ -685,7 +697,7 @@ const ObjectDetails = ({
                           </td>
                         </tr>
                         <tr>
-                          <td className={classes.titleCol}>Tags:</td>
+                          <td className={classes.titleCol}>{t("tagsColon")}</td>
                           <td>
                             {tagKeys &&
                               tagKeys.map((tagKey, index) => {
@@ -716,7 +728,7 @@ const ObjectDetails = ({
                               icon={<AddIcon />}
                               clickable
                               size="small"
-                              label="Add tag"
+                              label={t("addTag")}
                               color="primary"
                               variant="outlined"
                               onClick={() => {
@@ -735,12 +747,15 @@ const ObjectDetails = ({
               <Paper className={classes.paperContainer}>
                 <Grid item xs={12}>
                   <Grid item xs={12}>
-                    <h2>Object Metadata</h2>
+                    <h2>{t("objectMetadata")}</h2>
                     <hr className={classes.hr}></hr>
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Table className={classes.table} aria-label="simple table">
+                    <Table
+                      className={classes.table}
+                      aria-label={t("simpleTable")}
+                    >
                       <TableBody>
                         {Object.keys(metadata).map((element) => {
                           return (
@@ -767,13 +782,15 @@ const ObjectDetails = ({
             <TabPanel index={1} value={selectedTab}>
               <Fragment>
                 <div className={classes.actionsTray}>
-                  <h1 className={classes.sectionTitle}>Versions</h1>
+                  <h1 className={classes.sectionTitle}>{t("versions")}</h1>
                 </div>
                 <br />
                 <Grid item xs={12} className={classes.actionsTray}>
                   {actualInfo.version_id && actualInfo.version_id !== "null" && (
                     <TextField
-                      placeholder={`Search ${objectName}`}
+                      placeholder={t("searchObject", {
+                        objectName: `${objectName}`,
+                      })}
                       className={clsx(classes.search, classes.searchField)}
                       id="search-resource"
                       label=""
@@ -806,25 +823,27 @@ const ObjectDetails = ({
                             return `v${versOrd}`;
                           },
                         },
-                        { label: "Version ID", elementKey: "version_id" },
+                        { label: t("versionId"), elementKey: "version_id" },
                         {
-                          label: "Last Modified",
+                          label: t("lastModified"),
                           elementKey: "last_modified",
                           renderFunction: displayParsedDate,
                         },
                         {
-                          label: "Deleted",
+                          label: t("deleted"),
                           width: 60,
                           contentTextAlign: "center",
                           renderFullObject: true,
                           renderFunction: (r) => {
-                            const versOrd = r.is_delete_marker ? "Yes" : "No";
+                            const versOrd = r.is_delete_marker
+                              ? t("yes")
+                              : t("no");
                             return `${versOrd}`;
                           },
                         },
                       ]}
                       isLoading={false}
-                      entityName="Versions"
+                      entityName={t("versions")}
                       idField="version_id"
                       records={filteredRecords}
                     />

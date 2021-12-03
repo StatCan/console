@@ -41,6 +41,7 @@ import api from "../../../common/api";
 import ScreenTitle from "../Common/ScreenTitle/ScreenTitle";
 import RefreshIcon from "../../../icons/RefreshIcon";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -128,6 +129,8 @@ const BrowseBuckets = ({
   const [filterBuckets, setFilterBuckets] = useState<string>("");
   const [loadingPerms, setLoadingPerms] = useState<boolean>(true);
   const [canCreateBucket, setCanCreateBucket] = useState<boolean>(false);
+
+  const { t } = useTranslation("objectBrowser");
 
   // check the permissions for creating bucket
   useEffect(() => {
@@ -227,7 +230,7 @@ const BrowseBuckets = ({
                 <BucketsIcon width={40} />
               </Fragment>
             }
-            title={"All Buckets"}
+            title={t("allBuckets")}
             subTitle={
               <Fragment>
                 <BrowserBreadcrumbs title={false} />
@@ -237,10 +240,10 @@ const BrowseBuckets = ({
               <Fragment>
                 {canCreateBucket && (
                   <Fragment>
-                    <Tooltip title={"Create Bucket"}>
+                    <Tooltip title={t<string>("createBucket")}>
                       <IconButton
                         color="primary"
-                        aria-label="Create Bucket"
+                        aria-label={t("createBucket")}
                         component="span"
                         onClick={() => {
                           setAddScreenOpen(true);
@@ -251,10 +254,10 @@ const BrowseBuckets = ({
                     </Tooltip>
                   </Fragment>
                 )}
-                <Tooltip title={"Refresh List"}>
+                <Tooltip title={t<string>("refreshList")}>
                   <IconButton
                     color="primary"
-                    aria-label="Refresh List"
+                    aria-label={t("refreshList")}
                     component="span"
                     onClick={() => {
                       setLoading(true);
@@ -269,7 +272,7 @@ const BrowseBuckets = ({
         </Grid>
         <Grid item xs={12} className={classes.actionsTray}>
           <TextField
-            placeholder="Filter Buckets"
+            placeholder={t("filterBuckets")}
             className={classes.searchField}
             id="search-resource"
             label=""
@@ -300,12 +303,12 @@ const BrowseBuckets = ({
             ]}
             columns={[
               {
-                label: "Name",
+                label: t("name"),
                 elementKey: "name",
                 renderFunction: renderBucket,
               },
               {
-                label: "Used Space",
+                label: t("usedSpace"),
                 elementKey: "size",
                 renderFunction: niceBytes,
                 globalClass: classes.usedSpaceCol,
@@ -317,7 +320,7 @@ const BrowseBuckets = ({
             ]}
             isLoading={loading}
             records={filteredRecords}
-            entityName="Buckets"
+            entityName={t("buckets")}
             idField="name"
             customPaperHeight={classes.browsePaper}
           />

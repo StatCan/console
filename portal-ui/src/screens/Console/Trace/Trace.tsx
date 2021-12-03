@@ -39,6 +39,7 @@ import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import PageHeader from "../Common/PageHeader/PageHeader";
 import CheckboxWrapper from "../Common/FormComponents/CheckboxWrapper/CheckboxWrapper";
 import moment from "moment/moment";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -129,6 +130,8 @@ const Trace = ({
   const [os, setOS] = useState<boolean>(false);
   const [errors, setErrors] = useState<boolean>(false);
 
+  const { t } = useTranslation("trace");
+
   const startTrace = () => {
     traceResetMessages();
     const url = new URL(window.location.toString());
@@ -189,12 +192,12 @@ const Trace = ({
 
   return (
     <Fragment>
-      <PageHeader label={"Trace"} />
+      <PageHeader label={t("trace")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12} className={classes.actionsTray}>
             <TextField
-              placeholder="Status Code"
+              placeholder={t("statusCode")}
               className={classes.searchField}
               id="status-code"
               label=""
@@ -208,7 +211,7 @@ const Trace = ({
               disabled={traceStarted}
             />
             <TextField
-              placeholder="Method"
+              placeholder={t("method")}
               className={classes.searchField}
               id="method"
               label=""
@@ -222,7 +225,7 @@ const Trace = ({
               disabled={traceStarted}
             />
             <TextField
-              placeholder="Function Name"
+              placeholder={t("functionName")}
               className={classes.searchField}
               id="func-name"
               label=""
@@ -236,7 +239,7 @@ const Trace = ({
               }}
             />
             <TextField
-              placeholder="Path"
+              placeholder={t("path")}
               className={classes.searchField}
               id="path"
               label=""
@@ -253,7 +256,7 @@ const Trace = ({
               type="number"
               className={classes.searchField}
               id="fthreshold"
-              label="Response Threshold"
+              label={t("responseThreshold")}
               disabled={traceStarted}
               InputProps={{
                 disableUnderline: true,
@@ -268,12 +271,12 @@ const Trace = ({
             />
           </Grid>
           <Grid item xs={12} className={classes.inlineCheckboxes}>
-            <span className={classes.labelCheckboxes}>Calls to trace:</span>
+            <span className={classes.labelCheckboxes}>{t("callsToTraceColon")}</span>
             <CheckboxWrapper
               checked={all}
               id={"all_calls"}
               name={"all_calls"}
-              label={"All"}
+              label={t("all")}
               onChange={(item) => {
                 setAll(item.target.checked);
               }}
@@ -284,7 +287,7 @@ const Trace = ({
               checked={s3 || all}
               id={"s3_calls"}
               name={"s3_calls"}
-              label={"S3"}
+              label={t("s3")}
               onChange={(item) => {
                 setS3(item.target.checked);
               }}
@@ -295,7 +298,7 @@ const Trace = ({
               checked={internal || all}
               id={"internal_calls"}
               name={"internal_calls"}
-              label={"Internal"}
+              label={t("internal")}
               onChange={(item) => {
                 setInternal(item.target.checked);
               }}
@@ -306,7 +309,7 @@ const Trace = ({
               checked={storage || all}
               id={"storage_calls"}
               name={"storage_calls"}
-              label={"Storage"}
+              label={t("storage")}
               onChange={(item) => {
                 setStorage(item.target.checked);
               }}
@@ -317,7 +320,7 @@ const Trace = ({
               checked={os || all}
               id={"os_calls"}
               name={"os_calls"}
-              label={"OS"}
+              label={t("os")}
               onChange={(item) => {
                 setOS(item.target.checked);
               }}
@@ -331,7 +334,7 @@ const Trace = ({
               checked={errors}
               id={"only_errors"}
               name={"only_errors"}
-              label={"Display only Errors"}
+              label={t("displayOnlyErrors")}
               onChange={(item) => {
                 setErrors(item.target.checked);
               }}
@@ -348,7 +351,7 @@ const Trace = ({
                 disabled={traceStarted}
                 onClick={startTrace}
               >
-                Start
+                {t("start")}
               </Button>
             )}
             {traceStarted && (
@@ -358,7 +361,7 @@ const Trace = ({
                 color="primary"
                 onClick={stopTrace}
               >
-                Stop
+                {t("stop")}
               </Button>
             )}
           </Grid>
@@ -371,7 +374,7 @@ const Trace = ({
             itemActions={[]}
             columns={[
               {
-                label: "Time",
+                label: t("time"),
                 elementKey: "ptime",
                 renderFunction: (time: Date) => {
                   const timeParse = new Date(time);
@@ -379,34 +382,34 @@ const Trace = ({
                 },
                 globalClass: classes.timeItem,
               },
-              { label: "Name", elementKey: "api" },
+              { label: t("name"), elementKey: "api" },
               {
-                label: "Status",
+                label: t("status"),
                 elementKey: "",
                 renderFunction: (fullElement: TraceMessage) =>
                   `${fullElement.statusCode} ${fullElement.statusMsg}`,
                 renderFullObject: true,
               },
               {
-                label: "Location",
+                label: t("location"),
                 elementKey: "configuration_id",
                 renderFunction: (fullElement: TraceMessage) =>
                   `${fullElement.host} ${fullElement.client}`,
                 renderFullObject: true,
               },
               {
-                label: "Load Time",
+                label: t("loadTime"),
                 elementKey: "callStats.duration",
                 globalClass: classes.timeItem,
               },
               {
-                label: "Upload",
+                label: t("upload"),
                 elementKey: "callStats.rx",
                 renderFunction: niceBytes,
                 globalClass: classes.sizeItem,
               },
               {
-                label: "Download",
+                label: t("download"),
                 elementKey: "callStats.tx",
                 renderFunction: niceBytes,
                 globalClass: classes.sizeItem,
@@ -414,12 +417,12 @@ const Trace = ({
             ]}
             isLoading={false}
             records={messages}
-            entityName="Traces"
+            entityName={t("traces")}
             idField="api"
             customEmptyMessage={
               traceStarted
-                ? "No Traced elements received yet"
-                : "Trace is not started yet"
+                ? t("noTraceElementRecieved")
+                : t("traceHasNotStarted")
             }
             customPaperHeight={classes.tableWrapper}
             autoScrollToBottom

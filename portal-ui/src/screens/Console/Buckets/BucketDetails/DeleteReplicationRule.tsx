@@ -28,6 +28,7 @@ import {
 import { setErrorSnackMessage } from "../../../../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
 import api from "../../../../common/api";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeleteReplicationProps {
   closeDeleteModalAndRefresh: (refresh: boolean) => void;
@@ -45,6 +46,7 @@ const DeleteReplicationRule = ({
   setErrorSnackMessage,
 }: IDeleteReplicationProps) => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   const removeRecord = () => {
     if (!deleteLoading) {
@@ -75,14 +77,19 @@ const DeleteReplicationRule = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Replication Rule</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {t("deleteReplicationRule")}
+      </DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete replication rule <b>{ruleToDelete}</b>
-          ? <br />
-          Remember, at lease one rule must be present once replication has been
-          enabled
+          <Trans i18nKey="bucketsDetails:deleteReplicationRuleDialog">
+            Are you sure you want to delete replication rule
+            <b>{{ruleToDelete}}</b>
+            ? <br />
+            Remember, at lease one rule must be present once replication has
+            been enabled
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -93,7 +100,7 @@ const DeleteReplicationRule = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -102,7 +109,7 @@ const DeleteReplicationRule = ({
           color="secondary"
           autoFocus
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

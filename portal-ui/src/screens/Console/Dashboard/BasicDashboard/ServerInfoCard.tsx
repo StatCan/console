@@ -23,6 +23,7 @@ import { niceDays } from "../../../../common/utils";
 import { Card, CardHeader } from "@material-ui/core";
 import { CircleIcon } from "../../../../icons";
 import get from "lodash/get";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -104,6 +105,8 @@ const ServerInfoCard = ({ classes, server }: ICardProps) => {
     }
   };
 
+  const { t } = useTranslation("dashboard");
+
   const networkKeys = Object.keys(get(server, "network", []));
 
   const networkTotal = networkKeys.length;
@@ -141,7 +144,7 @@ const ServerInfoCard = ({ classes, server }: ICardProps) => {
         subheader={
           <Grid item xs={12} className={classes.stateContainer}>
             <span className={classes.infoValue}>
-              <strong>Drives:</strong> {activeDisks}/{totalDrives}{" "}
+              <strong>{t("drivesColon")}</strong> {activeDisks}/{totalDrives}{" "}
               <span
                 className={`${classes.innerState} ${
                   activeDisks <= totalDrives / 2 && classes.redState
@@ -153,7 +156,8 @@ const ServerInfoCard = ({ classes, server }: ICardProps) => {
               </span>
             </span>
             <span className={classes.infoValue}>
-              <strong>Network:</strong> {activeNetwork}/{networkTotal}{" "}
+              <strong>{t("networkColon")}</strong> {activeNetwork}/
+              {networkTotal}{" "}
               <span
                 className={`${classes.innerState} ${
                   activeNetwork <= networkTotal / 2 && classes.redState
@@ -165,7 +169,7 @@ const ServerInfoCard = ({ classes, server }: ICardProps) => {
               </span>
             </span>
             <span className={classes.infoValue}>
-              <strong>Uptime:</strong> {niceDays(server.uptime)}
+              <strong>{t("uptimeColon")}</strong> {niceDays(server.uptime)}
             </span>
           </Grid>
         }

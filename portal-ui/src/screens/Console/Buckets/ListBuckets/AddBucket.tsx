@@ -45,6 +45,7 @@ import { MakeBucketRequest } from "../types";
 import FormSwitchWrapper from "../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import { setModalErrorSnackMessage } from "../../../../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -134,6 +135,7 @@ const AddBucket = ({
   const [sendEnabled, setSendEnabled] = useState<boolean>(false);
   const [lockingFieldDisabled, setLockingFieldDisabled] =
     useState<boolean>(false);
+  const { t } = useTranslation("listBuckets");
 
   const addRecord = (event: React.FormEvent) => {
     event.preventDefault();
@@ -256,7 +258,7 @@ const AddBucket = ({
 
   return (
     <ModalWrapper
-      title="Create Bucket"
+      title={t("createBucket")}
       modalOpen={open}
       onClose={() => {
         closeModalAndRefresh(false);
@@ -280,20 +282,19 @@ const AddBucket = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   addBucketName(event.target.value);
                 }}
-                label="Bucket Name"
+                label={t("bucketName")}
                 value={bucketName}
               />
             </Grid>
             <Grid item xs={12}>
               <Typography component="h6" variant="h6">
-                Features
+                {t("features")}
               </Typography>
               <hr />
               {!distributedSetup && (
                 <Fragment>
                   <small className={classes.error}>
-                    Some these features are disabled as server is running in
-                    non-erasure coded mode.
+                    {t("someFeaturesAreDisbaled")}
                   </small>
                   <br />
                   <br />
@@ -310,11 +311,9 @@ const AddBucket = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   addBucketVersioned(event.target.checked);
                 }}
-                description={
-                  "Allows to keep multiple versions of the same object under the same key."
-                }
-                label={"Versioning"}
-                indicatorLabels={["On", "Off"]}
+                description={t("keepMultipleVersionsOfTheSameObject")}
+                label={t("versioning")}
+                indicatorLabels={[t("on"), t("off")]}
                 disabled={!distributedSetup}
               />
             </Grid>
@@ -328,11 +327,9 @@ const AddBucket = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   enableObjectLocking(event.target.checked);
                 }}
-                label={"Object Locking"}
-                description={
-                  "Required to support retention and legal hold. Can only be enabled at bucket creation."
-                }
-                indicatorLabels={["On", "Off"]}
+                label={t("objectLocking")}
+                description={t("requiredToSupportRetention")}
+                indicatorLabels={[t("on"), t("off")]}
               />
             </Grid>
 
@@ -345,9 +342,9 @@ const AddBucket = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   addBucketQuota(event.target.checked);
                 }}
-                label={"Quota"}
-                description={"Limit the amount of data in the bucket."}
-                indicatorLabels={["On", "Off"]}
+                label={t("quota")}
+                description={t("limitTheAmountOfData")}
+                indicatorLabels={[t("on"), t("off")]}
                 disabled={!distributedSetup}
               />
             </Grid>
@@ -358,13 +355,13 @@ const AddBucket = ({
                     currentSelection={quotaType}
                     id="quota_type"
                     name="quota_type"
-                    label="Quota Type"
+                    label={t("quotaType")}
                     onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                       addBucketQuotaType(e.target.value as string);
                     }}
                     selectorOptions={[
-                      { value: "hard", label: "Hard" },
-                      { value: "fifo", label: "FIFO" },
+                      { value: "hard", label: t("hard") },
+                      { value: "fifo", label: t("fifo") },
                     ]}
                   />
                 </Grid>
@@ -378,7 +375,7 @@ const AddBucket = ({
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           addBucketQuotaSize(e.target.value);
                         }}
-                        label="Quota"
+                        label={t("quota")}
                         value={quotaSize}
                         required
                         min="1"
@@ -412,11 +409,9 @@ const AddBucket = ({
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     addBucketRetention(event.target.checked);
                   }}
-                  label={"Retention"}
-                  description={
-                    "Impose rules to prevent object deletion for a period of time."
-                  }
-                  indicatorLabels={["On", "Off"]}
+                  label={t("retention")}
+                  description={t("imposeRulesToPreventObjectDeletion")}
+                  indicatorLabels={[t("on"), t("off")]}
                 />
               </Grid>
             )}
@@ -427,13 +422,13 @@ const AddBucket = ({
                     currentSelection={retentionMode}
                     id="retention_mode"
                     name="retention_mode"
-                    label="Retention Mode"
+                    label={t("retentionMode")}
                     onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                       addBucketRetentionMode(e.target.value as string);
                     }}
                     selectorOptions={[
-                      { value: "compliance", label: "Compliance" },
-                      { value: "governance", label: "Governance" },
+                      { value: "compliance", label: t("compliance") },
+                      { value: "governance", label: t("governance") },
                     ]}
                   />
                 </Grid>
@@ -442,13 +437,13 @@ const AddBucket = ({
                     currentSelection={retentionUnit}
                     id="retention_unit"
                     name="retention_unit"
-                    label="Retention Unit"
+                    label={t("retentionUnit")}
                     onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                       addBucketRetentionUnit(e.target.value as string);
                     }}
                     selectorOptions={[
-                      { value: "days", label: "Days" },
-                      { value: "years", label: "Years" },
+                      { value: "days", label: t("days") },
+                      { value: "years", label: t("years") },
                     ]}
                   />
                 </Grid>
@@ -460,7 +455,7 @@ const AddBucket = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       addBucketRetentionValidity(e.target.valueAsNumber);
                     }}
-                    label="Retention Validity"
+                    label={t("retentionValidity")}
                     value={String(retentionValidity)}
                     required
                     min="1"
@@ -476,7 +471,7 @@ const AddBucket = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -484,7 +479,7 @@ const AddBucket = ({
               color="primary"
               disabled={addLoading || !sendEnabled}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {addLoading && (

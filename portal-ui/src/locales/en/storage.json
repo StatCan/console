@@ -1,0 +1,13 @@
+{
+  "capacity": "Capacity",
+  "drives": "Drives",
+  "name": "Name",
+  "namespace": "Namespace",
+  "pvcs": "PVCs",
+  "searchPVC": "Search Volumes (PVCs)",
+  "status": "Status",
+  "storage": "Storage",
+  "storageClass": "Storage Class",
+  "tenant": "Tenant",
+  "volumes": "Volumes"
+}

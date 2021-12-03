@@ -31,6 +31,7 @@ import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { setErrorSnackMessage } from "../../../../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeletePod {
   deleteOpen: boolean;
@@ -47,6 +48,8 @@ const DeletePod = ({
 }: IDeletePod) => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [retypePod, setRetypePod] = useState("");
+
+  const { t } = useTranslation("tenants");
 
   useEffect(() => {
     if (deleteLoading) {
@@ -70,7 +73,7 @@ const DeletePod = ({
   const removeRecord = () => {
     if (retypePod !== selectedPod.name) {
       setErrorSnackMessage({
-        errorMessage: "Tenant name is incorrect",
+        errorMessage: t("tenantNameErr"),
         detailedError: "",
       });
       return;
@@ -87,11 +90,13 @@ const DeletePod = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Pod</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deletePod")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          To continue please type <b>{selectedPod.name}</b> in the box.
+          <Trans i18nKey="tenants:deletePodConfirmation">
+            To continue please type <b>{{selectedPod: selectedPod.name}}</b> in the box.
+          </Trans>
           <Grid item xs={12}>
             <InputBoxWrapper
               id="retype-pod"
@@ -113,7 +118,7 @@ const DeletePod = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={removeRecord}
@@ -121,7 +126,7 @@ const DeletePod = ({
           autoFocus
           disabled={retypePod !== selectedPod.name}
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

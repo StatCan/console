@@ -31,6 +31,7 @@ import { setTenantDetailsLoad } from "../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
 import SubnetLicenseTenant from "./SubnetLicenseTenant";
 import api from "../../../../common/api";
+import { useTranslation } from "react-i18next";
 
 interface ITenantLicense {
   classes: any;
@@ -58,6 +59,8 @@ const TenantLicense = ({
   const [loadingLicenseInfo, setLoadingLicenseInfo] = useState<boolean>(true);
   const [loadingActivateProduct, setLoadingActivateProduct] =
     useState<boolean>(false);
+
+  const { t } = useTranslation("tenants");
 
   const activateProduct = (namespace: string, tenant: string) => {
     if (loadingActivateProduct) {
@@ -98,7 +101,7 @@ const TenantLicense = ({
   return (
     <Fragment>
       <div className={classes.topSpacer} />
-      <h1 className={classes.sectionTitle}>License</h1>
+      <h1 className={classes.sectionTitle}>{t("license")}</h1>
       {loadingTenant ? (
         <div className={classes.loaderAlign}>
           <CircularProgress />

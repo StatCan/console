@@ -1,0 +1,22 @@
+{
+  "accessKey": "__STRING_NOT_TRANSLATED__",
+  "assignUsers": "__STRING_NOT_TRANSLATED__",
+  "cancel": "__STRING_NOT_TRANSLATED__",
+  "clear": "__STRING_NOT_TRANSLATED__",
+  "createGroup": "__STRING_NOT_TRANSLATED__",
+  "delete": "__STRING_NOT_TRANSLATED__",
+  "deleteGroupConfirmation": "Are you sure you want to delete group <1>{{selectedGroup}}</1>?",
+  "deleteUser": "__STRING_NOT_TRANSLATED__",
+  "disabled": "__STRING_NOT_TRANSLATED__",
+  "editGroup": "__STRING_NOT_TRANSLATED__",
+  "editMembers": "__STRING_NOT_TRANSLATED__",
+  "enabled": "__STRING_NOT_TRANSLATED__",
+  "filterUsers": "__STRING_NOT_TRANSLATED__",
+  "groupName": "__STRING_NOT_TRANSLATED__",
+  "groups": "__STRING_NOT_TRANSLATED__",
+  "name": "__STRING_NOT_TRANSLATED__",
+  "noUsersAvailable": "__STRING_NOT_TRANSLATED__",
+  "save": "__STRING_NOT_TRANSLATED__",
+  "searchGroups": "__STRING_NOT_TRANSLATED__",
+  "users": "__STRING_NOT_TRANSLATED__"
+}

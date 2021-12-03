@@ -34,6 +34,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
 import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IGroupsProps {
   classes: any;
@@ -121,6 +122,8 @@ const UsersSelectors = ({
   const [loading, isLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
 
+  const { t } = useTranslation("groups");
+
   const fetchUsers = useCallback(() => {
     api
       .invoke("GET", `/api/v1/users`)
@@ -186,10 +189,10 @@ const UsersSelectors = ({
             <React.Fragment>
               <Grid item xs={12} className={classes.actionsTray}>
                 <span className={classes.actionsTitle}>
-                  {editMode ? "Edit Members" : "Assign Users"}
+                  {editMode ? t("editMembers") : t("assignUsers")}
                 </span>
                 <TextField
-                  placeholder="Filter Users"
+                  placeholder={t("filterUsers")}
                   className={classes.filterField}
                   id="search-resource"
                   label=""
@@ -207,19 +210,19 @@ const UsersSelectors = ({
               </Grid>
               <Grid item xs={12} className={classes.tableBlock}>
                 <TableWrapper
-                  columns={[{ label: "Access Key", elementKey: "accessKey" }]}
+                  columns={[{ label: t("accessKey"), elementKey: "accessKey" }]}
                   onSelect={selectionChanged}
                   selectedItems={selUsers}
                   isLoading={loading}
                   records={filteredRecords}
-                  entityName="Users"
+                  entityName={t("users")}
                   idField="accessKey"
                   customPaperHeight={classes.multiSelectTable}
                 />
               </Grid>
             </React.Fragment>
           ) : (
-            <div className={classes.noFound}>No Users Available</div>
+            <div className={classes.noFound}>{t("noUsersAvailable")}</div>
           )}
         </Paper>
       </Grid>

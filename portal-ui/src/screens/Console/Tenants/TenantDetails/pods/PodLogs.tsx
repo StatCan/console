@@ -32,6 +32,7 @@ import { setErrorSnackMessage } from "../../../../../actions";
 import { ErrorResponseHandler } from "../../../../../common/types";
 import { AppState } from "../../../../../store";
 import SearchIcon from "../../../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IPodLogsProps {
   classes: any;
@@ -91,6 +92,8 @@ const PodLogs = ({
   const [highlight, setHighlight] = useState<string>("");
   const [logLines, setLogLines] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { t } = useTranslation("tenants");
 
   useEffect(() => {
     if (propLoading) {
@@ -171,7 +174,7 @@ const PodLogs = ({
     <React.Fragment>
       <Grid item xs={12} className={classes.actionsTray}>
         <TextField
-          placeholder="Highlight Line"
+          placeholder={t("highlightLine")}
           className={classes.searchField}
           id="search-resource"
           label=""

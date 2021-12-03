@@ -22,6 +22,7 @@ import {
   tooltipHelper,
 } from "../common/styleLibrary";
 import HelpIcon from "../../../../../icons/HelpIcon";
+import { useTranslation } from "react-i18next";
 
 interface CheckBoxProps {
   label: string;
@@ -63,6 +64,8 @@ const CheckboxWrapper = ({
   tooltip = "",
   classes,
 }: CheckBoxProps) => {
+  const { t } = useTranslation("common");
+
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.fieldContainer}>
@@ -72,7 +75,7 @@ const CheckboxWrapper = ({
             id={id}
             value={value}
             color="primary"
-            inputProps={{ "aria-label": "secondary checkbox" }}
+            inputProps={{ "aria-label": t("secondaryCheckbox") }}
             checked={checked}
             onChange={onChange}
             checkedIcon={<span className={classes.checkedIcon} />}

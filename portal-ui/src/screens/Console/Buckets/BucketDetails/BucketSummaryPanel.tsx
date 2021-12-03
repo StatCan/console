@@ -51,6 +51,7 @@ import GavelIcon from "@material-ui/icons/Gavel";
 import EnableQuota from "./EnableQuota";
 import { setBucketDetailsLoad } from "../actions";
 import ReportedUsageIcon from "../../../../icons/ReportedUsageIcon";
+import { useTranslation } from "react-i18next";
 
 interface IBucketSummaryProps {
   classes: any;
@@ -142,6 +143,7 @@ const BucketSummary = ({
     useState<boolean>(false);
   const [enableVersioningOpen, setEnableVersioningOpen] =
     useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   const bucketName = match.params["bucketName"];
 
@@ -171,10 +173,7 @@ const BucketSummary = ({
           setLoadingEncryption(false);
         })
         .catch((err: ErrorResponseHandler) => {
-          if (
-            err.errorMessage ===
-            "The server side encryption configuration was not found"
-          ) {
+          if (err.errorMessage === t("serverSideEncryptionErr")) {
             setEncryptionEnabled(false);
             setEncryptionCfg(null);
           }
@@ -395,7 +394,7 @@ const BucketSummary = ({
       )}
       <Grid container>
         <Grid item xs={12} className={classes.actionsTray}>
-          <h1 className={classes.sectionTitle}>Summary</h1>
+          <h1 className={classes.sectionTitle}>{t("summary")}</h1>
         </Grid>
       </Grid>
       <Paper className={classes.paperContainer}>
@@ -404,7 +403,7 @@ const BucketSummary = ({
             <table width={"100%"}>
               <tbody>
                 <tr>
-                  <td className={classes.titleCol}>Access Policy:</td>
+                  <td className={classes.titleCol}>{t("accessPolicyColon")}</td>
                   <td className={classes.capitalizeFirst}>
                     <Button
                       color="primary"
@@ -419,8 +418,10 @@ const BucketSummary = ({
                           size={16}
                           variant="indeterminate"
                         />
+                      ) : accessPolicy === "PRIVATE" ? (
+                        t("private").toLowerCase()
                       ) : (
-                        accessPolicy.toLowerCase()
+                        t("public").toLowerCase()
                       )}
                     </Button>
                   </td>
@@ -428,19 +429,27 @@ const BucketSummary = ({
                 {distributedSetup && (
                   <Fragment>
                     <tr>
-                      <td className={classes.titleCol}>Replication:</td>
+                      <td className={classes.titleCol}>
+                        {t("replicationColon")}
+                      </td>
                       <td className={classes.doubleElement}>
-                        <span>{replicationRules ? "Enabled" : "Disabled"}</span>
+                        <span>
+                          {replicationRules ? t("enabled") : t("disabled")}
+                        </span>
                       </td>
                     </tr>
                     <tr>
-                      <td className={classes.titleCol}>Object Locking:</td>
-                      <td>{!hasObjectLocking ? "Disabled" : "Enabled"}</td>
+                      <td className={classes.titleCol}>
+                        {t("objectLockingColon")}
+                      </td>
+                      <td>
+                        {!hasObjectLocking ? t("disabled") : t("enabled")}
+                      </td>
                     </tr>
                   </Fragment>
                 )}
                 <tr>
-                  <td className={classes.titleCol}>Encryption:</td>
+                  <td className={classes.titleCol}>{t("encryptionColon")}:</td>
                   <td>
                     {loadingEncryption ? (
                       <CircularProgress
@@ -456,7 +465,7 @@ const BucketSummary = ({
                           setEnableEncryptionScreenOpen(true);
                         }}
                       >
-                        {encryptionEnabled ? "Enabled" : "Disabled"}
+                        {encryptionEnabled ? t("enabled") : t("disabled")}
                       </Button>
                     )}
                   </td>
@@ -471,7 +480,7 @@ const BucketSummary = ({
               </Grid>
               <Grid item xs={10}>
                 <Typography className={classes.elementTitle}>
-                  Reported Usage
+                  {t("reportedUsage")}
                 </Typography>
               </Grid>
             </Grid>
@@ -488,12 +497,14 @@ const BucketSummary = ({
           <Paper className={classes.paperContainer} elevation={1}>
             <Grid container>
               <Grid item xs={quotaEnabled ? 9 : 12}>
-                <h2>Versioning</h2>
+                <h2>{t("versioning")}</h2>
                 <hr className={classes.hrClass} />
                 <table width={"100%"}>
                   <tbody>
                     <tr>
-                      <td className={classes.titleCol}>Versioning:</td>
+                      <td className={classes.titleCol}>
+                        {t("versioningColon")}
+                      </td>
                       <td>
                         {loadingVersioning ? (
                           <CircularProgress
@@ -508,12 +519,12 @@ const BucketSummary = ({
                               className={classes.anchorButton}
                               onClick={setBucketVersioning}
                             >
-                              {isVersioned ? "Enabled" : "Disabled"}
+                              {isVersioned ? t("enabled") : t("disabled")}
                             </Button>
                           </Fragment>
                         )}
                       </td>
-                      <td className={classes.titleCol}>Quota:</td>
+                      <td className={classes.titleCol}>{t("quotaColon")}</td>
                       <td>
                         {loadingQuota ? (
                           <CircularProgress
@@ -528,7 +539,7 @@ const BucketSummary = ({
                               className={classes.anchorButton}
                               onClick={setBucketQuota}
                             >
-                              {quotaEnabled ? "Enabled" : "Disabled"}
+                              {quotaEnabled ? t("enabled") : t("disabled")}
                             </Button>
                           </Fragment>
                         )}
@@ -545,7 +556,7 @@ const BucketSummary = ({
                     </Grid>
                     <Grid item xs={10}>
                       <Typography className={classes.elementTitle}>
-                        {cap(quota?.type)} Quota
+                        {t("quotaTypeVar", { type: cap(quota?.type) })}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -565,12 +576,12 @@ const BucketSummary = ({
         <Paper className={classes.paperContainer}>
           <Grid container>
             <Grid item xs={12}>
-              <h2>Retention</h2>
+              <h2>{t("retention")}</h2>
               <hr className={classes.hrClass} />
               <table width={"100%"}>
                 <tbody>
                   <tr className={classes.gridContainer}>
-                    <td className={classes.titleCol}>Status:</td>
+                    <td className={classes.titleCol}>{t("statusColon")}</td>
                     <td>
                       {loadingRetention ? (
                         <CircularProgress
@@ -587,7 +598,7 @@ const BucketSummary = ({
                               setRetentionConfigOpen(true);
                             }}
                           >
-                            {!retentionEnabled ? "Disabled" : "Enabled"}
+                            {!retentionEnabled ? t("disabled") : t("enabled")}
                           </Button>
                         </Fragment>
                       )}
@@ -596,7 +607,7 @@ const BucketSummary = ({
                       <td colSpan={2}>&nbsp;</td>
                     ) : (
                       <Fragment>
-                        <td className={classes.titleCol}>Mode:</td>
+                        <td className={classes.titleCol}>{t("modeColon")}</td>
                         <td className={classes.capitalizeFirst}>
                           {retentionConfig && retentionConfig.mode}
                         </td>
@@ -608,7 +619,9 @@ const BucketSummary = ({
                       <td colSpan={2}></td>
                     ) : (
                       <Fragment>
-                        <td className={classes.titleCol}>Valitidy:</td>
+                        <td className={classes.titleCol}>
+                          {t("valitidyColon")}
+                        </td>
                         <td className={classes.capitalizeFirst}>
                           {retentionConfig && retentionConfig.validity}{" "}
                           {retentionConfig &&

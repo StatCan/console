@@ -37,6 +37,7 @@ import { AppState } from "../../../../store";
 import { ErrorResponseHandler } from "../../../../common/types";
 import { setTenantDetailsLoad } from "../actions";
 import ConfirmationDialog from "./ConfirmationDialog";
+import { useTranslation } from "react-i18next";
 
 interface ITenantSecurity {
   classes: any;
@@ -94,6 +95,9 @@ const TenantSecurity = ({
   const [certificatesToBeRemoved, setCertificatesToBeRemoved] = useState<
     string[]
   >([]);
+
+  const { t } = useTranslation("tenants");
+
   // MinIO certificates
   const [minioCertificates, setMinioCertificates] = useState<KeyPair[]>([]);
   const [minioCaCertificates, setMinioCaCertificates] = useState<KeyPair[]>([]);
@@ -311,13 +315,13 @@ const TenantSecurity = ({
     <React.Fragment>
       <ConfirmationDialog
         open={dialogOpen}
-        title="Save and Restart"
-        description="Are you sure you want to save the changes and restart the service?"
+        title={t("saveAndRestart")}
+        description={t("saveAndRestartConfirm")}
         onClose={() => setDialogOpen(false)}
         cancelOnClick={() => setDialogOpen(false)}
         okOnClick={updateTenantSecurity}
-        cancelLabel="Cancel"
-        okLabel={"Restart"}
+        cancelLabel={t("cancel")}
+        okLabel={t("restart")}
       />
       <div className={classes.topSpacer} />
       {loadingTenant ? (
@@ -328,7 +332,7 @@ const TenantSecurity = ({
         </Paper>
       ) : (
         <Fragment>
-          <h1 className={classes.sectionTitle}>Security</h1>
+          <h1 className={classes.sectionTitle}>{t("security")}</h1>
           <Paper className={classes.paperContainer}>
             <Grid item xs={12} className={classes.title}>
               <FormSwitchWrapper
@@ -341,10 +345,8 @@ const TenantSecurity = ({
                   const checked = targetD.checked;
                   setEnableAutoCert(checked);
                 }}
-                label={"Manage Inter-Node Certificates Automatically"}
-                description={
-                  "The internode certificates will be generated and managed by MinIO Operator"
-                }
+                label={t("manageInterNodeCert")}
+                description={t("interNodeCertDesc")}
               />
               <FormSwitchWrapper
                 value="enableCustomCerts"
@@ -356,7 +358,7 @@ const TenantSecurity = ({
                   const checked = targetD.checked;
                   setEnableCustomCerts(checked);
                 }}
-                label={"Custom Certificates"}
+                label={t("customCertificates")}
               />
             </Grid>
             <Grid item xs={12} className={classes.buttonContainer}>
@@ -367,7 +369,7 @@ const TenantSecurity = ({
                 disabled={dialogOpen || isSending}
                 onClick={() => setDialogOpen(true)}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
           </Paper>
@@ -378,7 +380,7 @@ const TenantSecurity = ({
                 <Grid container>
                   <Grid container item xs={12}>
                     <Typography variant="h5" display="block" gutterBottom>
-                      MinIO Certificates
+                      {t("minioCertificates")}
                     </Typography>
                   </Grid>
                   <Grid container item xs={12}>
@@ -414,7 +416,7 @@ const TenantSecurity = ({
                                 variant="overline"
                                 gutterBottom
                               >
-                                Expiry:&nbsp;
+                                {t("expiryColon")}&nbsp;
                               </Typography>
                               <Typography variant="caption" gutterBottom>
                                 <Moment format="YYYY-MM-DD">
@@ -448,7 +450,7 @@ const TenantSecurity = ({
                             accept=".cer,.crt,.cert,.pem"
                             id="tlsCert"
                             name="tlsCert"
-                            label="Cert"
+                            label={t("cert")}
                             value={keyPair.cert}
                           />
                         </Grid>
@@ -466,7 +468,7 @@ const TenantSecurity = ({
                             accept=".key,.pem"
                             id="tlsKey"
                             name="tlsKey"
-                            label="Key"
+                            label={t("key")}
                             value={keyPair.key}
                           />
                         </Grid>
@@ -475,7 +477,7 @@ const TenantSecurity = ({
                             onClick={() => deleteKeyPair("minio", keyPair.id)}
                             color="secondary"
                           >
-                            Remove
+                            {t("remove")}
                           </Button>
                         </Grid>
                       </Fragment>
@@ -483,7 +485,7 @@ const TenantSecurity = ({
                   </Grid>
                   <Grid container item xs={12}>
                     <Button onClick={() => addKeyPair("minio")} color="primary">
-                      Add Certificate
+                      {t("addCert")}
                     </Button>
                   </Grid>
                   <Grid container item xs={12}>
@@ -492,7 +494,7 @@ const TenantSecurity = ({
 
                   <Grid container item xs={12}>
                     <Typography variant="h6" display="block" gutterBottom>
-                      MinIO CA Certificates
+                      {t("minioCACertificates")}
                     </Typography>
                   </Grid>
                   <Grid container item xs={12}>
@@ -528,7 +530,7 @@ const TenantSecurity = ({
                                 variant="overline"
                                 gutterBottom
                               >
-                                Expiry:&nbsp;
+                                {t("expiryColon")}&nbsp;
                               </Typography>
                               <Typography variant="caption" gutterBottom>
                                 <Moment format="YYYY-MM-DD">
@@ -562,7 +564,7 @@ const TenantSecurity = ({
                             accept=".cer,.crt,.cert,.pem"
                             id="tlsCert"
                             name="tlsCert"
-                            label="Cert"
+                            label={t("cert")}
                             value={keyPair.cert}
                           />
                         </Grid>
@@ -573,7 +575,7 @@ const TenantSecurity = ({
                             }
                             color="secondary"
                           >
-                            Remove
+                            {t("remove")}
                           </Button>
                         </Grid>
                       </Fragment>
@@ -584,7 +586,7 @@ const TenantSecurity = ({
                       onClick={() => addKeyPair("minioCAs")}
                       color="primary"
                     >
-                      Add CA Certificate
+                      {t("addCACertificate")}
                     </Button>
                   </Grid>
                   <Grid item xs={12} className={classes.buttonContainer}>
@@ -595,7 +597,7 @@ const TenantSecurity = ({
                       disabled={dialogOpen || isSending}
                       onClick={() => setDialogOpen(true)}
                     >
-                      Save
+                      {t("save")}
                     </Button>
                   </Grid>
                 </Grid>

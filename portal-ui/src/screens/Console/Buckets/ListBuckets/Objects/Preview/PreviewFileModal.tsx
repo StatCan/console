@@ -18,6 +18,7 @@ import React, { Fragment } from "react";
 import ModalWrapper from "../../../../Common/ModalWrapper/ModalWrapper";
 import PreviewFileContent from "./PreviewFileContent";
 import { BucketObject } from "../ListObjects/types";
+import { useTranslation } from "react-i18next";
 
 interface IPreviewFileProps {
   open: boolean;
@@ -32,11 +33,13 @@ const PreviewFileModal = ({
   object,
   onClosePreview,
 }: IPreviewFileProps) => {
+  const { t } = useTranslation("listBuckets");
+
   return (
     <Fragment>
       <ModalWrapper
         modalOpen={open}
-        title={`Preview - ${object?.name}`}
+        title={t("previewObject", { name: `${object?.name}` })}
         onClose={onClosePreview}
       >
         <PreviewFileContent bucketName={bucketName} object={object} />

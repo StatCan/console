@@ -28,6 +28,7 @@ import {
 import { ErrorResponseHandler } from "../../../../common/types";
 import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import CodeMirrorWrapper from "../../Common/FormComponents/CodeMirrorWrapper/CodeMirrorWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -72,6 +73,8 @@ const TenantYAML = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [tenantYaml, setTenantYaml] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const { t } = useTranslation("tenants");
 
   const updateTenant = (event: React.FormEvent) => {
     event.preventDefault();
@@ -119,7 +122,7 @@ const TenantYAML = ({
       onClose={() => {
         closeModalAndRefresh(false);
       }}
-      title={`YAML`}
+      title={t("yaml")}
     >
       {loading && <LinearProgress />}
       {errorMessage !== "" && (
@@ -139,7 +142,7 @@ const TenantYAML = ({
                 <br />
               </Grid>
               <CodeMirrorWrapper
-                label={`Tenant Specification`}
+                label={t("tenantSpecification")}
                 value={tenantYaml}
                 mode={"yaml"}
                 onBeforeChange={(editor, data, value) => {
@@ -154,7 +157,7 @@ const TenantYAML = ({
                 color="primary"
                 disabled={addLoading || !validSave}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
             {addLoading && (

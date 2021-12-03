@@ -36,6 +36,7 @@ import api from "../../../../common/api";
 import TableWrapper from "../../Common/TableWrapper/TableWrapper";
 import FilterInputWrapper from "../../Common/FormComponents/FilterInputWrapper/FilterInputWrapper";
 import DateTimePickerWrapper from "../../Common/FormComponents/DateTimePickerWrapper/DateTimePickerWrapper";
+import { useTranslation } from "react-i18next";
 
 interface ILogSearchProps {
   classes: any;
@@ -153,6 +154,8 @@ const LogsSearchMain = ({
   const [nextPage, setNextPage] = useState<number>(0);
   const [alreadyFetching, setAlreadyFetching] = useState<boolean>(false);
 
+  const { t } = useTranslation("logs");
+
   let recordsResp: any = null;
   const logSearchEnabled = features && features.includes("log-search");
 
@@ -268,14 +271,14 @@ const LogsSearchMain = ({
           xs={12}
           className={`${classes.actionsTray} ${classes.timeContainers}`}
         >
-          <span className={classes.label}>Start Time</span>
+          <span className={classes.label}>{t("startTime")}</span>
           <DateTimePickerWrapper
             value={timeStart}
             onChange={setTimeStart}
             forSearchBlock
             id="stTime"
           />
-          <span className={classes.label}>End Time</span>
+          <span className={classes.label}>{t("endTime")}</span>
           <DateTimePickerWrapper
             value={timeEnd}
             onChange={setTimeEnd}
@@ -291,30 +294,29 @@ const LogsSearchMain = ({
           >
             <div className={classes.innerContainer}>
               <div className={classes.noticeLabel}>
-                Enable your preferred options to get filtered records.
+                {t("enablePreferredOptions")}
                 <br />
-                You can use '*' to match any character, '.' to signify a single
-                character or '\' to scape an special character (E.g. mybucket-*)
+                {t("youCanUseSpecialChar")}
               </div>
               <div className={classes.filtersContainer}>
                 <FilterInputWrapper
                   onChange={setBucket}
                   value={bucket}
-                  label={"Bucket"}
+                  label={t("bucket")}
                   id="bucket"
                   name="bucket"
                 />
                 <FilterInputWrapper
                   onChange={setApiName}
                   value={apiName}
-                  label={"API Name"}
+                  label={t("apiName")}
                   id="api_name"
                   name="api_name"
                 />
                 <FilterInputWrapper
                   onChange={setUserAgent}
                   value={userAgent}
-                  label={"User Agent"}
+                  label={t("userAgent")}
                   id="user_agent"
                   name="user_agent"
                 />
@@ -323,21 +325,21 @@ const LogsSearchMain = ({
                 <FilterInputWrapper
                   onChange={setObject}
                   value={object}
-                  label={"Object"}
+                  label={t("object")}
                   id="object"
                   name="object"
                 />
                 <FilterInputWrapper
                   onChange={setRequestID}
                   value={requestID}
-                  label={"Request ID"}
+                  label={t("requestID")}
                   id="request_id"
                   name="request_id"
                 />
                 <FilterInputWrapper
                   onChange={setResponseStatus}
                   value={responseStatus}
-                  label={"Response Status"}
+                  label={t("responseStatus")}
                   id="response_status"
                   name="response_status"
                 />
@@ -358,7 +360,7 @@ const LogsSearchMain = ({
                 setFilterOpen(!filterOpen);
               }}
             >
-              Advanced Filters{" "}
+              {t("advancedFilters")}
               {filterOpen ? <ArrowDropUp /> : <ArrowDropDownIcon />}
             </button>
           </div>
@@ -368,21 +370,21 @@ const LogsSearchMain = ({
             color="primary"
             onClick={triggerLoad}
           >
-            Get Information
+            {t("getInfo")}
           </Button>
         </Grid>
         <Grid item xs={12}>
           <TableWrapper
             columns={[
-              { label: "Timestamp", elementKey: "time", enableSort: true },
-              { label: "API Name", elementKey: "api_name" },
-              { label: "Bucket", elementKey: "bucket" },
-              { label: "Object", elementKey: "object" },
-              { label: "Remote Host", elementKey: "remote_host" },
-              { label: "Request ID", elementKey: "request_id" },
-              { label: "User Agent", elementKey: "user_agent" },
+              { label: t("timestamp"), elementKey: "time", enableSort: true },
+              { label: t("apiName"), elementKey: "api_name" },
+              { label: t("bucket"), elementKey: "bucket" },
+              { label: t("object"), elementKey: "object" },
+              { label: t("remoteHost"), elementKey: "remote_host" },
+              { label: t("requestID"), elementKey: "request_id" },
+              { label: t("userAgent"), elementKey: "user_agent" },
               {
-                label: "Response Status",
+                label: t("responseStatus"),
                 elementKey: "response_status",
                 renderFunction: (element) => (
                   <Fragment>
@@ -394,17 +396,17 @@ const LogsSearchMain = ({
                 renderFullObject: true,
               },
               {
-                label: "Request Content Length",
+                label: t("requestContentLength"),
                 elementKey: "request_content_length",
                 renderFunction: niceBytes,
               },
               {
-                label: "Response Content Length",
+                label: t("responseContentLength"),
                 elementKey: "response_content_length",
                 renderFunction: niceBytes,
               },
               {
-                label: "Time to Response NS",
+                label: t("timeToResponse"),
                 elementKey: "time_to_response_ns",
                 renderFunction: nsToSeconds,
                 contentTextAlign: "right",
@@ -412,8 +414,8 @@ const LogsSearchMain = ({
             ]}
             isLoading={loading}
             records={records}
-            entityName="Logs"
-            customEmptyMessage={"There is no information with this criteria"}
+            entityName={t("logs")}
+            customEmptyMessage={t("thereIsInInfo")}
             idField="request_id"
             columnsSelector
             columnsShown={columnsShown}

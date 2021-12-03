@@ -27,6 +27,7 @@ import { ErrorResponseHandler } from "../../../../../../common/types";
 import ModalWrapper from "../../../../Common/ModalWrapper/ModalWrapper";
 import FormSwitchWrapper from "../../../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import api from "../../../../../../common/api";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -63,6 +64,7 @@ const SetLegalHoldModal = ({
   const [legalHoldEnabled, setLegalHoldEnabled] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const versionId = actualInfo.version_id;
+  const { t } = useTranslation("listBuckets");
 
   useEffect(() => {
     const status = get(actualInfo, "legal_hold_status", "OFF");
@@ -95,7 +97,7 @@ const SetLegalHoldModal = ({
 
   return (
     <ModalWrapper
-      title="Set Legal Hold"
+      title={t("setLegalHold")}
       modalOpen={open}
       onClose={() => {
         resetForm();
@@ -121,11 +123,9 @@ const SetLegalHoldModal = ({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setLegalHoldEnabled(!legalHoldEnabled);
             }}
-            label={"Legal Hold Status"}
-            indicatorLabels={["Enabled", "Disabled"]}
-            tooltip={
-              "To enable this feature you need to enable versioning on the bucket before creation"
-            }
+            label={t("legalHoldStatus")}
+            indicatorLabels={[t("enabled"), t("disabled")]}
+            tooltip={t("legalHoldStatusTooltip")}
           />
         </Grid>
         <Grid item xs={12} className={classes.buttonContainer}>
@@ -135,7 +135,7 @@ const SetLegalHoldModal = ({
             className={classes.clearButton}
             onClick={resetForm}
           >
-            Reset
+            {t("reset")}
           </button>
           <Button
             type="submit"
@@ -143,7 +143,7 @@ const SetLegalHoldModal = ({
             color="primary"
             disabled={isSaving}
           >
-            Save
+            {t("save")}
           </Button>
         </Grid>
       </form>

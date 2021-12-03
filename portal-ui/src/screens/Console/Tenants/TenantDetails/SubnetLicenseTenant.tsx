@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { ITenant } from "../ListTenants/types";
 import { LicenseInfo } from "../../License/types";
+import { useTranslation } from "react-i18next";
 
 interface ISubnetLicenseTenant {
   classes: any;
@@ -92,6 +93,8 @@ const SubnetLicenseTenant = ({
   licenseInfo,
   activateProduct,
 }: ISubnetLicenseTenant) => {
+  const { t } = useTranslation("tenants");
+
   return (
     <Paper
       className={
@@ -108,7 +111,7 @@ const SubnetLicenseTenant = ({
                 gutterBottom
                 className={classes.licenseInfoTitle}
               >
-                License
+                {t("license")}
               </Typography>
               <Typography
                 variant="overline"
@@ -116,7 +119,7 @@ const SubnetLicenseTenant = ({
                 gutterBottom
                 className={classes.licenseInfoValue}
               >
-                Commercial License
+                {t("commercialLicense")}
               </Typography>
               <Typography
                 variant="button"
@@ -124,7 +127,7 @@ const SubnetLicenseTenant = ({
                 gutterBottom
                 className={classes.licenseInfoTitle}
               >
-                Organization
+                {t("organization")}
               </Typography>
               <Typography
                 variant="overline"
@@ -140,7 +143,7 @@ const SubnetLicenseTenant = ({
                 gutterBottom
                 className={classes.licenseInfoTitle}
               >
-                Registered Capacity
+                {t("registeredCapacity")}
               </Typography>
               <Typography
                 variant="overline"
@@ -159,7 +162,7 @@ const SubnetLicenseTenant = ({
                 gutterBottom
                 className={classes.licenseInfoTitle}
               >
-                Expiry Date
+                {t("expiryDate")}
               </Typography>
               <Typography
                 variant="overline"
@@ -179,7 +182,7 @@ const SubnetLicenseTenant = ({
                 gutterBottom
                 className={classes.licenseInfoTitle}
               >
-                Subscription Plan
+                {t("subscriptionPlan")}
               </Typography>
               <Typography
                 variant="overline"
@@ -195,7 +198,7 @@ const SubnetLicenseTenant = ({
                 gutterBottom
                 className={classes.licenseInfoTitle}
               >
-                Requester
+                {t("requester")}
               </Typography>
               <Typography
                 variant="overline"
@@ -209,7 +212,7 @@ const SubnetLicenseTenant = ({
             <img
               className={classes.verifiedIcon}
               src={"/verified.svg"}
-              alt="verified"
+              alt={t("verified")}
             />
           </Grid>
         </React.Fragment>
@@ -229,7 +232,7 @@ const SubnetLicenseTenant = ({
                   variant="contained"
                   color="primary"
                 >
-                  Activate Product
+                  {t("activateProduct")}
                 </Button>
               </Link>
             )}
@@ -241,7 +244,7 @@ const SubnetLicenseTenant = ({
                 color="primary"
                 onClick={() => activateProduct(tenant.namespace, tenant.name)}
               >
-                Attach License
+                {t("attachLicense")}
               </Button>
             )}
           </Grid>

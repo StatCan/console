@@ -38,6 +38,7 @@ import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import SetPolicy from "../Policies/SetPolicy";
 import PageHeader from "../Common/PageHeader/PageHeader";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IGroupsProps {
   classes: any;
@@ -90,6 +91,8 @@ const Groups = ({ classes, setErrorSnackMessage }: IGroupsProps) => {
   const [records, setRecords] = useState<any[]>([]);
   const [filter, setFilter] = useState<string>("");
   const [policyOpen, setPolicyOpen] = useState<boolean>(false);
+
+  const { t } = useTranslation("groups");
 
   useEffect(() => {
     isLoading(true);
@@ -185,12 +188,12 @@ const Groups = ({ classes, setErrorSnackMessage }: IGroupsProps) => {
           }}
         />
       )}
-      <PageHeader label={"Groups"} />
+      <PageHeader label={t("groups")} />
       <Grid container>
         <Grid item xs={12} className={classes.container}>
           <Grid item xs={12} className={classes.actionsTray}>
             <TextField
-              placeholder="Search Groups"
+              placeholder={t("searchGroups")}
               className={classes.searchField}
               id="search-resource"
               label=""
@@ -215,7 +218,7 @@ const Groups = ({ classes, setErrorSnackMessage }: IGroupsProps) => {
                 setGroupOpen(true);
               }}
             >
-              Create Group
+              {t("createGroup")}
             </Button>
           </Grid>
 
@@ -225,10 +228,10 @@ const Groups = ({ classes, setErrorSnackMessage }: IGroupsProps) => {
           <Grid item xs={12}>
             <TableWrapper
               itemActions={tableActions}
-              columns={[{ label: "Name", elementKey: "" }]}
+              columns={[{ label: t("name"), elementKey: "" }]}
               isLoading={loading}
               records={filteredRecords}
-              entityName="Groups"
+              entityName={t("groups")}
               idField=""
             />
           </Grid>

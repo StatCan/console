@@ -7,6 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "../../../common/Title";
+import { useTranslation } from "react-i18next";
 
 // Generate Order Data
 function createData(
@@ -75,17 +76,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Orders() {
   const classes = useStyles();
+  const { t } = useTranslation("dashboard");
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Title>{t("recentOrders")}</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>{t("date")}</TableCell>
+            <TableCell>{t("name")}</TableCell>
+            <TableCell>{t("shipTo")}</TableCell>
+            <TableCell>{t("paymentMethod")}</TableCell>
+            <TableCell align="right">{t("saleAmount")}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -102,7 +104,7 @@ export default function Orders() {
       </Table>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
+          {t("seeMoreOrders")}
         </Link>
       </div>
     </React.Fragment>

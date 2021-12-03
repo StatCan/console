@@ -27,6 +27,7 @@ import api from "../../../../common/api";
 import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
 import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -66,6 +67,7 @@ const EnableBucketEncryption = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [kmsKeyID, setKmsKeyID] = useState<string>("");
   const [encryptionType, setEncryptionType] = useState<string>("disabled");
+  const { t } = useTranslation("bucketsDetails");
 
   useEffect(() => {
     if (encryptionCfg) {
@@ -117,7 +119,7 @@ const EnableBucketEncryption = ({
       onClose={() => {
         closeModalAndRefresh();
       }}
-      title="Enable Bucket Encryption"
+      title={t("enableBucketEncryption")}
     >
       <form
         noValidate
@@ -135,12 +137,12 @@ const EnableBucketEncryption = ({
                 }}
                 id="select-encryption-type"
                 name="select-encryption-type"
-                label={"Encryption Type"}
+                label={t("encryptionType")}
                 value={encryptionType}
                 options={[
                   {
-                    label: "Disabled",
-                    value: "disabled",
+                    label: t("disabled"),
+                    value: t("disabled"),
                   },
                   {
                     label: "SSE-S3",
@@ -161,7 +163,7 @@ const EnableBucketEncryption = ({
                 <InputBoxWrapper
                   id="kms-key-id"
                   name="kms-key-id"
-                  label="KMS Key ID"
+                  label={t("kmsKeyID")}
                   value={kmsKeyID}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setKmsKeyID(e.target.value);
@@ -180,7 +182,7 @@ const EnableBucketEncryption = ({
               color="primary"
               disabled={loading}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {loading && (

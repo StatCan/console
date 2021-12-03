@@ -28,6 +28,7 @@ import api from "../../../common/api";
 import CodeMirrorWrapper from "../Common/FormComponents/CodeMirrorWrapper/CodeMirrorWrapper";
 import FormSwitchWrapper from "../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import InputBoxWrapper from "../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -71,6 +72,7 @@ const AddServiceAccount = ({
   const [isRestrictedByPolicy, setIsRestrictedByPolicy] =
     useState<boolean>(false);
   const [addCredentials, setAddCredentials] = useState<boolean>(false);
+  const { t } = useTranslation("accounts");
 
   useEffect(() => {
     if (addSending) {
@@ -130,7 +132,7 @@ const AddServiceAccount = ({
       onClose={() => {
         closeModalAndRefresh(null);
       }}
-      title={`Create Service Account`}
+      title={t("createServiceAccount")}
     >
       <form
         noValidate
@@ -142,13 +144,7 @@ const AddServiceAccount = ({
         <Grid container className={classes.containerScrollable}>
           <Grid item xs={12}>
             <div className={classes.infoDetails}>
-              Service Accounts inherit the policy explicitly attached to the
-              parent user and the policy attached to each group in which the
-              parent user has membership. You can specify an optional
-              JSON-formatted policy below to restrict the Service Account access
-              to a subset of actions and resources explicitly allowed for the
-              parent user. You cannot modify the Service Account optional policy
-              after saving.
+              {t("serviceAccountPolicy")}
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -160,8 +156,8 @@ const AddServiceAccount = ({
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setIsRestrictedByPolicy(event.target.checked);
               }}
-              label={"Restrict with policy"}
-              indicatorLabels={["On", "Off"]}
+              label={t("restrictWithPolicy")}
+              indicatorLabels={[t("on"), t("off")]}
             />
             <FormSwitchWrapper
               value="locking"
@@ -171,8 +167,8 @@ const AddServiceAccount = ({
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setAddCredentials(event.target.checked);
               }}
-              label={"Customize Credentials"}
-              indicatorLabels={["On", "Off"]}
+              label={t("customizeCreds")}
+              indicatorLabels={[t("on"), t("off")]}
             />
           </Grid>
           {isRestrictedByPolicy && (
@@ -189,20 +185,20 @@ const AddServiceAccount = ({
             <Grid item xs={12}>
               <InputBoxWrapper
                 value={accessKey}
-                label={"Access Key"}
+                label={t("accessKey")}
                 id={"accessKey"}
                 name={"accessKey"}
-                placeholder={"Enter Access Key"}
+                placeholder={t("enterAccessKey")}
                 onChange={(e) => {
                   setAccessKey(e.target.value);
                 }}
               />
               <InputBoxWrapper
                 value={secretKey}
-                label={"Secret Key"}
+                label={t("secretKey")}
                 id={"secretKey"}
                 name={"secretKey"}
-                placeholder={"Enter Secret Key"}
+                placeholder={t("enterSecretKey")}
                 onChange={(e) => {
                   setSecretKey(e.target.value);
                 }}
@@ -218,7 +214,7 @@ const AddServiceAccount = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -226,7 +222,7 @@ const AddServiceAccount = ({
               color="primary"
               disabled={addSending}
             >
-              Create
+              {t("create")}
             </Button>
           </Grid>
           {addSending && (

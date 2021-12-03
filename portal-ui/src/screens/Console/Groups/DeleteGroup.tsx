@@ -28,6 +28,7 @@ import {
 import api from "../../../common/api";
 import { setErrorSnackMessage } from "../../../actions";
 import { ErrorResponseHandler } from "../../../common/types";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeleteGroup {
   selectedGroup: string;
@@ -43,6 +44,8 @@ const DeleteGroup = ({
   setErrorSnackMessage,
 }: IDeleteGroup) => {
   const [isDeleting, setDeleteLoading] = useState<boolean>(false);
+
+  const { t } = useTranslation("groups");
 
   useEffect(() => {
     if (isDeleting) {
@@ -83,16 +86,18 @@ const DeleteGroup = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Delete User</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{t("deleteUser")}</DialogTitle>
         <DialogContent>
           {isDeleting && <LinearProgress />}
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete group <b>{selectedGroup}</b>?
+            <Trans i18nKey="groups:deleteGroupConfirmation">
+              Are you sure you want to delete group <b>{{selectedGroup}}</b>?
+            </Trans>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={closeNoAction} color="primary" disabled={isDeleting}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button
             onClick={() => {
@@ -101,7 +106,7 @@ const DeleteGroup = ({
             color="secondary"
             autoFocus
           >
-            Delete
+            {t("delete")}
           </Button>
         </DialogActions>
       </Dialog>

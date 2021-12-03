@@ -28,6 +28,7 @@ import { ISessionResponse } from "../types";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import { useTranslation } from "react-i18next";
 
 interface IConfigurationMain {
   classes: any;
@@ -52,10 +53,11 @@ const ConfigurationMain = ({
   distributedSetup,
 }: IConfigurationMain) => {
   const [selectedTab, setSelectedTab] = useState<number>(0);
+  const { t } = useTranslation("configurations");
 
   return (
     <Fragment>
-      <PageHeader label="Settings" />
+      <PageHeader label={t("settings")} />
       <Grid container className={classes.container}>
         <Grid item xs={2}>
           <List component="nav" dense={true}>
@@ -66,7 +68,7 @@ const ConfigurationMain = ({
                 setSelectedTab(0);
               }}
             >
-              <ListItemText primary="Configurations" />
+              <ListItemText primary={t("configurations")} />
             </ListItem>
             <ListItem
               button
@@ -75,7 +77,7 @@ const ConfigurationMain = ({
                 setSelectedTab(1);
               }}
             >
-              <ListItemText primary="Lambda Notifications" />
+              <ListItemText primary={t("lambdaNotifs")} />
             </ListItem>
             <ListItem
               button
@@ -84,26 +86,26 @@ const ConfigurationMain = ({
                 setSelectedTab(2);
               }}
             >
-              <ListItemText primary="Tiers" />
+              <ListItemText primary={t("tiers")}  />
             </ListItem>
           </List>
         </Grid>
         <Grid item xs={10}>
           {selectedTab === 0 && (
             <Grid item xs={12}>
-              <h1 className={classes.sectionTitle}>Configurations</h1>
+              <h1 className={classes.sectionTitle}>{t("configurations")}</h1>
               <ConfigurationsList />
             </Grid>
           )}
           {selectedTab === 1 && (
             <Grid item xs={12}>
-              <h1 className={classes.sectionTitle}>Lambda Notifications</h1>
+              <h1 className={classes.sectionTitle}>{t("lambdaNotifs")}</h1>
               <ListNotificationEndpoints />
             </Grid>
           )}
           {selectedTab === 2 && distributedSetup && (
             <Grid item xs={12}>
-              <h1 className={classes.sectionTitle}>Tiers</h1>
+              <h1 className={classes.sectionTitle}>{t("tiers")} </h1>
               <ListTiersConfiguration />
             </Grid>
           )}

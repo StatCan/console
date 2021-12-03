@@ -24,6 +24,7 @@ import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { AppState } from "../../../../store";
 import { setErrorSnackMessage } from "../../../../actions";
 import { snackBarMessage } from "../../../../types";
+import { useTranslation } from "react-i18next";
 
 interface IMainErrorProps {
   classes: any;
@@ -134,6 +135,8 @@ const MainError = ({
   const [detailsOpen, setDetailsOpen] = useState<boolean>(false);
   const [displayErrorMsg, setDisplayErrorMsg] = useState<boolean>(false);
 
+  const { t } = useTranslation("common");
+
   const closeErrorMessage = useCallback(() => {
     setDisplayErrorMsg(false);
   }, []);
@@ -181,14 +184,14 @@ const MainError = ({
           <span className={classes.messageIcon}>
             <ErrorOutlineIcon />
           </span>
-          <span className={classes.errorLabel}>Error</span>
+          <span className={classes.errorLabel}>{t("error")}</span>
         </div>
         <div className={classes.simpleError}>{message}</div>
         {messageDetails !== "" && (
           <Fragment>
             <div className={classes.detailsContainerLink}>
               <button className={classes.detailsButton} onClick={detailsToggle}>
-                Details
+                {t("details")}
                 <ArrowRightIcon
                   className={`${classes.arrowElement} ${
                     detailsOpen ? classes.arrowOpen : ""

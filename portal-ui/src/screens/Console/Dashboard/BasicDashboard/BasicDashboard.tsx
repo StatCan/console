@@ -31,6 +31,7 @@ import {
   TotalObjectsIcon,
 } from "../../../../icons";
 import { Card, CardHeader } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -60,6 +61,8 @@ interface IDashboardProps {
 }
 
 const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
+  const { t } = useTranslation("dashboard");
+
   const prettyUsage = (usage: string | undefined) => {
     if (usage === undefined) {
       return "0";
@@ -115,7 +118,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
               <Card className={classes.cardRoot}>
                 <CardHeader
                   avatar={<BucketsIcon />}
-                  title="Number of Buckets"
+                  title={t("numberOfBuckets")}
                   subheader={usage ? prettyNumber(usage.buckets) : 0}
                 />
               </Card>
@@ -124,7 +127,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
               <Card className={classes.cardRoot}>
                 <CardHeader
                   avatar={<ReportedUsageIcon />}
-                  title="Usage"
+                  title={t("usage")}
                   subheader={usage ? prettyUsage(usage.usage + "") : 0}
                 />
               </Card>
@@ -133,7 +136,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
               <Card className={classes.cardRoot}>
                 <CardHeader
                   avatar={<TotalObjectsIcon />}
-                  title="Total Objects"
+                  title={t("totalObjects")}
                   subheader={usage ? prettyNumber(usage.objects) : 0}
                 />
               </Card>
@@ -145,7 +148,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
                   ? usage.servers.length !== 0 && (
                       <CardHeader
                         avatar={<TotalObjectsIcon />}
-                        title="MinIO Version"
+                        title={t("minioVersion")}
                         subheader={usage ? usage.servers[0].version : 0}
                       />
                     )
@@ -161,7 +164,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
                 <StorageIcon />
               </Grid>
               <Grid item>
-                <Typography variant="h5">Drives Status</Typography>
+                <Typography variant="h5">{t("drivesStatus")}</Typography>
               </Grid>
             </Grid>
             <Grid container spacing={1} className={classes.cardsContainer}>
@@ -181,7 +184,7 @@ const BasicDashboard = ({ classes, usage }: IDashboardProps) => {
               <ServersIcon />
             </Grid>
             <Grid item>
-              <Typography variant="h5">Servers Status</Typography>
+              <Typography variant="h5">{t("serversStatus")}</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={1}>

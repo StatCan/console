@@ -29,6 +29,7 @@ import FormSwitchWrapper from "../../../../Common/FormComponents/FormSwitchWrapp
 import RadioGroupSelector from "../../../../Common/FormComponents/RadioGroupSelector/RadioGroupSelector";
 import DateSelector from "../../../../Common/FormComponents/DateSelector/DateSelector";
 import api from "../../../../../../common/api";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -72,6 +73,7 @@ const SetRetention = ({
   const [isDateValid, setIsDateValid] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [alreadyConfigured, setAlreadyConfigured] = useState<boolean>(false);
+  const { t } = useTranslation("listBuckets");
 
   useEffect(() => {
     if (objectInfo.retention_mode) {
@@ -176,7 +178,7 @@ const SetRetention = ({
 
   return (
     <ModalWrapper
-      title="Set Retention Policy"
+      title={t("setRetentionPolicy")}
       modalOpen={open}
       onClose={() => {
         resetForm();
@@ -203,8 +205,8 @@ const SetRetention = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setStatusEnabled(!statusEnabled);
               }}
-              label={"Status"}
-              indicatorLabels={["Enabled", "Disabled"]}
+              label={t("status")}
+              indicatorLabels={[t("enabled"), t("disabled")]}
             />
           </Grid>
         )}
@@ -213,7 +215,7 @@ const SetRetention = ({
             currentSelection={type}
             id="type"
             name="type"
-            label="Type"
+            label={t("type")}
             disableOptions={
               !statusEnabled || (alreadyConfigured && type !== "")
             }
@@ -221,15 +223,15 @@ const SetRetention = ({
               setType(e.target.value);
             }}
             selectorOptions={[
-              { label: "Governance", value: "governance" },
-              { label: "Compliance", value: "compliance" },
+              { label: t("governance"), value: "governance" },
+              { label: t("compliance"), value: "compliance" },
             ]}
           />
         </Grid>
         <Grid item xs={12}>
           <DateSelector
             id="date"
-            label="Date"
+            label={t("date")}
             disableOptions={dateFieldDisabled()}
             ref={dateElement}
             value={date}
@@ -249,7 +251,7 @@ const SetRetention = ({
             className={classes.clearButton}
             onClick={resetForm}
           >
-            Reset
+            {t("reset")}
           </button>
           <Button
             type="submit"
@@ -262,7 +264,7 @@ const SetRetention = ({
             }
             onClick={saveNewRetentionPolicy}
           >
-            Save
+            {t("save")}
           </Button>
         </Grid>
       </form>

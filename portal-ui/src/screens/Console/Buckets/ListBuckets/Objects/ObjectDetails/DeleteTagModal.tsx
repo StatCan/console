@@ -32,6 +32,7 @@ import { setErrorSnackMessage } from "../../../../../../actions";
 import { AppState } from "../../../../../../store";
 import { ErrorResponseHandler } from "../../../../../../common/types";
 import api from "../../../../../../common/api";
+import { Trans, useTranslation } from "react-i18next";
 
 interface IDeleteTagModal {
   deleteOpen: boolean;
@@ -72,6 +73,7 @@ const DeleteTagModal = ({
 }: IDeleteTagModal) => {
   const [deleteLoading, setDeleteSending] = useState<boolean>(false);
   const [tagKey, tagLabel] = selectedTag;
+  const { t } = useTranslation("listBuckets");
 
   const removeTagProcess = () => {
     setDeleteSending(true);
@@ -105,15 +107,13 @@ const DeleteTagModal = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Tag</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deleteTag")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete the tag{" "}
-          <b className={classes.wrapText}>
-            {tagKey} : {tagLabel}
-          </b>{" "}
-          from {selectedObject}?
+          <Trans i18nKey="listBuckets:deleteTagConfirmation">
+            Are you sure you want to delete the tag <b className={classes.wrapText}> {{tagKey}} : {{tagLabel}} </b> from {{selectedObject}}?
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -124,10 +124,10 @@ const DeleteTagModal = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button onClick={removeTagProcess} color="secondary" autoFocus>
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

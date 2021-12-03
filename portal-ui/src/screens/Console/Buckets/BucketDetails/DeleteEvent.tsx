@@ -30,6 +30,7 @@ import api from "../../../../common/api";
 import { BucketEvent, BucketList } from "../types";
 import { setErrorSnackMessage } from "../../../../actions";
 import { ErrorResponseHandler } from "../../../../common/types";
+import { useTranslation } from "react-i18next";
 
 interface IDeleteEventProps {
   closeDeleteModalAndRefresh: (refresh: boolean) => void;
@@ -47,6 +48,7 @@ const DeleteEvent = ({
   setErrorSnackMessage,
 }: IDeleteEventProps) => {
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   const removeRecord = () => {
     if (deleteLoading) {
@@ -90,11 +92,11 @@ const DeleteEvent = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Delete Event</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{t("deleteEvent")}</DialogTitle>
       <DialogContent>
         {deleteLoading && <LinearProgress />}
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this event?
+          {t("deleteEventConfirmation")}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -105,7 +107,7 @@ const DeleteEvent = ({
           color="primary"
           disabled={deleteLoading}
         >
-          Cancel
+          {t("cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -114,7 +116,7 @@ const DeleteEvent = ({
           color="secondary"
           autoFocus
         >
-          Delete
+          {t("delete")}
         </Button>
       </DialogActions>
     </Dialog>

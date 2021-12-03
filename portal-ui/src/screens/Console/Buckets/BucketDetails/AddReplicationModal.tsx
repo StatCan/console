@@ -31,6 +31,7 @@ import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapp
 import FormSwitchWrapper from "../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
 import { getBytes, k8sfactorForDropdown } from "../../../../common/utils";
 import QueryMultiSelector from "../../Common/FormComponents/QueryMultiSelector/QueryMultiSelector";
+import { useTranslation } from "react-i18next";
 
 interface IReplicationModal {
   open: boolean;
@@ -85,6 +86,7 @@ const AddReplicationModal = ({
   const [bandwidthScalar, setBandwidthScalar] = useState<string>("100");
   const [bandwidthUnit, setBandwidthUnit] = useState<string>("Gi");
   const [healthCheck, setHealthCheck] = useState<string>("60");
+  const { t } = useTranslation("bucketsDetails");
 
   const addRecord = () => {
     const replicate = [
@@ -142,7 +144,7 @@ const AddReplicationModal = ({
           return;
         }
         setModalErrorSnackMessage({
-          errorMessage: "No changes applied",
+          errorMessage: t("noChangesApplied"),
           detailedError: "",
         });
       })
@@ -158,7 +160,7 @@ const AddReplicationModal = ({
       onClose={() => {
         closeModalAndRefresh();
       }}
-      title="Set Bucket Replication"
+      title={t("setBucketReplication")}
     >
       <form
         noValidate
@@ -179,7 +181,7 @@ const AddReplicationModal = ({
                   setTargetURL(e.target.value);
                 }}
                 placeholder="play.min.io"
-                label="Target URL"
+                label={t("targetURL")}
                 value={targetURL}
               />
             </Grid>
@@ -188,7 +190,7 @@ const AddReplicationModal = ({
                 checked={useTLS}
                 id="useTLS"
                 name="useTLS"
-                label="Use TLS"
+                label={t("useTLS")}
                 onChange={(e) => {
                   setUseTLS(e.target.checked);
                 }}
@@ -202,7 +204,7 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setAccessKey(e.target.value);
                 }}
-                label="Access Key"
+                label={t("accessKey")}
                 value={accessKey}
               />
             </Grid>
@@ -213,7 +215,7 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setSecretKey(e.target.value);
                 }}
-                label="Secret Key"
+                label={t("secretKey")}
                 value={secretKey}
               />
             </Grid>
@@ -224,7 +226,7 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setTargetBucket(e.target.value);
                 }}
-                label="Target Bucket"
+                label={t("targetBucket")}
                 value={targetBucket}
               />
             </Grid>
@@ -235,7 +237,7 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setRegion(e.target.value);
                 }}
-                label="Region"
+                label={t("region")}
                 value={region}
               />
             </Grid>
@@ -246,11 +248,11 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                   setReplicationMode(e.target.value as string);
                 }}
-                label="Replication Mode"
+                label={t("replicationMode")}
                 value={replicationMode}
                 options={[
-                  { label: "Asynchronous", value: "async" },
-                  { label: "Synchronous", value: "sync" },
+                  { label: t("asynchronous"), value: "async" },
+                  { label: t("synchronous"), value: "sync" },
                 ]}
               />
             </Grid>
@@ -266,14 +268,14 @@ const AddReplicationModal = ({
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setBandwidthScalar(e.target.value as string);
                       }}
-                      label="Bandwidth"
+                      label={t("bandwidth")}
                       value={bandwidthScalar}
                       min="0"
                     />
                   </div>
                   <div className={classes.sizeFactorContainer}>
                     <SelectWrapper
-                      label={"Unit"}
+                      label={t("unit")}
                       id="bandwidth_unit"
                       name="bandwidth_unit"
                       value={bandwidthUnit}
@@ -293,11 +295,11 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setHealthCheck(e.target.value as string);
                 }}
-                label="Health Check Duration"
+                label={t("healthCheckDuration")}
                 value={healthCheck}
               />
             </Grid>
-            <h3>Object Filters</h3>
+            <h3>{t("objectFilters")}</h3>
             <Grid item xs={12}>
               <InputBoxWrapper
                 id="prefix"
@@ -305,25 +307,25 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setPrefix(e.target.value);
                 }}
-                placeholder="prefix"
-                label="Prefix"
+                placeholder={t("prefix")}
+                label={t("prefix")}
                 value={prefix}
               />
             </Grid>
             <Grid item xs={12}>
               <QueryMultiSelector
                 name="tags"
-                label="Tags"
+                label={t("tags")}
                 elements={""}
                 onChange={(vl: string) => {
                   setTags(vl);
                 }}
-                keyPlaceholder="Tag Key"
-                valuePlaceholder="Tag Value"
+                keyPlaceholder={t("tagKey")}
+                valuePlaceholder={t("tagValue")}
                 withBorder
               />
             </Grid>
-            <h3>Storage Configuration</h3>
+            <h3>{t("storageConfiguration")}</h3>
             <Grid item xs={12}>
               <InputBoxWrapper
                 id="storageClass"
@@ -331,25 +333,25 @@ const AddReplicationModal = ({
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setTargetStorageClass(e.target.value);
                 }}
-                placeholder="STANDARD_IA,REDUCED_REDUNDANCY etc"
-                label="Storage Class"
+                placeholder={t("storageClassPlaceholder")}
+                label={t("storageClass")}
                 value={targetStorageClass}
               />
             </Grid>
-            <h3>Replication Options</h3>
+            <h3>{t("replicationOptions")}</h3>
             <Grid item xs={12}>
               <FormSwitchWrapper
                 checked={repDeleteMarker}
                 id="deleteMarker"
                 name="deleteMarker"
-                label="Delete Marker"
+                label={t("deleteMarker")}
                 onChange={(e) => {
                   console.log(e);
                   console.log(e.target.checked);
                   setRepDeleteMarker(e.target.checked);
                 }}
                 value={repDeleteMarker}
-                description={"Replicate soft deletes"}
+                description={t("replicateSoftDeletes")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -357,12 +359,12 @@ const AddReplicationModal = ({
                 checked={repDelete}
                 id="repDelete"
                 name="repDelete"
-                label="Deletes"
+                label={t("deletes")}
                 onChange={(e) => {
                   setRepDelete(e.target.checked);
                 }}
                 value={repDelete}
-                description={"Replicate versioned deletes"}
+                description={t("replicateVersionedDeletes")}
               />
             </Grid>
             {/*TODO: This will be enabled later on when we update the dependency on mc*/}
@@ -387,7 +389,7 @@ const AddReplicationModal = ({
               color="primary"
               disabled={addLoading}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {addLoading && (

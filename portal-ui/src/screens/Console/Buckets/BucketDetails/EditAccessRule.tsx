@@ -25,6 +25,7 @@ import { ErrorResponseHandler } from "../../../../common/types";
 import { setErrorSnackMessage } from "../../../../actions";
 import { AppState } from "../../../../store";
 import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapper";
+import { useTranslation } from "react-i18next";
 
 const mapState = (state: AppState) => ({
   session: state.console.session,
@@ -63,10 +64,12 @@ const EditAccessRule = ({
 }: IEditAccessRule) => {
   const [selectedAccess, setSelectedAccess] = useState<any>(initial);
 
+  const { t } = useTranslation("bucketsDetails");
+
   const accessOptions = [
-    { label: "readonly", value: "readonly" },
-    { label: "writeonly", value: "writeonly" },
-    { label: "readwrite", value: "readwrite" },
+    { label: t("readonly"), value: "readonly" },
+    { label: t("writeonly"), value: "writeonly" },
+    { label: t("readwrite"), value: "readwrite" },
   ];
 
   const resetForm = () => {
@@ -92,7 +95,7 @@ const EditAccessRule = ({
     <React.Fragment>
       <ModalWrapper
         modalOpen={modalOpen}
-        title={`Edit Access Rule for ${toEdit}`}
+        title={t("editAccessRuleFor", { toEdit: `${toEdit}` })}
         onClose={onClose}
       >
         <Grid container>
@@ -103,7 +106,7 @@ const EditAccessRule = ({
               onChange={(e) => {
                 setSelectedAccess(e.target.value);
               }}
-              label="Access"
+              label={t("access")}
               value={selectedAccess}
               options={accessOptions}
               disabled={false}
@@ -116,7 +119,7 @@ const EditAccessRule = ({
               className={classes.clearButton}
               onClick={resetForm}
             >
-              Clear
+              {t("clear")}
             </button>
             <Button
               type="submit"
@@ -124,7 +127,7 @@ const EditAccessRule = ({
               color="primary"
               onClick={createProcess}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
         </Grid>

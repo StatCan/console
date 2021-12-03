@@ -26,6 +26,8 @@ import api from "../../../common/api";
 import GroupsSelectors from "./GroupsSelectors";
 import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import PredefinedList from "../Common/FormComponents/PredefinedList/PredefinedList";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n";
 
 interface IAddToGroup {
   open: boolean;
@@ -56,6 +58,8 @@ const BulkAddToGroup = ({
   classes,
   setModalErrorSnackMessage,
 }: IAddToGroup) => {
+  const { t } = useTranslation("users");
+  
   //Local States
   const [saving, isSaving] = useState<boolean>(false);
   const [accepted, setAccepted] = useState<boolean>(false);
@@ -81,7 +85,7 @@ const BulkAddToGroup = ({
       } else {
         isSaving(false);
         setModalErrorSnackMessage({
-          errorMessage: "You need to select at least one group to assign",
+          errorMessage: i18n.t("users:minAssignGroupErr"),
           detailedError: "",
         });
       }
@@ -114,18 +118,18 @@ const BulkAddToGroup = ({
       }}
       title={
         accepted
-          ? "The selected users were added to the following groups."
-          : "Add Users to Group"
+          ? t("selectedUsersAdded")
+          : t("addUsersToGroup")
       }
     >
       {accepted ? (
         <React.Fragment>
           <Grid container>
             <PredefinedList
-              label={"Groups"}
+              label={t("groups")}
               content={selectedGroups.join(", ")}
             />
-            <PredefinedList label={"Users"} content={checkedUsers.join(", ")} />
+            <PredefinedList label={t("users")} content={checkedUsers.join(", ")} />
           </Grid>
           <br />
           <br />
@@ -136,7 +140,7 @@ const BulkAddToGroup = ({
           <Grid container>
             <Grid item xs={12} className={classes.formScrollable}>
               <PredefinedList
-                label={"Selected Users"}
+                label={t("selectedUsers")}
                 content={checkedUsers.join(", ")}
               />
               <Grid item xs={12}>
@@ -156,7 +160,7 @@ const BulkAddToGroup = ({
                 className={classes.clearButton}
                 onClick={resetForm}
               >
-                Clear
+                {t("clear")}
               </button>
               <Button
                 type="submit"
@@ -164,7 +168,7 @@ const BulkAddToGroup = ({
                 color="primary"
                 disabled={saving || selectedGroups.length < 1}
               >
-                Save
+                {t("save")}
               </Button>
             </Grid>
             {saving && (

@@ -22,6 +22,7 @@ import { Button } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import Grid from "@material-ui/core/Grid";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -68,6 +69,7 @@ const CredentialsPrompt = ({
   closeModal,
   entity,
 }: ICredentialsPromptProps) => {
+  const { t } = useTranslation("common");
   if (!newServiceAccount) {
     return null;
   }
@@ -81,25 +83,27 @@ const CredentialsPrompt = ({
       onClose={() => {
         closeModal();
       }}
-      title={`New ${entity} Created`}
+      title={t("newEntityCreated", { entity: `${entity}` })}
     >
       <React.Fragment>
         <Grid container>
           <Grid item xs={12} className={classes.formScrollable}>
-            A new {entity} has been created with the following details:
+            {t("newEntityDetails", { entity: `${entity}` })}
             {!idp && consoleCreds && (
               <React.Fragment>
                 <Grid item xs={12} className={classes.credentialsPanel}>
-                  <strong>Console Credentials</strong>
+                  <strong>{t("consoleCreds")}</strong>
                   {Array.isArray(consoleCreds) &&
                     consoleCreds.map((credentialsPair, index) => {
                       return (
                         <ul key={`creds-item-${index.toString()}`}>
                           <li>
-                            <b>Access Key:</b> {credentialsPair.accessKey}
+                            <b>{t("accessKeyColon")}</b>{" "}
+                            {credentialsPair.accessKey}
                           </li>
                           <li>
-                            <b>Secret Key:</b> {credentialsPair.secretKey}
+                            <b>{t("secretKeyColon")}</b>{" "}
+                            {credentialsPair.secretKey}
                           </li>
                         </ul>
                       );
@@ -107,10 +111,10 @@ const CredentialsPrompt = ({
                   {!Array.isArray(consoleCreds) && (
                     <ul>
                       <li>
-                        <b>Access Key:</b> {consoleCreds.accessKey}
+                        <b>{t("accessKeyColon")}</b> {consoleCreds.accessKey}
                       </li>
                       <li>
-                        <b>Secret Key:</b> {consoleCreds.secretKey}
+                        <b>{t("secretKeyColon")}</b> {consoleCreds.secretKey}
                       </li>
                     </ul>
                   )}
@@ -123,7 +127,7 @@ const CredentialsPrompt = ({
                 variant="body1"
                 className={classes.warningBlock}
               >
-                Please Login via the configured external identity provider.
+                {t("pleaseLoginVia")}
               </Typography>
             ) : (
               <Typography
@@ -131,8 +135,7 @@ const CredentialsPrompt = ({
                 variant="body1"
                 className={classes.warningBlock}
               >
-                Write these down, as this is the only time the secret will be
-                displayed.
+                {t("oneTimeSecret")}
               </Typography>
             )}
           </Grid>
@@ -175,7 +178,7 @@ const CredentialsPrompt = ({
                 }}
                 color="primary"
               >
-                Download
+                {t("download")}
               </Button>
             )}
             <Button
@@ -185,7 +188,7 @@ const CredentialsPrompt = ({
               color="secondary"
               autoFocus
             >
-              Done
+              {t("done")}
             </Button>
           </Grid>
         </Grid>

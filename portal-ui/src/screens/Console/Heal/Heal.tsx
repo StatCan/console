@@ -36,6 +36,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import CheckboxWrapper from "../Common/FormComponents/CheckboxWrapper/CheckboxWrapper";
 import PageHeader from "../Common/PageHeader/PageHeader";
 import api from "../../../common/api";
+import { Trans, useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -119,6 +120,8 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
     healDuration: 0,
     sizeScanned: "",
   });
+
+  const { t } = useTranslation("heal");
 
   const fetchBucketList = () => {
     api
@@ -209,17 +212,17 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
   }, [start, bucketName, forceStart, forceStop, prefix, recursive]);
 
   let data = {
-    labels: ["Green", "Yellow", "Red", "Grey"],
+    labels: [t("green"), t("yellow"), t("red"), t("grey")],
     datasets: [
       {
-        label: "After Healing",
+        label: t("afterHealing"),
         data: hStatus.afterHeal,
         backgroundColor: "rgba(0, 0, 255, 0.2)",
         borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,
       },
       {
-        label: "Before Healing",
+        label: t("beforeHealing"),
         data: hStatus.beforeHeal,
         backgroundColor: "rgba(153, 102, 255, 0.2)",
         borderColor: "rgba(153, 102, 255, 1)",
@@ -237,7 +240,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
 
   return (
     <React.Fragment>
-      <PageHeader label="Heal" />
+      <PageHeader label={t("heal")} />
       <Grid container className={classes.container}>
         <Grid item xs={12}>
           <Grid item xs={12} className={classes.actionsTray}>
@@ -254,7 +257,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
                 displayEmpty
               >
                 <MenuItem value="" key={`select-bucket-name-default`}>
-                  Select Bucket
+                  {t("selectBucket")}
                 </MenuItem>
                 {bucketNames.map((option) => (
                   <MenuItem
@@ -267,7 +270,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
               </Select>
             </FormControl>
             <TextField
-              placeholder="Prefix"
+              placeholder={t("prefix")}
               className={classes.searchField}
               id="prefix-resource"
               label=""
@@ -286,7 +289,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
               disabled={start}
               onClick={() => setStart(true)}
             >
-              Start
+              {t("start")}
             </Button>
           </Grid>
           <Grid item xs={12} className={classes.inlineCheckboxes}>
@@ -299,7 +302,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
                 setRecursive(e.target.checked);
               }}
               disabled={false}
-              label="Recursive"
+              label={t("recursive")}
             />
             <CheckboxWrapper
               name="forceStart"
@@ -310,7 +313,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
                 setForceStart(e.target.checked);
               }}
               disabled={false}
-              label="Force Start"
+              label={t("forceStart")}
             />
             <CheckboxWrapper
               name="forceStop"
@@ -321,7 +324,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
                 setForceStop(e.target.checked);
               }}
               disabled={false}
-              label="Force Stop"
+              label={t("forceStop")}
             />
           </Grid>
           <Grid item xs={12}>
@@ -335,7 +338,7 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
               options={{
                 title: {
                   display: true,
-                  text: "Item's Health Status [%]",
+                  text: t("itemsHealthStatus"),
                   fontSize: 20,
                 },
                 legend: {
@@ -346,14 +349,23 @@ const Heal = ({ classes, distributedSetup }: IHeal) => {
             />
             <Grid item xs={12} className={classes.scanInfo}>
               <div className={classes.scanData}>
-                <strong>Size scanned:</strong> {hStatus.sizeScanned}
+                <Trans i18nKey="sizeScannedColon">
+                  <strong>Size scanned:</strong>{" "}
+                  {{ sizeScanned: hStatus.sizeScanned }}
+                </Trans>
               </div>
               <div className={classes.scanData}>
-                <strong>Objects healed:</strong> {hStatus.objectsHealed} /{" "}
-                {hStatus.objectsScanned}
+                <Trans i18nKey="objectsHealedColon">
+                  <strong>Objects healed:</strong>{" "}
+                  {{ objectsHealed: hStatus.objectsHealed }} /{" "}
+                  {{ objectsScanned: hStatus.objectsScanned }}
+                </Trans>
               </div>
               <div className={classes.scanData}>
-                <strong>Healing time:</strong> {hStatus.healDuration}s
+                <Trans i18nKey="healingTimeColon">
+                  <strong>Healing time:</strong>{" "}
+                  {{ healDuration: hStatus.healDuration }}s
+                </Trans>
               </div>
             </Grid>
           </Grid>

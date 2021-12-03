@@ -43,6 +43,8 @@ import { Grid, Button } from "@material-ui/core";
 import PageHeader from "../Common/PageHeader/PageHeader";
 import { setSnackBarMessage, setServerDiagStat } from "../../../actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -108,6 +110,8 @@ const HealthInfo = ({
   const [startDiagnostic, setStartDiagnostic] = useState(false);
   const [downloadDisabled, setDownloadDisabled] = useState(true);
 
+  const { t } = useTranslation("healthInfo");
+
   useEffect(() => {
     if (
       serverDiagnosticStatus === DiagStatSuccess &&
@@ -146,9 +150,7 @@ const HealthInfo = ({
           interval = setInterval(() => {
             c.send("ok");
           }, 10 * 1000);
-          setSnackBarMessage(
-            "Diagnostic started. Please do not refresh page during diagnosis."
-          );
+          setSnackBarMessage(i18n.t("healthInfo:diagnosticStarted"));
           setServerDiagStat(DiagStatInProgress);
         };
         c.onmessage = (message: IMessageEvent) => {
@@ -171,13 +173,11 @@ const HealthInfo = ({
           ) {
             // handle close with error
             console.log("connection closed by server with code:", event.code);
-            setSnackBarMessage(
-              "An error occurred while getting Diagnostic file."
-            );
+            setSnackBarMessage(i18n.t("healthInfo:getDiagnosticFilesErr"));
             setServerDiagStat(DiagStatError);
           } else {
             console.log("connection closed by server");
-            setSnackBarMessage("Diagnostic file is ready to be downloaded.");
+            setSnackBarMessage(i18n.t("healthInfo:diagnosticFileReady"));
             setServerDiagStat(DiagStatSuccess);
           }
         };
@@ -196,7 +196,7 @@ const HealthInfo = ({
 
   return (
     <React.Fragment>
-      <PageHeader label="Diagnostic" />
+      <PageHeader label={t("diagnostic")} />
 
       <Grid container>
         <Grid item xs={12} className={classes.container}>
@@ -209,7 +209,7 @@ const HealthInfo = ({
                 disabled={startDiagnostic}
                 onClick={() => setStartDiagnostic(true)}
               >
-                Start Diagnostic
+                {t("startDiagnostic")}
               </Button>
             </Grid>
             <Grid key="start-download" item>
@@ -230,7 +230,7 @@ const HealthInfo = ({
                   }}
                   disabled={downloadDisabled}
                 >
-                  Download
+                  {t("download")}
                 </Button>
               )}
             </Grid>

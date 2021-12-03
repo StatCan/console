@@ -41,6 +41,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import ModalWrapper from "../Common/ModalWrapper/ModalWrapper";
 import api from "../../../common/api";
 import PolicySelectors from "../Policies/PolicySelectors";
+import { useTranslation } from "react-i18next";
 
 interface ISetUserPoliciesProps {
   classes: any;
@@ -67,6 +68,8 @@ const SetUserPolicies = ({
   setModalErrorSnackMessage,
   open,
 }: ISetUserPoliciesProps) => {
+  const { t } = useTranslation("users");
+
   //Local States
   const [loading, setLoading] = useState<boolean>(false);
   const [actualPolicy, setActualPolicy] = useState<string[]>([]);
@@ -115,7 +118,7 @@ const SetUserPolicies = ({
         closeModalAndRefresh();
       }}
       modalOpen={open}
-      title="Set Policies"
+      title={t("setPolicies")}
     >
       <PolicySelectors
         selectedPolicy={selectedPolicy}
@@ -131,7 +134,7 @@ const SetUserPolicies = ({
           className={classes.clearButton}
           onClick={resetSelection}
         >
-          Clear
+          {t("clear")}
         </button>
         <Button
           type="button"
@@ -140,7 +143,7 @@ const SetUserPolicies = ({
           disabled={loading}
           onClick={SetUserPoliciesAction}
         >
-          Save
+          {t("save")}
         </Button>
       </Grid>
       {loading && (

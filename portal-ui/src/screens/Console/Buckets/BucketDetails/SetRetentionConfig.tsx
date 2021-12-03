@@ -29,6 +29,7 @@ import api from "../../../../common/api";
 import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import RadioGroupSelector from "../../Common/FormComponents/RadioGroupSelector/RadioGroupSelector";
 import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBoxWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -56,6 +57,7 @@ const SetRetentionConfig = ({
   const [retentionUnit, setRetentionUnit] = useState<string>("days");
   const [retentionValidity, setRetentionValidity] = useState<number>(1);
   const [valid, setValid] = useState<boolean>(false);
+  const { t } = useTranslation("bucketsDetails");
 
   const setRetention = (event: React.FormEvent) => {
     event.preventDefault();
@@ -107,7 +109,7 @@ const SetRetentionConfig = ({
 
   return (
     <ModalWrapper
-      title="Set Retention Configuration"
+      title={t("setRetentionConfiguration")}
       modalOpen={open}
       onClose={() => {
         closeModalAndRefresh();
@@ -130,13 +132,13 @@ const SetRetentionConfig = ({
                   currentSelection={retentionMode}
                   id="retention_mode"
                   name="retention_mode"
-                  label="Retention Mode"
+                  label={t("retentionMode")}
                   onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                     setRetentionMode(e.target.value as string);
                   }}
                   selectorOptions={[
-                    { value: "compliance", label: "Compliance" },
-                    { value: "governance", label: "Governance" },
+                    { value: "compliance", label: t("compliance") },
+                    { value: "governance", label: t("governance") },
                   ]}
                 />
               </Grid>
@@ -145,13 +147,13 @@ const SetRetentionConfig = ({
                   currentSelection={retentionUnit}
                   id="retention_unit"
                   name="retention_unit"
-                  label="Retention Unit"
+                  label={t("retentionUnit")}
                   onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                     setRetentionUnit(e.target.value as string);
                   }}
                   selectorOptions={[
-                    { value: "days", label: "Days" },
-                    { value: "years", label: "Years" },
+                    { value: "days", label: t("days") },
+                    { value: "years", label: t("years") },
                   ]}
                 />
               </Grid>
@@ -163,7 +165,7 @@ const SetRetentionConfig = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setRetentionValidity(e.target.valueAsNumber);
                   }}
-                  label="Retention Validity"
+                  label={t("retentionValidity")}
                   value={String(retentionValidity)}
                   required
                   min="1"
@@ -178,7 +180,7 @@ const SetRetentionConfig = ({
                 fullWidth
                 disabled={addLoading || !valid}
               >
-                Set
+                {t("set")}
               </Button>
             </Grid>
             {addLoading && (

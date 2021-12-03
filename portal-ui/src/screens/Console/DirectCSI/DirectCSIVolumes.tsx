@@ -32,6 +32,7 @@ import { ErrorResponseHandler } from "../../../common/types";
 import api from "../../../common/api";
 import TableWrapper from "../Common/TableWrapper/TableWrapper";
 import SearchIcon from "../../../icons/SearchIcon";
+import { useTranslation } from "react-i18next";
 
 interface IDirectCSIVolumesProps {
   classes: any;
@@ -67,6 +68,8 @@ const DirectCSIVolumes = ({
   const [records, setRecords] = useState<IDirectCSIVolumes[]>([]);
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { t } = useTranslation("directCSI");
 
   useEffect(() => {
     if (loading) {
@@ -109,7 +112,7 @@ const DirectCSIVolumes = ({
     <Fragment>
       <Grid item xs={12} className={classes.actionsTray}>
         <TextField
-          placeholder="Search Volumes"
+          placeholder={t("searchVolumes")}
           className={classes.searchField}
           id="search-resource"
           label=""
@@ -134,26 +137,26 @@ const DirectCSIVolumes = ({
           itemActions={[]}
           columns={[
             {
-              label: "Volume",
+              label: t("volume"),
               elementKey: "volume",
             },
             {
-              label: "Capacity",
+              label: t("capacity"),
               elementKey: "capacity",
               renderFunction: niceBytes,
             },
             {
-              label: "Node",
+              label: t("node"),
               elementKey: "node",
             },
             {
-              label: "Drive",
+              label: t("drive"),
               elementKey: "drive",
             },
           ]}
           isLoading={loading}
           records={filteredRecords}
-          entityName="Volumes"
+          entityName={t("volumes")}
           idField="volume"
           customPaperHeight={classes.tableWrapper}
         />

@@ -30,6 +30,7 @@ import InputBoxWrapper from "../../Common/FormComponents/InputBoxWrapper/InputBo
 import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapper";
 import api from "../../../../common/api";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -76,6 +77,7 @@ const EnableQuota = ({
   const [quotaType, setQuotaType] = useState<string>("hard");
   const [quotaSize, setQuotaSize] = useState<string>("1");
   const [quotaUnit, setQuotaUnit] = useState<string>("TiB");
+  const { t } = useTranslation("bucketsDetails");
 
   useEffect(() => {
     if (enabled) {
@@ -131,7 +133,7 @@ const EnableQuota = ({
       onClose={() => {
         closeModalAndRefresh();
       }}
-      title="Enable Bucket Quota"
+      title={t("enableBucketQuota")}
     >
       <form
         noValidate
@@ -151,8 +153,8 @@ const EnableQuota = ({
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setQuotaEnabled(event.target.checked);
                 }}
-                label={"Quota"}
-                indicatorLabels={["On", "Off"]}
+                label={t("quota")}
+                indicatorLabels={[t("on"), t("off")]}
               />
             </Grid>
             {quotaEnabled && (
@@ -162,13 +164,13 @@ const EnableQuota = ({
                     currentSelection={quotaType}
                     id="quota_type"
                     name="quota_type"
-                    label="Quota Type"
+                    label={t("quotaType")}
                     onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                       setQuotaType(e.target.value as string);
                     }}
                     selectorOptions={[
-                      { value: "hard", label: "Hard" },
-                      { value: "fifo", label: "FIFO" },
+                      { value: "hard", label: t("hard") },
+                      { value: "fifo", label: t("fifo") },
                     ]}
                   />
                 </Grid>
@@ -182,7 +184,7 @@ const EnableQuota = ({
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setQuotaSize(e.target.value);
                         }}
-                        label="Quota"
+                        label={t("quota")}
                         value={quotaSize}
                         required
                         min="1"
@@ -217,7 +219,7 @@ const EnableQuota = ({
               color="primary"
               disabled={loading}
             >
-              Save
+              {t("save")}
             </Button>
           </Grid>
           {loading && (

@@ -28,6 +28,7 @@ import {
 import ModalWrapper from "../../../../Common/ModalWrapper/ModalWrapper";
 import DateTimePickerWrapper from "../../../../Common/FormComponents/DateTimePickerWrapper/DateTimePickerWrapper";
 import FormSwitchWrapper from "../../../../Common/FormComponents/FormSwitchWrapper/FormSwitchWrapper";
+import { useTranslation } from "react-i18next"
 
 interface IRewindEnable {
   closeModalAndRefresh: (reload: boolean) => void;
@@ -63,7 +64,8 @@ const RewindEnable = ({
   const [rewindEnabling, setRewindEnabling] = useState<boolean>(false);
   const [rewindEnableButton, setRewindEnableButton] = useState<boolean>(true);
   const [dateSelected, setDateSelected] = useState<any>(null);
-
+  const { t } = useTranslation("listBuckets");
+  
   useEffect(() => {
     if (rewindEnabled) {
       setRewindEnableButton(true);
@@ -87,14 +89,14 @@ const RewindEnable = ({
       onClose={() => {
         closeModalAndRefresh(false);
       }}
-      title={`Rewind - ${bucketName}`}
+      title={ t("rewindBucket", { bucketname : `${bucketName}`})}
     >
       <Grid item xs={12}>
         <DateTimePickerWrapper
           value={dateSelected}
           onChange={setDateSelected}
           id="rewind-selector"
-          label="Rewind to"
+          label={t("rewindTo")}
           disabled={!rewindEnableButton}
         />
       </Grid>
@@ -109,8 +111,8 @@ const RewindEnable = ({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setRewindEnableButton(false);
               }}
-              label={"Current Status"}
-              indicatorLabels={["Enabled", "Disabled"]}
+              label={t("currentStatus")}
+              indicatorLabels={[t("enabled"), t("disabled")]}
             />
           </Grid>
         )}
@@ -123,8 +125,8 @@ const RewindEnable = ({
             onClick={rewindApply}
           >
             {!rewindEnableButton && rewindEnabled
-              ? "Show Current Data"
-              : "Show Rewind Data"}
+              ? t("showCurrentData")
+              : t("showRewindData")}
           </Button>
         </Grid>
         {rewindEnabling && (

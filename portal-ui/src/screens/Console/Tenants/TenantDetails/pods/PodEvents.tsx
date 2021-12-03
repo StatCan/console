@@ -31,6 +31,7 @@ import { ErrorResponseHandler } from "../../../../../common/types";
 import TableWrapper from "../../../Common/TableWrapper/TableWrapper";
 import api from "../../../../../common/api";
 import { AppState } from "../../../../../store";
+import { useTranslation } from "react-i18next";
 
 interface IPodEventsProps {
   classes: any;
@@ -65,6 +66,8 @@ const PodEvents = ({
 }: IPodEventsProps) => {
   const [event, setEvent] = useState<IEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const { t } = useTranslation("tenants");
 
   useEffect(() => {
     if (propLoading) {
@@ -107,15 +110,15 @@ const PodEvents = ({
         <TableWrapper
           itemActions={[]}
           columns={[
-            { label: "Namespace", elementKey: "namespace" },
-            { label: "Last Seen", elementKey: "seen" },
-            { label: "Message", elementKey: "message" },
-            { label: "Event Type", elementKey: "event_type" },
-            { label: "Reason", elementKey: "reason" },
+            { label: t("namespace"), elementKey: "namespace" },
+            { label: t("lastSeen"), elementKey: "seen" },
+            { label: t("message"), elementKey: "message" },
+            { label: t("eventType"), elementKey: "event_type" },
+            { label: t("reason"), elementKey: "reason" },
           ]}
           isLoading={loading}
           records={event}
-          entityName="Events"
+          entityName={t("events")}
           idField="event"
         />
       </Grid>

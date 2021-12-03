@@ -25,6 +25,7 @@ import { ErrorResponseHandler } from "../../../../common/types";
 import api from "../../../../common/api";
 import ModalWrapper from "../../Common/ModalWrapper/ModalWrapper";
 import SelectWrapper from "../../Common/FormComponents/SelectWrapper/SelectWrapper";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -50,6 +51,7 @@ const SetAccessPolicy = ({
 }: ISetAccessPolicyProps) => {
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [accessPolicy, setAccessPolicy] = useState<string>("");
+  const { t } = useTranslation("bucketsDetails");
   const addRecord = (event: React.FormEvent) => {
     event.preventDefault();
     if (addLoading) {
@@ -76,7 +78,7 @@ const SetAccessPolicy = ({
 
   return (
     <ModalWrapper
-      title="Change Access Policy"
+      title={t("changeAccessPolicy")}
       modalOpen={open}
       onClose={() => {
         closeModalAndRefresh();
@@ -94,15 +96,15 @@ const SetAccessPolicy = ({
             <Grid item xs={12}>
               <SelectWrapper
                 value={accessPolicy}
-                label="Access Policy"
+                label={t("accessPolicyColon")}
                 id="select-access-policy"
                 name="select-access-policy"
                 onChange={(e: React.ChangeEvent<{ value: unknown }>) => {
                   setAccessPolicy(e.target.value as string);
                 }}
                 options={[
-                  { value: "PRIVATE", label: "Private" },
-                  { value: "PUBLIC", label: "Public" },
+                  { value: "PRIVATE", label: t("private") },
+                  { value: "PUBLIC", label: t("public") },
                 ]}
               />
             </Grid>
@@ -115,7 +117,7 @@ const SetAccessPolicy = ({
               fullWidth
               disabled={addLoading}
             >
-              Set
+              {t("set")}
             </Button>
           </Grid>
           {addLoading && (
